@@ -4,7 +4,11 @@ public class Game {
 
     Player player;
 
-    double leftmostpoint = 0;
+    Camera camera;
+
+    Enemy[] enemy;
+
+
 
 
 
