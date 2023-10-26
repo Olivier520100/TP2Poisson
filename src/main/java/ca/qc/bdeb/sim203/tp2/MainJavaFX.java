@@ -14,9 +14,7 @@ import java.util.HashMap;
 
 public class MainJavaFX extends Application {
 
-    private HashMap<String, String> dictionary = new HashMap<>();
-    private ArrayList<String> botMessages = new ArrayList<>();
-    private ArrayList<String> userMessages = new ArrayList<>();
+
     private int height = 750;
     private int width = 450;
 
@@ -44,34 +42,9 @@ public class MainJavaFX extends Application {
         root.getChildren().add(canvas);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        Square sqr1 = new Square(50, 50, 20, 20);
 
-
-
-        scene.setOnKeyPressed(e->{
-            if (e.getCode() == KeyCode.LEFT ){
-                sqr1.moveLeft();
-
-            } else if (e.getCode()  == KeyCode.RIGHT){
-                sqr1.moveRight();
-
-            }
-            if (e.getCode() == KeyCode.SPACE ){
-                System.out.println("Jump");
-                sqr1.jump();
-
-            }
-        });
-        scene.setOnKeyReleased(e->{
-            if (e.getCode() == KeyCode.LEFT ){
-                sqr1.stopMove();
-
-            } else if (e.getCode()  == KeyCode.RIGHT){
-                sqr1.stopMove();
-
-            }
-
-        });
+        context.translate(50,0);
+        context.fillRect(0, 0, w, h);
 
         AnimationTimer tm = new AnimationTimer() {
             @Override
@@ -82,11 +55,6 @@ public class MainJavaFX extends Application {
                 }
                 double dt = (now - lasttime) * 1e-9;
 
-                context.clearRect(0, 0, w, h);
-
-                sqr1.update(dt,w,h);
-
-                sqr1.draw(context);
 
                 lasttime = now;
             }

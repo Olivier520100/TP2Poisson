@@ -6,8 +6,7 @@ public class Square {
     double x;
     double y;
 
-    double speed;
-    double angle;
+
     double height;
     double width;
 
