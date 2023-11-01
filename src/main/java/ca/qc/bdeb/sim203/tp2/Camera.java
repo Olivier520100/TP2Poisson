@@ -16,7 +16,7 @@ public class Camera {
         this.width = width;
     }
 
-    public void Draw(GraphicsContext context, Player player,){
+    public void Draw(GraphicsContext context, Player player){
 
 //        for (Ship ship : ships) {
 //            ship.draw(context);

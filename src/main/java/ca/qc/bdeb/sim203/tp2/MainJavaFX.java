@@ -42,10 +42,37 @@ public class MainJavaFX extends Application {
         root.getChildren().add(canvas);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
+        Player p = new Player(50,50,50,50);
 
-        context.translate(50,0);
-        context.fillRect(0, 0, w, h);
 
+        scene.setOnKeyPressed(e->{
+
+            if (e.getCode()==KeyCode.RIGHT){
+                p.moveRight();
+            } else if (e.getCode()==KeyCode.LEFT) {
+                p.moveLeft();
+            } else if (e.getCode()==KeyCode.UP){
+                p.moveUp();
+            } else if (e.getCode()==KeyCode.DOWN){
+                p.moveDown();
+            }
+
+        });
+        scene.setOnKeyReleased(e->{
+
+            if (e.getCode()==KeyCode.RIGHT){
+                p.stopMoveHorizontal();
+            } else if (e.getCode()==KeyCode.LEFT) {
+                p.stopMoveHorizontal();
+            } else if (e.getCode()==KeyCode.UP){
+                p.stopMoveVertical();
+            } else if (e.getCode()==KeyCode.DOWN){
+                p.stopMoveVertical();
+            }
+
+
+        });
+        p.draw(context);
         AnimationTimer tm = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -54,7 +81,9 @@ public class MainJavaFX extends Application {
                     return;
                 }
                 double dt = (now - lasttime) * 1e-9;
-
+                context.clearRect(0,0,w,h);
+                p.update(dt, w, h);
+                p.draw(context);
 
                 lasttime = now;
             }
