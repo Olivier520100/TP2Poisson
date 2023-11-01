@@ -16,7 +16,7 @@ public class Camera {
         this.width = width;
     }
 
-    public void Draw(GraphicsContext context, Player player){
+    public void draw(GraphicsContext context, Player player){
 
 
         player.draw(context);

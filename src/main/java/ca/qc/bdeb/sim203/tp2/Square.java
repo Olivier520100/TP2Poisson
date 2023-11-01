@@ -11,9 +11,9 @@ public class Square {
     double width;
 
     double dx = 0;
-    double dy= 0;
+    double dy = 0;
     final double g = 9.81;
-    double jumpspeed = -7;
+    double jumpSpeed = -7;
     double lastJump = 0;
     boolean onFloor = false;
     double rightspeed = 200;
@@ -32,8 +32,9 @@ public class Square {
         this.height = height;
 
     }
-    void moveSquare(double dt){
-        if (stopped==true && onFloor) {
+
+    void moveSquare(double dt) {
+        if (stopped && onFloor) {
 
             if (currentDirectionLeft) {
                 dx -= dx * 0.1;
@@ -52,27 +53,29 @@ public class Square {
                 }
             }
         }
-        x=x+dx*dt;
-        y=y+dy;
+        x = x + dx * dt;
+        y = y + dy;
     }
 
-    void jump(){
+    void jump() {
         if (onFloor) {
-            dy = jumpspeed;
+            dy = jumpSpeed;
             lastJump = 0;
             onFloor = false;
             System.out.println("Jump");
         }
     }
-    void physicsCalculate(double dt){
-        if (!onFloor){
-            dy += g*dt;
+
+    void physicsCalculate(double dt) {
+        if (!onFloor) {
+            dy += g * dt;
         }
 
     }
-    void moveLeft(){
-        stopped=false;
-        currentDirectionLeft=true;
+
+    void moveLeft() {
+        stopped = false;
+        currentDirectionLeft = true;
         currentDirectionRight = false;
         currentDirectionNone = false;
         dx = -rightspeed;
@@ -80,9 +83,10 @@ public class Square {
         System.out.println("Left");
 
     }
-    void moveRight(){
-        stopped=false;
-        currentDirectionLeft=false;
+
+    void moveRight() {
+        stopped = false;
+        currentDirectionLeft = false;
         currentDirectionRight = true;
         currentDirectionNone = false;
         dx = rightspeed;
@@ -90,44 +94,45 @@ public class Square {
 
     }
 
-    void stopMove(){
+    void stopMove() {
 
 
-        onFloor=false;
-        stopped=true;
+        onFloor = false;
+        stopped = true;
 
 
     }
-    void checkCollision(double screenwidth, double screenheight){
-        if (!onFloor){
-        if (x+width > screenwidth){
-            dx = 0;
-            x=screenwidth-width;
-        } else if (x < 0) {
-            dx = 0;
-            x=0;
-        } else if (y+height > screenheight){
-            dy = 0;
-            y=screenheight-height;
-            onFloor = true;
-        } else if (y < 0) {
-            dy = 0;
-            y=screenheight-height;
-        }
+
+    void checkCollision(double screenwidth, double screenheight) {
+        if (!onFloor) {
+            if (x + width > screenwidth) {
+                dx = 0;
+                x = screenwidth - width;
+            } else if (x < 0) {
+                dx = 0;
+                x = 0;
+            } else if (y + height > screenheight) {
+                dy = 0;
+                y = screenheight - height;
+                onFloor = true;
+            } else if (y < 0) {
+                dy = 0;
+                y = screenheight - height;
+            }
         }
 
     }
 
-    void update(double dt,double screenwidth, double screenheight) {
+    void update(double dt, double screenwidth, double screenheight) {
         physicsCalculate(dt);
-        checkCollision(screenwidth,screenheight);
+        checkCollision(screenwidth, screenheight);
         moveSquare(dt);
 
 
     }
 
-    void draw(GraphicsContext context){
-        context.fillRect(x,y, width, height);
+    void draw(GraphicsContext context) {
+        context.fillRect(x, y, width, height);
     }
 
 }

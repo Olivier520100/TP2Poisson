@@ -12,10 +12,10 @@ public class Player {
     double height;
     double width;
 
-    double speedx = 0;
-    double speedy = 0;
-    final double  horizontalacceleration = 100;
-    final double  maximumhorizontalacceleration = 30;
+    double speedX = 0;
+    double speedY = 0;
+    final double acceleration = 100;
+    final double maximumAcceleration = 30;
 
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
@@ -32,89 +32,95 @@ public class Player {
         this.height = height;
 
     }
-    void movePlayer(){
 
-        x+=speedx;
-        y+=speedy;
+    void movePlayer() {
+
+        x += speedX;
+        y += speedY;
 
     }
-    void moveLeft(){
+
+    void moveLeft() {
         horizontalPressed = true;
         directionRight = false;
 
     }
-    void moveRight(){
+
+    void moveRight() {
         horizontalPressed = true;
         directionRight = true;
     }
-    void stopMoveHorizontal(){
+
+    void stopMoveHorizontal() {
         horizontalPressed = false;
 
     }
-    void moveUp(){
+
+    void moveUp() {
         verticalPressed = true;
         directionUp = true;
 
     }
-    void moveDown(){
+
+    void moveDown() {
         verticalPressed = true;
         directionUp = false;
     }
-    void stopMoveVertical(){
+
+    void stopMoveVertical() {
         verticalPressed = false;
     }
 
-    void calculatedx(double dt){
-        if (horizontalPressed){
-            if (Math.abs(speedx)<maximumhorizontalacceleration){
-                if (directionRight){
-                    speedx+=horizontalacceleration*dt;
-                    if (speedx > maximumhorizontalacceleration) {
-                        speedx = maximumhorizontalacceleration;
+    void calculatedx(double dt) {
+        if (horizontalPressed) {
+            if (Math.abs(speedX) < maximumAcceleration) {
+                if (directionRight) {
+                    speedX += acceleration * dt;
+                    if (speedX > maximumAcceleration) {
+                        speedX = maximumAcceleration;
                     }
                 } else {
-                    speedx-=horizontalacceleration*dt;
-                    if (Math.abs(speedx) > maximumhorizontalacceleration) {
-                        speedx = -maximumhorizontalacceleration;
+                    speedX -= acceleration * dt;
+                    if (Math.abs(speedX) > maximumAcceleration) {
+                        speedX = -maximumAcceleration;
                     }
                 }
             }
         } else {
-            if (speedx > 0) {
-                speedx -= horizontalacceleration * dt;
-                if (speedx < 0) {
-                    speedx = 0;
+            if (speedX > 0) {
+                speedX -= acceleration * dt;
+                if (speedX < 0) {
+                    speedX = 0;
                 }
-            }
-            else if (speedx < 0){
-                speedx+=horizontalacceleration*dt;
-                if (speedx > 0) {
-                    speedx = 0;
+            } else if (speedX < 0) {
+                speedX += acceleration * dt;
+                if (speedX > 0) {
+                    speedX = 0;
                 }
             }
 
         }
     }
-    void calculatedy(double dt){
-        if (verticalPressed){
-            if (Math.abs(speedy)<maximumhorizontalacceleration) {
+
+    void calculatedy(double dt) {
+        if (verticalPressed) {
+            if (Math.abs(speedY) < maximumAcceleration) {
                 if (directionUp) {
-                    speedy -= horizontalacceleration * dt;
+                    speedY -= acceleration * dt;
                 } else {
-                    speedy += horizontalacceleration * dt;
+                    speedY += acceleration * dt;
                 }
             }
         } else {
-            if (speedy > 0) {
-                speedy -= horizontalacceleration * dt;
-                if (speedy < 0) {
-                    speedy = 0;
+            if (speedY > 0) {
+                speedY -= acceleration * dt;
+                if (speedY < 0) {
+                    speedY = 0;
                 }
-            }
-            else if (speedy < 0){
-                speedy+=horizontalacceleration*dt;
-                if (speedy > 0) {
-                    speedy = 0;
+            } else if (speedY < 0) {
+                speedY += acceleration * dt;
+                if (speedY > 0) {
+                    speedY = 0;
                 }
             }
 
@@ -127,29 +133,28 @@ public class Player {
         calculatedy(dt);
     }
 
-    void checkCollision(double screenwidth, double screenheight){
-            if (y+height > screenheight){
-                y = screenheight-height;
-                speedy = 0;
-            } else if (y < 0) {
-                y=0;
-                speedy = 0;
-            }
-
+    void checkCollision(double screenWidth, double screenHeight) {
+        if (y + height > screenHeight) {
+            y = screenHeight - height;
+            speedY = 0;
+        } else if (y < 0) {
+            y = 0;
+            speedY = 0;
+        }
 
 
     }
 
-    void update(double dt,double screenwidth, double screenheight) {
+    void update(double dt, double screenWidth, double screenheight) {
         physicsCalculate(dt);
-        checkCollision(screenwidth,screenheight);
+        checkCollision(screenWidth, screenheight);
         movePlayer();
 
     }
 
-    void draw(GraphicsContext context){
+    void draw(GraphicsContext context) {
 
-        context.fillRect(x,y, width, height);
+        context.fillRect(x, y, width, height);
     }
 
 
