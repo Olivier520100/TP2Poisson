@@ -21,7 +21,7 @@ public class Camera {
 //        for (Ship ship : ships) {
 //            ship.draw(context);
 //        }
-        player.draw(context, x, y);
+        player.draw(context);
 
     }
 

@@ -73,17 +73,13 @@ public class Player extends Ship{
 
     void checkCollision(double screenwidth, double screenheight){
             if (x+width > screenwidth){
-                dx = 0;
-                x=screenwidth-width;
+                speedx = 0;
             } else if (x < 0) {
-                dx = 0;
-                x=0;
+                speedx = 0;
             } else if (y+height > screenheight){
-                dy = 0;
-                y=screenheight-height;
+                speedy = 0;
             } else if (y < 0) {
-                dy = 0;
-                y=screenheight-height;
+                speedy = 0;
             }
 
     }
