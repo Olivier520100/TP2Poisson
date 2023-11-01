@@ -18,9 +18,7 @@ public class Camera {
 
     public void Draw(GraphicsContext context, Player player){
 
-//        for (Ship ship : ships) {
-//            ship.draw(context);
-//        }
+
         player.draw(context);
 
     }

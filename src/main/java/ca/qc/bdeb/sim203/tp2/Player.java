@@ -1,10 +1,9 @@
 package ca.qc.bdeb.sim203.tp2;
 
-import javafx.geometry.VerticalDirection;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Player extends Ship{
+public class Player {
 
 
     double x;
@@ -63,7 +62,6 @@ public class Player extends Ship{
     }
     void stopMoveVertical(){
         verticalPressed = false;
-
     }
 
     void calculatedx(double dt){
@@ -130,21 +128,23 @@ public class Player extends Ship{
     }
 
     void checkCollision(double screenwidth, double screenheight){
-            if (x+width > screenwidth){
-                speedx = 0;
-            } else if (x < 0) {
-                speedx = 0;
-            } else if (y+height > screenheight){
+            if (y+height > screenheight){
+                y = screenheight-height;
                 speedy = 0;
             } else if (y < 0) {
+                y=0;
                 speedy = 0;
             }
+
+
 
     }
 
     void update(double dt,double screenwidth, double screenheight) {
         physicsCalculate(dt);
+        checkCollision(screenwidth,screenheight);
         movePlayer();
+
     }
 
     void draw(GraphicsContext context){
