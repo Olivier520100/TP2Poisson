@@ -42,37 +42,32 @@ public class MainJavaFX extends Application {
         root.getChildren().add(canvas);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        Player p = new Player(50,50,50,50);
-
+        Game game = new Game(w,h);
 
         scene.setOnKeyPressed(e->{
 
             if (e.getCode()==KeyCode.RIGHT){
-                p.moveRight();
+                game.rightPress();
             } else if (e.getCode()==KeyCode.LEFT) {
-                p.moveLeft();
+                game.leftPress();
             } else if (e.getCode()==KeyCode.UP){
-                p.moveUp();
+                game.upPress();
             } else if (e.getCode()==KeyCode.DOWN){
-                p.moveDown();
+                game.downPress();
             }
 
         });
         scene.setOnKeyReleased(e->{
 
-            if (e.getCode()==KeyCode.RIGHT){
-                p.stopMoveHorizontal();
-            } else if (e.getCode()==KeyCode.LEFT) {
-                p.stopMoveHorizontal();
-            } else if (e.getCode()==KeyCode.UP){
-                p.stopMoveVertical();
-            } else if (e.getCode()==KeyCode.DOWN){
-                p.stopMoveVertical();
+            if (e.getCode()==KeyCode.RIGHT || e.getCode()==KeyCode.LEFT){
+                game.horizontalRelease();
+            } else if (e.getCode()==KeyCode.UP || e.getCode()==KeyCode.DOWN){
+                game.verticalRelease();
             }
 
 
         });
-        p.draw(context);
+        game.drawGame(context);
         AnimationTimer tm = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -82,8 +77,8 @@ public class MainJavaFX extends Application {
                 }
                 double dt = (now - lasttime) * 1e-9;
                 context.clearRect(0,0,w,h);
-                p.update(dt, w, h);
-                p.draw(context);
+                game.updateGame(dt, w, h);
+                game.drawGame(context);
 
                 lasttime = now;
             }

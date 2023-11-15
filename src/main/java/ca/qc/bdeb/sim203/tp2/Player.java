@@ -14,8 +14,8 @@ public class Player {
 
     double speedX = 0;
     double speedY = 0;
-    final double acceleration = 100;
-    final double maximumAcceleration = 30;
+    final double acceleration = 60;
+    final double maximumAcceleration = 10;
 
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
@@ -145,17 +145,23 @@ public class Player {
 
     }
 
-    void update(double dt, double screenWidth, double screenheight) {
+    void update(double dt, double screenWidth, double screenheight, Camera camera) {
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight);
         movePlayer();
+        moveCamera(camera);
 
     }
 
-    void draw(GraphicsContext context) {
-
-        context.fillRect(x, y, width, height);
+    void draw(GraphicsContext context, Camera camera) {
+        System.out.println("Position x: " + x);
+        System.out.println("Position y: " + y);
+        context.fillRect(x - camera.getX(), y, width, height);
     }
-
+    void moveCamera(Camera camera){
+        if (((x - camera.getX()) >= camera.getWidth()/5)){
+            camera.setX(camera.getX()+speedX);
+        }
+    }
 
 }
