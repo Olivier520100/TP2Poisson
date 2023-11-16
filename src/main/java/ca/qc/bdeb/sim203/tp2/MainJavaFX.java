@@ -9,9 +9,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class MainJavaFX extends Application {
 
     long lasttime = 0;
@@ -32,7 +29,7 @@ public class MainJavaFX extends Application {
         root.getChildren().add(canvas);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        Game game = new Game(w,h);
+        Level game = new Level(w,h,1);
 
         scene.setOnKeyPressed(e->{
 

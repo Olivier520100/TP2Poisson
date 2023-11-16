@@ -1,12 +1,29 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class GameObject {
 
 
     double x;
     double y;
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
 
     double height;
     double width;
@@ -20,6 +37,8 @@ public class GameObject {
     }
 
     void draw(GraphicsContext context, Camera camera) {
+        context.setFill((Color.BLUE));
+
         context.fillRect(x - camera.getX(), y, width, height);
     }
 

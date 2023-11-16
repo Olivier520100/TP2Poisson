@@ -13,7 +13,7 @@ public class Camera {
         this.x = x;
     }
 
-    public Camera(double x, double y, double height, double width) {
+    public Camera(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.height = height;

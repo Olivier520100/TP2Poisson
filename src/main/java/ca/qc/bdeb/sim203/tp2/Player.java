@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 
 public class Player extends Actor{
@@ -11,9 +12,12 @@ public class Player extends Actor{
     boolean directionRight = false;
     boolean directionUp = false;
 
+    double invisibilitytimer = 0;
+    final double invisibilityconst = 2;
 
     public Player(double x, double y, double width, double height){
         super(x, y, width, height);
+        health = 5;
 
     }
 
@@ -51,16 +55,16 @@ public class Player extends Actor{
     @Override
     void calculatedx(double dt) {
         if (horizontalPressed) {
-            if (Math.abs(speedX) < maximumAcceleration) {
+            if (Math.abs(speedX) < maximumSpeed) {
                 if (directionRight) {
                     speedX += acceleration * dt;
-                    if (speedX > maximumAcceleration) {
-                        speedX = maximumAcceleration;
+                    if (speedX > maximumSpeed) {
+                        speedX = maximumSpeed;
                     }
                 } else {
                     speedX -= acceleration * dt;
-                    if (Math.abs(speedX) > maximumAcceleration) {
-                        speedX = -maximumAcceleration;
+                    if (Math.abs(speedX) > maximumSpeed) {
+                        speedX = -maximumSpeed;
                     }
                 }
             }
@@ -82,7 +86,7 @@ public class Player extends Actor{
     @Override
     void calculatedy(double dt) {
         if (verticalPressed) {
-            if (Math.abs(speedY) < maximumAcceleration) {
+            if (Math.abs(speedY) < maximumSpeed) {
                 if (directionUp) {
                     speedY -= acceleration * dt;
                 } else {
@@ -105,7 +109,7 @@ public class Player extends Actor{
         }
     }
     @Override
-    void checkCollision(double screenWidth, double screenHeight, Camera camera) {
+    public void checkCollision(double screenWidth, double screenHeight, Camera camera) {
         if (y + height > screenHeight) {
             y = screenHeight - height;
             speedY = 0;
@@ -121,20 +125,36 @@ public class Player extends Actor{
     }
     @Override
     void update(double dt, double screenWidth, double screenheight, Camera camera) {
+        invisibilitytimer-=dt;
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);
-        moveObject();
-        moveCamera(camera);
+        moveObject(dt);
+        moveCamera(camera,dt);
+    }
+    void objectCollision(Enemy enemies[]){
+        boolean hit = false;
+        if (invisibilitytimer < 0) {
+            for (Enemy enemy : enemies) {
+                hit = checkCollisionWithObject(enemy);
+                if (hit) {
+                    invisibilitytimer=invisibilityconst;
+                    health-=1;
+                    System.out.println("Hit");
+                    break;
+                }
+            }
+
+        }
     }
     @Override
     void draw(GraphicsContext context, Camera camera) {
-        System.out.println("Position x: " + x);
-        System.out.println("Position y: " + y);
+        context.setFill((Color.GREEN));
+        context.fillText("Health: " + health, 20,20);
         context.fillRect(x - camera.getX(), y, width, height);
     }
-    void moveCamera(Camera camera){
+    void moveCamera(Camera camera, double dt){
         if (((x - camera.getX()) >= camera.getWidth()/5)){
-            camera.setX(camera.getX()+speedX);
+            camera.setX(camera.getX()+speedX*dt);
         }
     }
 
