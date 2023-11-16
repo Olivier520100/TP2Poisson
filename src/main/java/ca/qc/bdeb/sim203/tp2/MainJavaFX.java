@@ -14,17 +14,7 @@ import java.util.HashMap;
 
 public class MainJavaFX extends Application {
 
-
-    private int height = 750;
-    private int width = 450;
-
-    double currentx = 0;
-    double currenty = 50;
-
     long lasttime = 0;
-
-
-
 
     public static void main(String[] args) {
         launch(args);

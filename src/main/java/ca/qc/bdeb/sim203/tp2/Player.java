@@ -3,19 +3,7 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Player {
-
-
-    double x;
-    double y;
-
-    double height;
-    double width;
-
-    double speedX = 0;
-    double speedY = 0;
-    final double acceleration = 60;
-    final double maximumAcceleration = 10;
+public class Player extends Actor{
 
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
@@ -24,19 +12,8 @@ public class Player {
     boolean directionUp = false;
 
 
-    public Player(double x, double y, double width, double height) {
-        super();
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-
-    }
-
-    void movePlayer() {
-
-        x += speedX;
-        y += speedY;
+    public Player(double x, double y, double width, double height){
+        super(x, y, width, height);
 
     }
 
@@ -71,6 +48,7 @@ public class Player {
         verticalPressed = false;
     }
 
+    @Override
     void calculatedx(double dt) {
         if (horizontalPressed) {
             if (Math.abs(speedX) < maximumAcceleration) {
@@ -101,7 +79,7 @@ public class Player {
 
         }
     }
-
+    @Override
     void calculatedy(double dt) {
         if (verticalPressed) {
             if (Math.abs(speedY) < maximumAcceleration) {
@@ -126,14 +104,8 @@ public class Player {
 
         }
     }
-
-    void physicsCalculate(double dt) {
-
-        calculatedx(dt);
-        calculatedy(dt);
-    }
-
-    void checkCollision(double screenWidth, double screenHeight) {
+    @Override
+    void checkCollision(double screenWidth, double screenHeight, Camera camera) {
         if (y + height > screenHeight) {
             y = screenHeight - height;
             speedY = 0;
@@ -141,18 +113,20 @@ public class Player {
             y = 0;
             speedY = 0;
         }
-
+        if (x < camera.getX()) {
+            x = camera.getX();
+            speedX = 0;
+        }
 
     }
-
+    @Override
     void update(double dt, double screenWidth, double screenheight, Camera camera) {
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight);
-        movePlayer();
+        checkCollision(screenWidth, screenheight, camera);
+        moveObject();
         moveCamera(camera);
-
     }
-
+    @Override
     void draw(GraphicsContext context, Camera camera) {
         System.out.println("Position x: " + x);
         System.out.println("Position y: " + y);
