@@ -131,7 +131,7 @@ public class Player extends Actor{
         moveObject(dt);
         moveCamera(camera,dt);
     }
-    void objectCollision(Enemy enemies[]){
+    void objectCollision(Enemy enemies[],Baril baril){
         boolean hit = false;
         if (invisibilitytimer < 0) {
             for (Enemy enemy : enemies) {
@@ -144,6 +144,9 @@ public class Player extends Actor{
                 }
             }
 
+        }
+        if (!baril.isOuvert()){
+            baril.setOuvert(checkCollisionWithObject(baril));
         }
     }
     @Override

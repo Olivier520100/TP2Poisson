@@ -9,6 +9,8 @@ public class Level {
     Player player;
     Enemy []enemies;
 
+    Baril baril;
+
     int niveau;
     Camera camera;
     GameObject []go = new GameObject[40];
@@ -28,6 +30,7 @@ public class Level {
             go[i] = new GameObject(x, height - 50, 20, 50);
             x += 100;
         }
+        baril = new Baril(width/2,height/2,100,100,height);
     }
 
     public void downPress(){
@@ -55,8 +58,9 @@ public class Level {
             enemyCreation();
         }
         player.update(dt,width,height,camera);
-        player.objectCollision(enemies);
+        player.objectCollision(enemies,baril);
         enemyUpdate(dt,width,height,camera);
+        baril.update(dt,width,height,camera);
     }
     public void drawGame(GraphicsContext context){
 
@@ -66,7 +70,7 @@ public class Level {
         }
         player.draw(context,camera);
         enemyDraw(context,camera);
-
+        baril.draw(context,camera);
     }
     public void enemyUpdate(double dt, double width, double height,Camera camera){
         for (Enemy enemy : enemies) {

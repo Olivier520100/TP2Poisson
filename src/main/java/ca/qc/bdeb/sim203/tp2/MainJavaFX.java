@@ -51,8 +51,6 @@ public class MainJavaFX extends Application {
             } else if (e.getCode()==KeyCode.UP || e.getCode()==KeyCode.DOWN){
                 game.verticalRelease();
             }
-
-
         });
         game.drawGame(context);
         AnimationTimer tm = new AnimationTimer() {
