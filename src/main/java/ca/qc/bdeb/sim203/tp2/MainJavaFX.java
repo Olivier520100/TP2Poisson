@@ -37,10 +37,14 @@ public class MainJavaFX extends Application {
                 game.rightPress();
             } else if (e.getCode()==KeyCode.LEFT) {
                 game.leftPress();
-            } else if (e.getCode()==KeyCode.UP){
+            }
+            if (e.getCode()==KeyCode.UP){
                 game.upPress();
             } else if (e.getCode()==KeyCode.DOWN){
                 game.downPress();
+            }
+            if (e.getCode()==KeyCode.SPACE){
+                game.spacePress();
             }
 
         });
@@ -48,8 +52,12 @@ public class MainJavaFX extends Application {
 
             if (e.getCode()==KeyCode.RIGHT || e.getCode()==KeyCode.LEFT){
                 game.horizontalRelease();
-            } else if (e.getCode()==KeyCode.UP || e.getCode()==KeyCode.DOWN){
+            }
+            if (e.getCode()==KeyCode.UP || e.getCode()==KeyCode.DOWN){
                 game.verticalRelease();
+            }
+            if (e.getCode()==KeyCode.SPACE){
+                game.spaceRelease();
             }
         });
         game.drawGame(context);

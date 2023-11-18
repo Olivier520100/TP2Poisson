@@ -3,6 +3,7 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends Actor{
@@ -21,7 +22,7 @@ public class Enemy extends Actor{
     public void checkCollision(double screenWidth, double screenHeight, Camera camera) {
 
     }
-    @Override
+
     void update(double dt, double screenWidth, double screenheight, Camera camera) {
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);

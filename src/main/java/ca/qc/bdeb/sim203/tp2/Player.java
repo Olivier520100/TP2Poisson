@@ -3,6 +3,8 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 
 public class Player extends Actor{
 
@@ -12,12 +14,20 @@ public class Player extends Actor{
     boolean directionRight = false;
     boolean directionUp = false;
 
+    boolean shootPressed = false;
+
     double invisibilitytimer = 0;
     final double invisibilityconst = 2;
+    double shoottimer = 0;
+    final double shootconst = 0.5;
+
+    ProjectileLauncher projectileLauncher;
+
 
     public Player(double x, double y, double width, double height){
         super(x, y, width, height);
         health = 5;
+        projectileLauncher = new ProjectileLauncher();
 
     }
 
@@ -46,6 +56,13 @@ public class Player extends Actor{
     void moveDown() {
         verticalPressed = true;
         directionUp = false;
+    }
+
+    void shootDown() {
+        shootPressed=true;
+    }
+    void shootRelease() {
+        shootPressed=false;
     }
 
     void stopMoveVertical() {
@@ -123,15 +140,25 @@ public class Player extends Actor{
         }
 
     }
-    @Override
-    void update(double dt, double screenWidth, double screenheight, Camera camera) {
+    void shoot(ArrayList<Projectile> projectiles){
+        if (shootPressed && shoottimer < 0) {
+            projectileLauncher.shoot(x + width, y + height / 4, projectiles);
+            shoottimer = shootconst;
+        }
+    }
+
+    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles, ArrayList<Enemy> enemies, Baril baril) {
         invisibilitytimer-=dt;
+        shoottimer-=dt;
+
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
+        objectCollision(enemies,baril);
+        shoot(projectiles);
         moveCamera(camera,dt);
     }
-    void objectCollision(Enemy enemies[],Baril baril){
+    void objectCollision(ArrayList<Enemy> enemies,Baril baril){
         boolean hit = false;
         if (invisibilitytimer < 0) {
             for (Enemy enemy : enemies) {
@@ -146,7 +173,11 @@ public class Player extends Actor{
 
         }
         if (!baril.isOuvert()){
-            baril.setOuvert(checkCollisionWithObject(baril));
+            if (checkCollisionWithObject(baril)){
+                baril.setOuvert(true);
+                projectileLauncher.setCurrent(baril.getProjectileInside());
+            }
+
         }
     }
     @Override

@@ -3,8 +3,12 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 public class Baril extends MovableObject{
 
+
+    ProjectileType projectileInside;
     boolean ouvert = false;
     double functionOffset;
     double sinCoefficient;
@@ -23,8 +27,18 @@ public class Baril extends MovableObject{
         super(x, y, width, height);
         sinCoefficient=(screenHeight-height)/2;
         functionOffset=(3/(2*PI))*Math.asin((y-sinCoefficient)/sinCoefficient);
+        if ((new Random()).nextInt(0, 2)==0) {
+            projectileInside = ProjectileType.TRIPLE;
+        } else {
+            projectileInside = ProjectileType.TRIPLE;
+        }
 
     }
+
+    public ProjectileType getProjectileInside() {
+        return projectileInside;
+    }
+
     void updateTime(double dt){
         timesincestart+=dt;
     }
