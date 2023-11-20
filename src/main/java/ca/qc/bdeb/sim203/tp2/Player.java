@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 
 public class Player extends Actor{
 
+
+    Image movingImage;
+    Image damagedImage;
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
 
@@ -20,14 +24,18 @@ public class Player extends Actor{
     final double invisibilityconst = 2;
     double shoottimer = 0;
     final double shootconst = 0.5;
+    final int maxHealth = 5;
 
     ProjectileLauncher projectileLauncher;
 
 
-    public Player(double x, double y, double width, double height){
-        super(x, y, width, height);
+    public Player(double x, double y){
+        super(x, y, 102, 90);
         health = 5;
         projectileLauncher = new ProjectileLauncher();
+        baseImage = new Image("./charlotte.png");
+        movingImage = new Image("./charlotte-avant.png");
+        damagedImage = new Image("./charlotte-outch.png");
 
     }
 
@@ -182,9 +190,18 @@ public class Player extends Actor{
     }
     @Override
     void draw(GraphicsContext context, Camera camera) {
+
         context.setFill((Color.GREEN));
         context.fillText("Health: " + health, 20,20);
-        context.fillRect(x - camera.getX(), y, width, height);
+        double displayx = x - camera.getX();
+        if (speedX > 0 && health >= maxHealth) {
+            context.drawImage(movingImage, displayx, y);
+        } else if (health >= maxHealth){
+            context.drawImage(baseImage, displayx, y);
+        } else {
+            context.drawImage(damagedImage,displayx,y);
+        }
+
     }
     void moveCamera(Camera camera, double dt){
         if (((x - camera.getX()) >= camera.getWidth()/5)){

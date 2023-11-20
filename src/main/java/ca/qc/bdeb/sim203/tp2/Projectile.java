@@ -34,10 +34,6 @@ public class Projectile extends MovableObject{
         }
     }
 
-    public boolean isOob() {
-        return oob;
-    }
-
     void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Enemy> enemies) {
 
 

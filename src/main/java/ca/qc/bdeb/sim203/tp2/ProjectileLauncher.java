@@ -3,8 +3,6 @@ package ca.qc.bdeb.sim203.tp2;
 import java.util.ArrayList;
 
 public class ProjectileLauncher {
-
-
     private ProjectileType current;
 
     public ProjectileLauncher() {
@@ -15,13 +13,15 @@ public class ProjectileLauncher {
         this.current = current;
     }
 
-    public void shoot(double x, double y, ArrayList<Projectile> projectiles){
-        if (current==ProjectileType.BASIC) {
-            projectiles.add(new BasicProjectile(x, y));
-        } else if (current==ProjectileType.TRIPLE) {
-            projectiles.add(new TripleProjectile(x, y));
-            projectiles.add(new TripleProjectile(x, y));
-            projectiles.add(new TripleProjectile(x, y));
+    public void shoot(double x, double y, ArrayList<Projectile> projectiles) {
+        switch (current) {
+            case BASIC -> projectiles.add(new BasicProjectile(x, y));
+            case TRIPLE -> {
+                for (int i = 0; i < 3; i++) {
+                    projectiles.add(new TripleProjectile(x, y));
+                }
+            }
+            case MAGNET -> projectiles.add(new MagnetProjectile(x, y));
         }
     }
 }

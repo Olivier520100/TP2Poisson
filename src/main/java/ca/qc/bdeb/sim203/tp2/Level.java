@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,17 +23,13 @@ public class Level {
     double respawntime;
 
     public Level(double width, double height, int niveau) {
-        player = new Player(50,50,50,50);
+        player = new Player(50,50);
         camera = new Camera(0,0,width, height);
         this.niveau = niveau;
         respawntime = 0.75 + 1/(Math.sqrt(niveau));
         enemyCreation();
-        int x = 0;
-        for (int i = 0; i < go.length; i++) {
-            go[i] = new GameObject(x, height - 50, 20, 50);
-            x += 100;
-        }
-        baril = new Baril(width/2,height/2,70,83,height);
+        backgroundElementsCreation(height);
+        baril = new Baril(width/2,height/2, height);
     }
 
     public void downPress(){
@@ -53,7 +50,10 @@ public class Level {
     public void horizontalRelease(){
         player.stopMoveHorizontal();
     }
-    public void spacePress(){ player.shootDown(); }
+    public void spacePress(){
+        player.shootDown();
+        System.out.println("Shoot");
+    }
     public void spaceRelease(){ player.shootRelease(); }
 
     public void updateGame(double dt,double width, double height){
@@ -63,13 +63,13 @@ public class Level {
             enemyCreation();
         }
         player.update(dt,width,height,camera,projectiles,enemies,baril);
-        enemyUpdate(dt,width,height,camera);
+        enemyUpdate(dt,width,height,camera,projectiles);
         baril.update(dt,width,height,camera);
         projectileUpdate(dt,width,height,camera,enemies);
     }
     public void drawGame(GraphicsContext context){
-
-
+        context.setFill((Color.LIGHTBLUE));
+        context.fillRect(0,0,camera.getWidth(), camera.getHeight());
         for (GameObject gameObject : go) {
             gameObject.draw(context, camera);
         }
@@ -78,9 +78,9 @@ public class Level {
         baril.draw(context,camera);
         projectileDraw(context,camera);
     }
-    public void enemyUpdate(double dt, double width, double height, Camera camera){
+    public void enemyUpdate(double dt, double width, double height, Camera camera, ArrayList<Projectile> projectiles){
         for (Enemy enemy : enemies) {
-            enemy.update(dt, width, height, camera);
+            enemy.update(dt, width, height, camera,projectiles);
         }
     }
 
@@ -94,7 +94,7 @@ public class Level {
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
             projectile.update(dt, width, height, camera, enemies);
-            if (projectile.isUsed() || projectile.isOob()) {
+            if (projectile.isUsed()/* || (projectile.isOob()*/) {
                 projectiles.remove(i);
             }
         }
@@ -111,12 +111,22 @@ public class Level {
         Random rand = (new Random());
         int enemycount = rand.nextInt(1,6);
         enemies = new ArrayList<>();
+
         for (int i = 0; i < enemycount; i++) {
             //Make constant for the 50 below please
-            enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(camera.getHeight()/5, 4*camera.getHeight()/5), 50, 50, niveau));
+            double enemyheight = rand.nextDouble(50,120);
+            double enemywidth = enemyheight/120 * 104;
+            enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(camera.getHeight()/5, 4*camera.getHeight()/5), enemyheight, enemywidth, niveau));
         }
     }
 
+    public void backgroundElementsCreation(double height){
+        int x = 0;
+        for (int i = 0; i < go.length; i++) {
+            go[i] = new BackgroundElement(x, height);
+            x += (new Random()).nextInt(50,100)+80;
+        }
+    }
 
 
 }
