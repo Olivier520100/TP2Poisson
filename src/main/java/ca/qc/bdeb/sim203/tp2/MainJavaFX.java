@@ -20,8 +20,8 @@ public class MainJavaFX extends Application {
     @Override
     public void start(Stage primaryStage)throws Exception {
 
-        int h = 640;
-        int w = 960;
+        int h = 520;
+        int w = 900;
 
         Pane root = new Pane();
         Scene scene = new Scene(root, w, h);
@@ -29,7 +29,7 @@ public class MainJavaFX extends Application {
         root.getChildren().add(canvas);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        Level game = new Level(w,h,1);
+        Game game = new Game(w,h);
 
         scene.setOnKeyPressed(e->{
 
@@ -60,7 +60,6 @@ public class MainJavaFX extends Application {
                 game.spaceRelease();
             }
         });
-        game.drawGame(context);
         AnimationTimer tm = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -69,9 +68,7 @@ public class MainJavaFX extends Application {
                     return;
                 }
                 double dt = (now - lasttime) * 1e-9;
-                context.clearRect(0,0,w,h);
-                game.updateGame(dt, w, h);
-                game.drawGame(context);
+                game.update(context,dt);
 
                 lasttime = now;
             }

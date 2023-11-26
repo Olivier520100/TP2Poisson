@@ -24,4 +24,8 @@ public class ProjectileLauncher {
             case MAGNET -> projectiles.add(new MagnetProjectile(x, y));
         }
     }
+
+    public ProjectileType getCurrent() {
+        return current;
+    }
 }

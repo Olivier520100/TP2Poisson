@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 
-public class Player extends Actor{
+public class Player extends Actor {
 
 
     Image movingImage;
@@ -24,14 +24,18 @@ public class Player extends Actor{
     final double invisibilityconst = 2;
     double shoottimer = 0;
     final double shootconst = 0.5;
-    final int maxHealth = 5;
+    final int maxHealth = 4;
 
     ProjectileLauncher projectileLauncher;
+    int health;
 
+    public int getHealth() {
+        return health;
+    }
 
-    public Player(double x, double y){
+    public Player(double x, double y) {
         super(x, y, 102, 90);
-        health = 5;
+        health = maxHealth;
         projectileLauncher = new ProjectileLauncher();
         baseImage = new Image("./charlotte.png");
         movingImage = new Image("./charlotte-avant.png");
@@ -43,6 +47,9 @@ public class Player extends Actor{
         horizontalPressed = true;
         directionRight = false;
 
+    }
+    ProjectileType getPT(){
+        return projectileLauncher.getCurrent();
     }
 
     void moveRight() {
@@ -67,10 +74,11 @@ public class Player extends Actor{
     }
 
     void shootDown() {
-        shootPressed=true;
+        shootPressed = true;
     }
+
     void shootRelease() {
-        shootPressed=false;
+        shootPressed = false;
     }
 
     void stopMoveVertical() {
@@ -108,6 +116,7 @@ public class Player extends Actor{
 
         }
     }
+
     @Override
     void calculatedy(double dt) {
         if (verticalPressed) {
@@ -133,6 +142,7 @@ public class Player extends Actor{
 
         }
     }
+
     @Override
     public void checkCollision(double screenWidth, double screenHeight, Camera camera) {
         if (y + height > screenHeight) {
@@ -148,65 +158,74 @@ public class Player extends Actor{
         }
 
     }
-    void shoot(ArrayList<Projectile> projectiles){
+
+    void shoot(ArrayList<Projectile> projectiles) {
         if (shootPressed && shoottimer < 0) {
             projectileLauncher.shoot(x + width, y + height / 4, projectiles);
             shoottimer = shootconst;
         }
     }
 
-    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles, ArrayList<Enemy> enemies, Baril baril) {
-        invisibilitytimer-=dt;
-        shoottimer-=dt;
+    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles,
+                ArrayList<Enemy> enemies, Baril baril, double levelength) {
+        invisibilitytimer -= dt;
+        shoottimer -= dt;
 
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
-        objectCollision(enemies,baril);
+        objectCollision(enemies, baril);
         shoot(projectiles);
-        moveCamera(camera,dt);
+        moveCamera(camera, dt, levelength);
     }
-    void objectCollision(ArrayList<Enemy> enemies,Baril baril){
+
+    void objectCollision(ArrayList<Enemy> enemies, Baril baril) {
         boolean hit = false;
         if (invisibilitytimer < 0) {
             for (Enemy enemy : enemies) {
                 hit = checkCollisionWithObject(enemy);
                 if (hit) {
-                    invisibilitytimer=invisibilityconst;
-                    health-=1;
+                    invisibilitytimer = invisibilityconst;
+                    health -= 1;
                     System.out.println("Hit");
                     break;
                 }
             }
 
         }
-        if (!baril.isOuvert()){
-            if (checkCollisionWithObject(baril)){
+        if (!baril.isOuvert()) {
+            if (checkCollisionWithObject(baril)) {
                 baril.setOuvert(true);
                 projectileLauncher.setCurrent(baril.getProjectileInside());
             }
 
         }
     }
+
     @Override
     void draw(GraphicsContext context, Camera camera) {
 
         context.setFill((Color.GREEN));
-        context.fillText("Health: " + health, 20,20);
+
         double displayx = x - camera.getX();
         if (speedX > 0 && health >= maxHealth) {
             context.drawImage(movingImage, displayx, y);
-        } else if (health >= maxHealth){
+        } else if (health >= maxHealth) {
             context.drawImage(baseImage, displayx, y);
         } else {
-            context.drawImage(damagedImage,displayx,y);
+            context.drawImage(damagedImage, displayx, y);
         }
 
     }
-    void moveCamera(Camera camera, double dt){
-        if (((x - camera.getX()) >= camera.getWidth()/5)){
-            camera.setX(camera.getX()+speedX*dt);
+
+    void moveCamera(Camera camera, double dt, double levellength) {
+        if ((camera.getX() + camera.getWidth()) < levellength) {
+            if (((x - camera.getX()) >= camera.getWidth() / 5)) {
+                camera.setX(camera.getX() + speedX * dt);
+            }
         }
     }
-
+    boolean isDead(){
+        return (health <= 0);
+    }
 }

@@ -8,6 +8,7 @@ import java.util.Random;
 
 public class BackgroundElement extends GameObject{
 
+
     double hue;
     double saturation;
     double brightness;
