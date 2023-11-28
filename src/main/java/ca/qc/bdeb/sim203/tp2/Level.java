@@ -35,7 +35,7 @@ public class Level {
         this.niveau = niveau;
         respawntime = 0.75 + 1/(Math.sqrt(niveau));
         levellength = 8 * width;
-        double placementbaril = ((new Random()).nextDouble(20,100)/100)*levellength;
+        double placementbaril = ((new Random()).nextDouble(20,60)/100)*levellength;
         baril = new Baril(placementbaril,height/2, height);
         enemyCreation();
         backgroundElementsCreation(height);
@@ -68,11 +68,13 @@ public class Level {
 
     public void updateGame(double dt,double width, double height){
         displaytime-=dt;
-        levelEndCheck();
-        levelDeadCheck();
-
 
         if (!levelEnd && !levelDead) {
+            levelEndCheck();
+            levelDeadCheck();
+            if (levelDead){
+                displaytime = 4;
+            }
             lastspawn += dt;
             if (lastspawn > respawntime) {
                 lastspawn = 0;
@@ -86,8 +88,11 @@ public class Level {
             topbar.setCurrent(player.getPT());
         }
         if (levelDead){
-            displaytime = 4;
+            if (displaytime<0){
+                levelEnd=true;
+            }
         }
+
 
     }
     public void drawGame(GraphicsContext context){
@@ -109,8 +114,6 @@ public class Level {
         if (levelDead){
             if (displaytime > 0){
                 levelDeadText.draw(context, camera,player.getX());
-            } else {
-                levelEnd = true;
             }
         } else {
             if (displaytime > 0){
@@ -180,4 +183,6 @@ public class Level {
     public boolean isLevelDead(){
         return levelDead;
     }
+
+
 }

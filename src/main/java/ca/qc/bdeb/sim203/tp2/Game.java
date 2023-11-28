@@ -51,9 +51,14 @@ public class Game {
                 level.updateGame(dt, width, height);
                 level.drawGame(context);
             } else {
-                levelNumber += 1;
-                level = new Level(width, height, levelNumber);
+                if (!level.isLevelDead()) {
+                    levelNumber += 1;
+                    level = new Level(width, height, levelNumber);
+                } else {
+                    inGame = false;
+                }
             }
+
         } else {
             menu.draw(context);
             inGame = menu.isToGame();

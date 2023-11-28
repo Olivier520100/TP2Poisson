@@ -26,6 +26,8 @@ public class Player extends Actor {
     final double shootconst = 0.5;
     final int maxHealth = 4;
 
+    boolean flicker = false;
+    int flickercount = 0;
     ProjectileLauncher projectileLauncher;
     int health;
 
@@ -205,15 +207,21 @@ public class Player extends Actor {
     @Override
     void draw(GraphicsContext context, Camera camera) {
 
-        context.setFill((Color.GREEN));
 
         double displayx = x - camera.getX();
-        if (speedX > 0 && health >= maxHealth) {
+        if (speedX > 0 && invisibilitytimer < 0) {
             context.drawImage(movingImage, displayx, y);
-        } else if (health >= maxHealth) {
-            context.drawImage(baseImage, displayx, y);
+        } else if (invisibilitytimer>0) {
+            if (flicker){
+                context.drawImage(damagedImage, displayx, y);
+            }
+            flickercount+=1;
+            if (flickercount>15) {
+                flicker = !flicker;
+                flickercount=0;
+            }
         } else {
-            context.drawImage(damagedImage, displayx, y);
+            context.drawImage(baseImage, displayx, y);
         }
 
     }
