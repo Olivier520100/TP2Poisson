@@ -55,6 +55,7 @@ public class Game {
                     levelNumber += 1;
                     level = new Level(width, height, levelNumber);
                 } else {
+                    menu = new Menu();
                     inGame = false;
                 }
             }

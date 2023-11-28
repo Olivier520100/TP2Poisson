@@ -108,9 +108,7 @@ public class Level {
         projectileDraw(context,camera);
         topbar.draw(context);
 
-        if (displaytime > 0){
-            levelStart.draw(context, camera,0);
-        }
+
         if (levelDead){
             if (displaytime > 0){
                 levelDeadText.draw(context, camera,player.getX());
