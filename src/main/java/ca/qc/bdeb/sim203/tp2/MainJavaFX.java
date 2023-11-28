@@ -20,7 +20,7 @@ public class MainJavaFX extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         Pane root = new Pane();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);

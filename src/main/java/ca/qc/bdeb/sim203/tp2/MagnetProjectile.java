@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-public class MagnetProjectile extends Projectile  implements Attractable{
+public class MagnetProjectile extends Projectile {
 
     double forceX = 0;
     double forceY = 0;
@@ -15,8 +15,9 @@ public class MagnetProjectile extends Projectile  implements Attractable{
         speedX = 300;
         baseImage = new Image("./sardines.png");
     }
-    void calculateForce(Enemy enemy){
-        if (x<enemy.getX()) {
+
+    void calculateForce(Enemy enemy) {
+        if (x < enemy.getX()) {
             double dx = enemy.getX() - x;
             double dy = enemy.getY() - y;
             double distanceSquared = dx * dx + dy * dy;
@@ -26,20 +27,24 @@ public class MagnetProjectile extends Projectile  implements Attractable{
             forceY += forceTotal * (dy / distance);
         }
     }
+
     @Override
     void calculatedx(double dt) {
-        speedX += dt*forceX;
+        speedX += dt * forceX;
     }
+
     @Override
     void calculatedy(double dt) {
-        speedY += dt*forceY;
+        speedY += dt * forceY;
     }
+
     void sumForces(ArrayList<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             calculateForce(enemy);
         }
     }
-    void resetForces(){
+
+    void resetForces() {
         forceY = 0;
         forceX = 0;
     }

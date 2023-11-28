@@ -2,7 +2,6 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class TripleProjectile extends Projectile {

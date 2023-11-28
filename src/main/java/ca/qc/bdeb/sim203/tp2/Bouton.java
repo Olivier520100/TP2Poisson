@@ -15,7 +15,7 @@ public class Bouton {
     boolean active;
 
     Image buttonimage;
-    
+
 
     public Bouton(boolean active, String buttonImagePath, double x, double y) {
         this.active = active;
@@ -23,17 +23,16 @@ public class Bouton {
         this.x = x;
         this.y = y;
     }
-    public void draw(GraphicsContext context){
-        context.drawImage(buttonimage,x,y);
+
+    public void draw(GraphicsContext context) {
+        context.drawImage(buttonimage, x, y);
 
     }
 
-    public boolean clicked(double clickx, double clicky){
+    public boolean clicked(double clickx, double clicky) {
         return clickx > x && clickx < x + width && clicky > y && clicky < y + height;
 
     }
-
-
 
 
 }

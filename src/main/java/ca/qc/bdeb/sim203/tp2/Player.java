@@ -2,7 +2,6 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -50,7 +49,8 @@ public class Player extends Actor {
         directionRight = false;
 
     }
-    ProjectileType getPT(){
+
+    ProjectileType getPT() {
         return projectileLauncher.getCurrent();
     }
 
@@ -211,14 +211,14 @@ public class Player extends Actor {
         double displayx = x - camera.getX();
         if (speedX > 0 && invisibilitytimer < 0) {
             context.drawImage(movingImage, displayx, y);
-        } else if (invisibilitytimer>0) {
-            if (flicker){
+        } else if (invisibilitytimer > 0) {
+            if (flicker) {
                 context.drawImage(damagedImage, displayx, y);
             }
-            flickercount+=1;
-            if (flickercount>15) {
+            flickercount += 1;
+            if (flickercount > 15) {
                 flicker = !flicker;
-                flickercount=0;
+                flickercount = 0;
             }
         } else {
             context.drawImage(baseImage, displayx, y);
@@ -233,7 +233,8 @@ public class Player extends Actor {
             }
         }
     }
-    boolean isDead(){
+
+    boolean isDead() {
         return (health <= 0);
     }
 }

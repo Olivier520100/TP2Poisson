@@ -2,7 +2,7 @@ package ca.qc.bdeb.sim203.tp2;
 
 import java.util.ArrayList;
 
-public class Projectile extends MovableObject{
+public class Projectile extends MovableObject {
 
     boolean used = false;
     boolean oob = false;
@@ -15,21 +15,22 @@ public class Projectile extends MovableObject{
         return used;
     }
 
-    void objectCollision(ArrayList<Enemy> enemies){
-            for (int i = enemies.size() - 1; i >= 0; i--) {
-                Enemy enemy = enemies.get(i);
-                if (checkCollisionWithObject(enemy)) {
-                    enemies.remove(i);
-                    System.out.println("Hit enemy");
-                    used = true;
-                    break;
-                }
-
+    void objectCollision(ArrayList<Enemy> enemies) {
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            Enemy enemy = enemies.get(i);
+            if (checkCollisionWithObject(enemy)) {
+                enemies.remove(i);
+                System.out.println("Hit enemy");
+                used = true;
+                break;
             }
 
+        }
+
     }
-    void outOfBounds(Camera camera){
-        if (x > camera.getX()+camera.getWidth()){
+
+    void outOfBounds(Camera camera) {
+        if (x > camera.getX() + camera.getWidth()) {
             oob = true;
         }
     }

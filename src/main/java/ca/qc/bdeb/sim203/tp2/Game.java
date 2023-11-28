@@ -11,39 +11,49 @@ public class Game {
     Menu menu = new Menu();
 
 
-    public void downPress(){
+    public void downPress() {
         level.downPress();
     }
-    public void upPress(){
+
+    public void upPress() {
         level.upPress();
     }
-    public void leftPress(){
+
+    public void leftPress() {
         level.leftPress();
     }
-    public void rightPress(){
+
+    public void rightPress() {
         level.rightPress();
     }
-    public void verticalRelease(){
+
+    public void verticalRelease() {
         level.verticalRelease();
     }
-    public void horizontalRelease(){
+
+    public void horizontalRelease() {
         level.horizontalRelease();
     }
-    public void spacePress(){
+
+    public void spacePress() {
         level.spacePress();
     }
-    public void spaceRelease(){ level.spaceRelease(); }
 
-    public void screenClick(double x, double y){
-        menu.windowClick(x,y);
+    public void spaceRelease() {
+        level.spaceRelease();
+    }
+
+    public void screenClick(double x, double y) {
+        menu.windowClick(x, y);
     }
 
     public Game(double width, double height) {
         this.width = width;
         this.height = height;
-        level = new Level(width,height, levelNumber);
+        level = new Level(width, height, levelNumber);
     }
-    void update(GraphicsContext context, double dt){
+
+    void update(GraphicsContext context, double dt) {
 
         if (inGame) {
             if (!level.isLevelEnd()) {

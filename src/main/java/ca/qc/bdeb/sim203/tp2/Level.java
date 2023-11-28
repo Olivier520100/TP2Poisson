@@ -30,49 +30,58 @@ public class Level {
     boolean levelDead = false;
 
     public Level(double width, double height, int niveau) {
-        player = new Player(50,50);
-        camera = new Camera(0,0,width, height);
+        player = new Player(50, 50);
+        camera = new Camera(0, 0, width, height);
         this.niveau = niveau;
-        respawntime = 0.75 + 1/(Math.sqrt(niveau));
+        respawntime = 0.75 + 1 / (Math.sqrt(niveau));
         levellength = 8 * width;
-        double placementbaril = ((new Random()).nextDouble(20,60)/100)*levellength;
-        baril = new Baril(placementbaril,height/2, height);
+        double placementbaril = ((new Random()).nextDouble(20, 60) / 100) * levellength;
+        baril = new Baril(placementbaril, height / 2, height);
         enemyCreation();
         backgroundElementsCreation(height);
-        levelStart = new MainText("Niveau " + niveau, width,height);
-        levelDeadText = new MainText("Mort", width,height);
+        levelStart = new MainText("Niveau " + niveau, width, height);
+        levelDeadText = new MainText("Mort", width, height);
     }
 
-    public void downPress(){
+    public void downPress() {
         player.moveDown();
     }
-    public void upPress(){
+
+    public void upPress() {
         player.moveUp();
     }
-    public void leftPress(){
+
+    public void leftPress() {
         player.moveLeft();
     }
-    public void rightPress(){
+
+    public void rightPress() {
         player.moveRight();
     }
-    public void verticalRelease(){
+
+    public void verticalRelease() {
         player.stopMoveVertical();
     }
-    public void horizontalRelease(){
+
+    public void horizontalRelease() {
         player.stopMoveHorizontal();
     }
-    public void spacePress(){
+
+    public void spacePress() {
         player.shootDown();
     }
-    public void spaceRelease(){ player.shootRelease(); }
 
-    public void updateGame(double dt,double width, double height){
-        displaytime-=dt;
+    public void spaceRelease() {
+        player.shootRelease();
+    }
+
+    public void updateGame(double dt, double width, double height) {
+        displaytime -= dt;
 
         if (!levelEnd && !levelDead) {
             levelEndCheck();
             levelDeadCheck();
-            if (levelDead){
+            if (levelDead) {
                 displaytime = 4;
             }
             lastspawn += dt;
@@ -80,58 +89,60 @@ public class Level {
                 lastspawn = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera, projectiles, enemies, baril,levellength);
+            player.update(dt, width, height, camera, projectiles, enemies, baril, levellength);
             enemyUpdate(dt, width, height, camera, projectiles);
             baril.update(dt, width, height, camera);
             projectileUpdate(dt, width, height, camera, enemies);
-            topbar.setHeartsleft(player.getHealth());
+            topbar.setHeartsLeft(player.getHealth());
             topbar.setCurrent(player.getPT());
         }
-        if (levelDead){
-            if (displaytime<0){
-                levelEnd=true;
+        if (levelDead) {
+            if (displaytime < 0) {
+                levelEnd = true;
             }
         }
 
 
     }
-    public void drawGame(GraphicsContext context){
+
+    public void drawGame(GraphicsContext context) {
 
         context.setFill(new Color(0x2a / 255.0, 0x7f / 255.0, 0xff / 255.0, 1.0));
-        context.fillRect(0,0,camera.getWidth(), camera.getHeight());
+        context.fillRect(0, 0, camera.getWidth(), camera.getHeight());
         for (BackgroundElement backgroundElement : backgroundElements) {
             backgroundElement.draw(context, camera);
         }
-        player.draw(context,camera);
-        enemyDraw(context,camera);
-        baril.draw(context,camera);
-        projectileDraw(context,camera);
+        player.draw(context, camera);
+        enemyDraw(context, camera);
+        baril.draw(context, camera);
+        projectileDraw(context, camera);
         topbar.draw(context);
 
 
-        if (levelDead){
-            if (displaytime > 0){
-                levelDeadText.draw(context, camera,player.getX());
+        if (levelDead) {
+            if (displaytime > 0) {
+                levelDeadText.draw(context, camera, player.getX());
             }
         } else {
-            if (displaytime > 0){
-                levelStart.draw(context, camera,0);
+            if (displaytime > 0) {
+                levelStart.draw(context, camera, 0);
             }
-        }
-    }
-    public void enemyUpdate(double dt, double width, double height, Camera camera, ArrayList<Projectile> projectiles){
-        for (Enemy enemy : enemies) {
-            enemy.update(dt, width, height, camera,projectiles);
         }
     }
 
-    public void enemyDraw(GraphicsContext context, Camera camera){
+    public void enemyUpdate(double dt, double width, double height, Camera camera, ArrayList<Projectile> projectiles) {
+        for (Enemy enemy : enemies) {
+            enemy.update(dt, width, height, camera, projectiles);
+        }
+    }
+
+    public void enemyDraw(GraphicsContext context, Camera camera) {
         for (Enemy enemy : enemies) {
             enemy.draw(context, camera);
         }
     }
 
-    public void projectileUpdate(double dt, double width, double height, Camera camera, ArrayList<Enemy> enemies){
+    public void projectileUpdate(double dt, double width, double height, Camera camera, ArrayList<Enemy> enemies) {
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
             projectile.update(dt, width, height, camera, enemies);
@@ -141,44 +152,48 @@ public class Level {
         }
     }
 
-    public void projectileDraw(GraphicsContext context, Camera camera){
+    public void projectileDraw(GraphicsContext context, Camera camera) {
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
         }
     }
 
 
-    public void enemyCreation(){
+    public void enemyCreation() {
         Random rand = (new Random());
-        int enemycount = rand.nextInt(1,6);
+        int enemycount = rand.nextInt(1, 6);
         enemies = new ArrayList<>();
 
         for (int i = 0; i < enemycount; i++) {
             //Make constant for the 50 below please
-            double enemyheight = rand.nextDouble(50,120);
-            double enemywidth = enemyheight/120 * 104;
-            enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(camera.getHeight()/5, 4*camera.getHeight()/5), enemyheight, enemywidth, niveau));
+            double enemyheight = rand.nextDouble(50, 120);
+            double enemywidth = enemyheight / 120 * 104;
+            enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
+                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyheight, enemywidth, niveau));
         }
     }
-    public void levelEndCheck(){
+
+    public void levelEndCheck() {
         levelEnd = (player.getX() > levellength);
     }
-    public void levelDeadCheck(){
+
+    public void levelDeadCheck() {
         levelDead = (player.isDead());
     }
 
-    public void backgroundElementsCreation(double height){
+    public void backgroundElementsCreation(double height) {
         int x = 0;
-        while (x < levellength*9/8) {
+        while (x < levellength * 9 / 8) {
             backgroundElements.add((new BackgroundElement(x, height)));
-            x += (new Random()).nextInt(50,100)+80;
+            x += (new Random()).nextInt(50, 100) + 80;
         }
     }
 
     public boolean isLevelEnd() {
         return levelEnd;
     }
-    public boolean isLevelDead(){
+
+    public boolean isLevelDead() {
         return levelDead;
     }
 

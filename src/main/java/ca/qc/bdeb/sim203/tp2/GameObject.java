@@ -1,8 +1,8 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public class GameObject {
 
@@ -54,7 +54,7 @@ public class GameObject {
 
     void draw(GraphicsContext context, Camera camera) {
         double displayx = x - camera.getX();
-        context.drawImage(baseImage,displayx,y);
+        context.drawImage(baseImage, displayx, y);
     }
 
 }
