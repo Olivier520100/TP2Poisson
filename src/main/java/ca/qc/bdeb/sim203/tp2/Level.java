@@ -97,7 +97,7 @@ public class Level {
     }
     public void drawGame(GraphicsContext context){
 
-        context.setFill((Color.LIGHTBLUE));
+        context.setFill(new Color(0x2a / 255.0, 0x7f / 255.0, 0xff / 255.0, 1.0));
         context.fillRect(0,0,camera.getWidth(), camera.getHeight());
         for (BackgroundElement backgroundElement : backgroundElements) {
             backgroundElement.draw(context, camera);
