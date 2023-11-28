@@ -44,7 +44,9 @@ public class Game {
     }
 
     public void screenClick(double x, double y) {
-        menu.windowClick(x, y);
+        if (!inGame) {
+            menu.windowClick(x, y);
+        }
     }
 
     public Game(double width, double height) {
@@ -67,6 +69,8 @@ public class Game {
                 } else {
                     menu = new Menu();
                     inGame = false;
+                    levelNumber = 1;
+                    level = new Level(width, height, levelNumber);
                 }
             }
 
