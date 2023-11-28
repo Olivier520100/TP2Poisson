@@ -84,7 +84,8 @@ public class Level {
             projectileUpdate(dt, width, height, camera, enemies);
             topbar.setHeartsleft(player.getHealth());
             topbar.setCurrent(player.getPT());
-        } else if (levelDead){
+        }
+        if (levelDead){
             displaytime = 4;
         }
 
@@ -101,14 +102,19 @@ public class Level {
         baril.draw(context,camera);
         projectileDraw(context,camera);
         topbar.draw(context);
+
         if (displaytime > 0){
-            levelStart.draw(context, camera);
+            levelStart.draw(context, camera,0);
         }
         if (levelDead){
             if (displaytime > 0){
-                levelDeadText.draw(context, camera);
+                levelDeadText.draw(context, camera,player.getX());
             } else {
                 levelEnd = true;
+            }
+        } else {
+            if (displaytime > 0){
+                levelStart.draw(context, camera,0);
             }
         }
     }
@@ -157,7 +163,7 @@ public class Level {
         levelEnd = (player.getX() > levellength);
     }
     public void levelDeadCheck(){
-        levelEnd = (player.isDead());
+        levelDead = (player.isDead());
     }
 
     public void backgroundElementsCreation(double height){

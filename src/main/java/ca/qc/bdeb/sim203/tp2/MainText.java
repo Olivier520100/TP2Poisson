@@ -17,10 +17,10 @@ public class MainText {
 
     }
 
-    void draw(GraphicsContext context, Camera camera){
+    void draw(GraphicsContext context, Camera camera, double offset){
         context.setFill(Color.WHITE);
         context.setFont(Font.font(fontheight));
-        context.fillText(text, width/3 - camera.getX(),height/2);
+        context.fillText(text, offset + width/3 - camera.getX(),height/2);
     }
 
 }
