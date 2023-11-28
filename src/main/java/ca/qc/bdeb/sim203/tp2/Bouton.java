@@ -6,19 +6,18 @@ import javafx.scene.image.Image;
 
 public class Bouton {
 
-    boolean pressed = false;
-    int height = 40;
-    int width = 120;      ]
+    double height = 40;
+    double width = 120;
 
-    int x;
-    int y;
+    double x;
+    double y;
 
     boolean active;
 
     Image buttonimage;
     
 
-    public Bouton(boolean active, String buttonImagePath, int x, int y) {
+    public Bouton(boolean active, String buttonImagePath, double x, double y) {
         this.active = active;
         this.buttonimage = new Image(buttonImagePath);
         this.x = x;
@@ -29,14 +28,12 @@ public class Bouton {
 
     }
 
-    public void clickSet(int clickx, int clicky){
-        if (clickx> x && clickx < x+width && clicky > y && clicky < y+height)     {
-            pressed=true;
-        }
+    public boolean clicked(double clickx, double clicky){
+        return clickx > x && clickx < x + width && clicky > y && clicky < y + height;
 
     }
-    public boolean getPressed(){
-        return  pressed;
-    }
+
+
+
 
 }

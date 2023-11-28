@@ -60,6 +60,9 @@ public class MainJavaFX extends Application {
                 game.spaceRelease();
             }
         });
+        scene.setOnMouseClicked(e->{
+            game.screenClick(e.getX(),e.getY());
+        });
         AnimationTimer tm = new AnimationTimer() {
             @Override
             public void handle(long now) {
