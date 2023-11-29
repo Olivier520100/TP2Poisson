@@ -46,8 +46,10 @@ public class Level {
         baril = new Baril(placementBaril, height / 2, height);
         enemyCreation();
         backgroundElementsCreation(height);
-        levelStart = new MainText("Niveau " + levelNumber, width, height);
-        levelDeadText = new MainText("Mort", width, height);
+        levelStart = new MainText("NIVEAU " + levelNumber, width, height);
+        levelDeadText = new MainText("FIN DE PARTIE  ", width, height);
+
+
     }
 
     public void downPress() {
@@ -137,11 +139,12 @@ public class Level {
 
         if (levelDead) {
             if (displayTime > 0) {
-                levelDeadText.draw(context, camera, player.getX());
+                levelDeadText.draw(context, camera, player.getX() - 350,Color.RED);
+
             }
         } else {
             if (displayTime > 0) {
-                levelStart.draw(context, camera, 0);
+                levelStart.draw(context, camera, 0, Color.WHITE);
             }
         }
     }

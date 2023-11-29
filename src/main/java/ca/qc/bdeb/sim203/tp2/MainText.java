@@ -17,8 +17,8 @@ public class MainText {
 
     }
 
-    void draw(GraphicsContext context, Camera camera, double offset) {
-        context.setFill(Color.WHITE);
+    void draw(GraphicsContext context, Camera camera, double offset, Color color) {
+        context.setFill(color);
         context.setFont(Font.font(fontHeight));
         context.fillText(text, offset + width / 3 - camera.getX(), height / 2);
     }
