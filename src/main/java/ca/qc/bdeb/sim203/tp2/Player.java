@@ -39,9 +39,9 @@ public class Player extends Actor {
 
         this.health = health;
         projectileLauncher = new ProjectileLauncher();
-        baseImage = new Image("./charlotte.png");
-        movingImage = new Image("./charlotte-avant.png");
-        damagedImage = new Image("./charlotte-outch.png");
+        baseImage = new Image("charlotte.png");
+        movingImage = new Image("charlotte-avant.png");
+        damagedImage = new Image("charlotte-outch.png");
 
     }
 
