@@ -41,14 +41,11 @@ public class MovableObject extends GameObject {
     }
 
     void physicsCalculate(double dt) {
-
         calculateDx(dt);
         calculateDy(dt);
     }
 
-
-
-    void update(double dt, double screenWidth, double screenheight, Camera camera) {
+    void update(double dt) {
         physicsCalculate(dt);
         moveObject(dt);
     }

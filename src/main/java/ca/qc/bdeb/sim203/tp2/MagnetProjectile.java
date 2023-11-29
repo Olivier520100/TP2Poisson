@@ -60,16 +60,15 @@ public class MagnetProjectile extends Projectile {
         forceY = 0;
         forceX = 0;
     }
-    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Enemy> enemies) {
+    void update(double dt, double screenheight, ArrayList<Enemy> enemies) {
         resetForces();
         sumForces(enemies);
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight, camera);
+        checkCollision(screenheight);
         moveObject(dt);
-        outOfBounds(camera);
     }
 
-    public void checkCollision(double screenWidth, double screenHeight, Camera camera) {
+    public void checkCollision(double screenHeight) {
         if (y + height > screenHeight) {
             y = screenHeight - height;
             speedY = -speedY;
@@ -91,5 +90,6 @@ public class MagnetProjectile extends Projectile {
 
         return value;
     }
+
 }
 

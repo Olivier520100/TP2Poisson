@@ -2,10 +2,10 @@ package ca.qc.bdeb.sim203.tp2;
 
 import java.util.ArrayList;
 
-public class CollisionChecker {
+public class GameObjectHandler {
 
 
-    private CollisionChecker() {}
+    private GameObjectHandler() {}
 
     static void playerEnemy(Player player, ArrayList<Enemy> enemies){
         boolean hit;
@@ -38,12 +38,20 @@ public class CollisionChecker {
                 Enemy enemy = enemies.get(i);
                 if (checkCollisionWithObject(projectile,enemy)) {
                     enemies.remove(i);
-                    System.out.println("Hit enemy");
                 }
-
             }
         }
     }
-
+    static void addProjectiles(Player player,ArrayList<Projectile> projectiles){
+        projectiles.addAll(player.getProjectileLauncher().getProjectilesInside());
+        player.getProjectileLauncher().getProjectilesInside().clear();
+    }
+    /*
+    void outOfBounds(Camera camera) {
+        if (x > camera.getX() + camera.getWidth()) {
+            outOfBounds = true;
+        }
+    }
+    */
 
 }

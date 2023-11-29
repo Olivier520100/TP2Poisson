@@ -167,24 +167,29 @@ public class Player extends Actor {
 
     }
 
-    void shoot(ArrayList<Projectile> projectiles) {
+    void shoot() {
         if (shootPressed && shootTimer < 0) {
-            projectileLauncher.shoot(x + width, y + height / 4, projectiles);
+            projectileLauncher.shoot(x + width, y + height / 4);
             shootTimer = shootConst;
         }
     }
 
-    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles,
-                ArrayList<Enemy> enemies, Baril baril, double levelLength) {
+    public ProjectileLauncher getProjectileLauncher() {
+        return projectileLauncher;
+    }
+
+    void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
         invisibilityTimer -= dt;
         shootTimer -= dt;
 
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
-        shoot(projectiles);
+        checkCollision(screenWidth, screenheight, camera);
+
+        shoot();
         moveCamera(camera, dt, levelLength);
     }
+
 
     void enemyHit(boolean hitBoolean) {
         if (invisibilityTimer < 0 && hitBoolean == true) {

@@ -99,12 +99,16 @@ public class Level {
                 lastSpawn = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera, projectiles, enemies, baril, levelLength);
-            enemyUpdate(dt, width, height, camera, projectiles);
+            player.update(dt, width, height, camera, levelLength);
+            enemyUpdate(dt);
             baril.update(dt, width, height, camera);
-            projectileUpdate(dt, width, height, camera, enemies);
+            projectileUpdate(dt);
+
+            GameObjectHandler.addProjectiles(player,projectiles);
+            checkCollisions();
             topBar.setHeartsLeft(player.getHealth());
             topBar.setCurrent(player.getPT());
+
         }
         if (levelDead) {
             if (displayTime < 0) {
@@ -129,7 +133,6 @@ public class Level {
         projectileDraw(context, camera);
         topBar.draw(context);
 
-        checkCollisions();
 
 
         if (levelDead) {
@@ -143,9 +146,9 @@ public class Level {
         }
     }
 
-    public void enemyUpdate(double dt, double width, double height, Camera camera, ArrayList<Projectile> projectiles) {
+    public void enemyUpdate(double dt) {
         for (Enemy enemy : enemies) {
-            enemy.update(dt, width, height, camera);
+            enemy.update(dt);
         }
     }
 
@@ -153,14 +156,13 @@ public class Level {
         for (Enemy enemy : enemies) {
             enemy.draw(context, camera);
             enemy.drawDebug(context, camera);
-
         }
     }
 
-    public void projectileUpdate(double dt, double width, double height, Camera camera, ArrayList<Enemy> enemies) {
+    public void projectileUpdate(double dt) {
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            projectile.update(dt, width, height, camera);
+            projectile.update(dt);
 
         }
     }
@@ -216,8 +218,8 @@ public class Level {
         return player.getHealth();
     }
     public void checkCollisions(){
-        CollisionChecker.playerEnemy(player,enemies);
-        CollisionChecker.projectileEnemy(projectiles,enemies);
-        CollisionChecker.playerBaril(player,baril);
+        GameObjectHandler.playerEnemy(player,enemies);
+        GameObjectHandler.projectileEnemy(projectiles,enemies);
+        GameObjectHandler.playerBaril(player,baril);
     }
 }

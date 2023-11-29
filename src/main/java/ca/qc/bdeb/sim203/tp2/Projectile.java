@@ -4,23 +4,13 @@ import java.util.ArrayList;
 
 public class Projectile extends MovableObject {
 
-    boolean outOfBounds = false;
 
     public Projectile(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
 
-    void outOfBounds(Camera camera) {
-        if (x > camera.getX() + camera.getWidth()) {
-            outOfBounds = true;
-        }
-    }
 
 
-    void update(double dt, double screenWidth, double screenheight, Camera camera) {
-        super.update(dt,screenWidth,screenheight,camera);
-        outOfBounds(camera);
-    }
 }
 
 
