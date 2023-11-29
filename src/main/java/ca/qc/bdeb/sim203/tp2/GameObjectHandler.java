@@ -46,12 +46,8 @@ public class GameObjectHandler {
         projectiles.addAll(player.getProjectileLauncher().getProjectilesInside());
         player.getProjectileLauncher().getProjectilesInside().clear();
     }
-    /*
-    void outOfBounds(Camera camera) {
-        if (x > camera.getX() + camera.getWidth()) {
-            outOfBounds = true;
-        }
+    static void preprocessMagnetic(MagnetProjectile mP, ArrayList<Enemy> enemies){
+        mP.preprocess(enemies);
     }
-    */
 
 }
