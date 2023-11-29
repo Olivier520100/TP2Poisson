@@ -10,11 +10,6 @@ public class MovableObject extends GameObject {
     double acceleration = 0;
     double maximumSpeed = 300;
 
-    public boolean checkCollisionWithObject(MovableObject moveableObject) {
-
-        return x < moveableObject.getX() + moveableObject.getWidth() && x + width > moveableObject.getX() && y < moveableObject.getY() + moveableObject.getHeight() && y + height > moveableObject.getY();
-    }
-
     public MovableObject(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
@@ -30,7 +25,6 @@ public class MovableObject extends GameObject {
 
     }
     void calculateDy(double dt) {
-
     }
 
     void moveObject(double dt) {

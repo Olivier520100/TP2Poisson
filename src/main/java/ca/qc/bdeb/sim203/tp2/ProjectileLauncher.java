@@ -19,10 +19,6 @@ public class ProjectileLauncher {
         return projectilesInside;
     }
 
-    public void setProjectilesInside(ArrayList<Projectile> projectilesInside) {
-        this.projectilesInside = projectilesInside;
-    }
-
     public void shoot(double x, double y) {
         projectilesInside.clear();
         switch (current) {
@@ -35,7 +31,6 @@ public class ProjectileLauncher {
             case MAGNET -> projectilesInside.add(new MagnetProjectile(x, y));
         }
     }
-
     public ProjectileType getCurrent() {
         return current;
     }
