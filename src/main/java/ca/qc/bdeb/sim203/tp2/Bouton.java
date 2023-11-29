@@ -14,23 +14,23 @@ public class Bouton {
 
     boolean active;
 
-    Image buttonimage;
+    Image buttonImage;
 
 
     public Bouton(boolean active, String buttonImagePath, double x, double y) {
         this.active = active;
-        this.buttonimage = new Image(buttonImagePath);
+        this.buttonImage = new Image(buttonImagePath);
         this.x = x;
         this.y = y;
     }
 
     public void draw(GraphicsContext context) {
-        context.drawImage(buttonimage, x, y);
+        context.drawImage(buttonImage, x, y);
 
     }
 
-    public boolean clicked(double clickx, double clicky) {
-        return clickx > x && clickx < x + width && clicky > y && clicky < y + height;
+    public boolean clicked(double clickX, double clickY) {
+        return clickX > x && clickX < x + width && clickY > y && clickY < y + height;
 
     }
 

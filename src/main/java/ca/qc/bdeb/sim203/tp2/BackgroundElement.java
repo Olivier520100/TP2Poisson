@@ -33,7 +33,7 @@ public class BackgroundElement extends GameObject {
     }
 
 
-    void draw(GraphicsContext context, Camera camera) {
+   public void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
         context.setEffect(colorAdjust);
         context.drawImage(baseImage, displayX, y);

@@ -30,7 +30,7 @@ public class GameObject {
     double height;
     double width;
 
-    Color color;
+    Color color; // why is this here?
 
     public void setHeight(double height) {
         this.height = height;
@@ -53,8 +53,8 @@ public class GameObject {
     }
 
     void draw(GraphicsContext context, Camera camera) {
-        double displayx = x - camera.getX();
-        context.drawImage(baseImage, displayx, y);
+        double displayX = x - camera.getX();
+        context.drawImage(baseImage, displayX, y);
     }
 
 }

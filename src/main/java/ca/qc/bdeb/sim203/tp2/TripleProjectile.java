@@ -7,9 +7,9 @@ import java.util.Random;
 public class TripleProjectile extends Projectile {
     double sinCoefficient;
     double period;
-    double timesincestart;
+    double timeSinceStart;
     double initialY;
-    final double PI = 3.1415926535;
+
 
 
     public TripleProjectile(double x, double y) {
@@ -22,8 +22,8 @@ public class TripleProjectile extends Projectile {
     }
 
     void moveObject(double dt) {
-        timesincestart += dt;
-        y = sinCoefficient * Math.sin(((2 * PI) / period) * (timesincestart)) + initialY;
+        timeSinceStart += dt;
+        y = sinCoefficient * Math.sin(((2 * Math.PI) / period) * (timeSinceStart)) + initialY;
         x += speedX * dt;
     }
 }

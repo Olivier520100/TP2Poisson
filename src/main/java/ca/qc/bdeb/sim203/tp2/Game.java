@@ -55,7 +55,7 @@ public class Game {
         level = new Level(width, height, levelNumber);
     }
 
-    void update(GraphicsContext context, double dt) {
+    public void update(GraphicsContext context, double dt) {
 
         if (inGame) {
             if (!level.isLevelEnd()) {

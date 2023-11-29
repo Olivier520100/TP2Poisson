@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Projectile extends MovableObject {
 
     boolean used = false;
-    boolean oob = false;
+    boolean outOfBounds = false;
 
     public Projectile(double x, double y, double width, double height) {
         super(x, y, width, height);
@@ -31,7 +31,7 @@ public class Projectile extends MovableObject {
 
     void outOfBounds(Camera camera) {
         if (x > camera.getX() + camera.getWidth()) {
-            oob = true;
+            outOfBounds = true;
         }
     }
 

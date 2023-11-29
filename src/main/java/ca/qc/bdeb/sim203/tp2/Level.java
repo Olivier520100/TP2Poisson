@@ -14,32 +14,34 @@ public class Level {
     MainText levelStart;
     MainText levelDeadText;
     ArrayList<Projectile> projectiles = new ArrayList<>();
-    double levellength;
-    int niveau;
+    double levelLength;
+    int levelNumber;
     Camera camera;
     ArrayList<BackgroundElement> backgroundElements = new ArrayList<>();
 
-    double lastspawn = 0;
-    double displaytime = 4;
+    private final int RANDOM_ENEMY_HEIGHT_ORIGIN = 50;
 
-    double respawntime;
+    double lastSpawn = 0;
+    double displayTime = 4;
+
+    double respawnTime;
 
     boolean levelEnd = false;
-    Bar topbar = new Bar();
+    Bar topBar = new Bar();
 
     boolean levelDead = false;
 
-    public Level(double width, double height, int niveau) {
+    public Level(double width, double height, int levelNumber) {
         player = new Player(50, 50);
         camera = new Camera(0, 0, width, height);
-        this.niveau = niveau;
-        respawntime = 0.75 + 1 / (Math.sqrt(niveau));
-        levellength = 8 * width;
-        double placementbaril = ((new Random()).nextDouble(20, 60) / 100) * levellength;
-        baril = new Baril(placementbaril, height / 2, height);
+        this.levelNumber = levelNumber;
+        respawnTime = 0.75 + 1 / (Math.sqrt(levelNumber));
+        levelLength = 8 * width;
+        double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * levelLength;
+        baril = new Baril(placementBaril, height / 2, height);
         enemyCreation();
         backgroundElementsCreation(height);
-        levelStart = new MainText("Niveau " + niveau, width, height);
+        levelStart = new MainText("Niveau " + levelNumber, width, height);
         levelDeadText = new MainText("Mort", width, height);
     }
 
@@ -76,28 +78,28 @@ public class Level {
     }
 
     public void updateGame(double dt, double width, double height) {
-        displaytime -= dt;
+        displayTime -= dt;
 
         if (!levelEnd && !levelDead) {
             levelEndCheck();
             levelDeadCheck();
             if (levelDead) {
-                displaytime = 4;
+                displayTime = 4;
             }
-            lastspawn += dt;
-            if (lastspawn > respawntime) {
-                lastspawn = 0;
+            lastSpawn += dt;
+            if (lastSpawn > respawnTime) {
+                lastSpawn = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera, projectiles, enemies, baril, levellength);
+            player.update(dt, width, height, camera, projectiles, enemies, baril, levelLength);
             enemyUpdate(dt, width, height, camera, projectiles);
             baril.update(dt, width, height, camera);
             projectileUpdate(dt, width, height, camera, enemies);
-            topbar.setHeartsLeft(player.getHealth());
-            topbar.setCurrent(player.getPT());
+            topBar.setHeartsLeft(player.getHealth());
+            topBar.setCurrent(player.getPT());
         }
         if (levelDead) {
-            if (displaytime < 0) {
+            if (displayTime < 0) {
                 levelEnd = true;
             }
         }
@@ -116,15 +118,15 @@ public class Level {
         enemyDraw(context, camera);
         baril.draw(context, camera);
         projectileDraw(context, camera);
-        topbar.draw(context);
+        topBar.draw(context);
 
 
         if (levelDead) {
-            if (displaytime > 0) {
+            if (displayTime > 0) {
                 levelDeadText.draw(context, camera, player.getX());
             }
         } else {
-            if (displaytime > 0) {
+            if (displayTime > 0) {
                 levelStart.draw(context, camera, 0);
             }
         }
@@ -161,20 +163,20 @@ public class Level {
 
     public void enemyCreation() {
         Random rand = (new Random());
-        int enemycount = rand.nextInt(1, 6);
+        int enemyCount = rand.nextInt(1, 6);
         enemies = new ArrayList<>();
 
-        for (int i = 0; i < enemycount; i++) {
-            //Make constant for the 50 below please
-            double enemyheight = rand.nextDouble(50, 120);
-            double enemywidth = enemyheight / 120 * 104;
+        for (int i = 0; i < enemyCount; i++) {
+
+            double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
+            double enemyWidth = enemyHeight / 120 * 104;
             enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
-                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyheight, enemywidth, niveau));
+                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
         }
     }
 
     public void levelEndCheck() {
-        levelEnd = (player.getX() > levellength);
+        levelEnd = (player.getX() > levelLength);
     }
 
     public void levelDeadCheck() {
@@ -183,9 +185,9 @@ public class Level {
 
     public void backgroundElementsCreation(double height) {
         int x = 0;
-        while (x < levellength * 9 / 8) {
+        while (x < levelLength * 9 / 8) {
             backgroundElements.add((new BackgroundElement(x, height)));
-            x += (new Random()).nextInt(50, 100) + 80;
+            x += (new Random()).nextInt(50, 100) + 80; // explain pls
         }
     }
 

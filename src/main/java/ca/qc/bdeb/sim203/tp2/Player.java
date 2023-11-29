@@ -19,14 +19,14 @@ public class Player extends Actor {
 
     boolean shootPressed = false;
 
-    double invisibilitytimer = 0;
-    final double invisibilityconst = 2;
-    double shoottimer = 0;
-    final double shootconst = 0.5;
+    double invisibilityTimer = 0;
+    final double invisibilityConst = 2;
+    double shootTimer = 0;
+    final double shootConst = 0.5;
     final int maxHealth = 4;
 
     boolean flicker = false;
-    int flickercount = 0;
+    int flickerCount = 0;
     ProjectileLauncher projectileLauncher;
     int health;
 
@@ -88,7 +88,7 @@ public class Player extends Actor {
     }
 
     @Override
-    void calculatedx(double dt) {
+    void calculateDx(double dt) {
         if (horizontalPressed) {
             if (Math.abs(speedX) < maximumSpeed) {
                 if (directionRight) {
@@ -120,7 +120,7 @@ public class Player extends Actor {
     }
 
     @Override
-    void calculatedy(double dt) {
+    void calculateDy(double dt) {
         if (verticalPressed) {
             if (Math.abs(speedY) < maximumSpeed) {
                 if (directionUp) {
@@ -162,32 +162,32 @@ public class Player extends Actor {
     }
 
     void shoot(ArrayList<Projectile> projectiles) {
-        if (shootPressed && shoottimer < 0) {
+        if (shootPressed && shootTimer < 0) {
             projectileLauncher.shoot(x + width, y + height / 4, projectiles);
-            shoottimer = shootconst;
+            shootTimer = shootConst;
         }
     }
 
     void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles,
-                ArrayList<Enemy> enemies, Baril baril, double levelength) {
-        invisibilitytimer -= dt;
-        shoottimer -= dt;
+                ArrayList<Enemy> enemies, Baril baril, double levelLength) {
+        invisibilityTimer -= dt;
+        shootTimer -= dt;
 
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
         objectCollision(enemies, baril);
         shoot(projectiles);
-        moveCamera(camera, dt, levelength);
+        moveCamera(camera, dt, levelLength);
     }
 
     void objectCollision(ArrayList<Enemy> enemies, Baril baril) {
         boolean hit = false;
-        if (invisibilitytimer < 0) {
+        if (invisibilityTimer < 0) {
             for (Enemy enemy : enemies) {
                 hit = checkCollisionWithObject(enemy);
                 if (hit) {
-                    invisibilitytimer = invisibilityconst;
+                    invisibilityTimer = invisibilityConst;
                     health -= 1;
                     System.out.println("Hit");
                     break;
@@ -195,9 +195,9 @@ public class Player extends Actor {
             }
 
         }
-        if (!baril.isOuvert()) {
+        if (!baril.isOpen()) {
             if (checkCollisionWithObject(baril)) {
-                baril.setOuvert(true);
+                baril.setOpen(true);
                 projectileLauncher.setCurrent(baril.getProjectileInside());
             }
 
@@ -208,20 +208,20 @@ public class Player extends Actor {
     void draw(GraphicsContext context, Camera camera) {
 
 
-        double displayx = x - camera.getX();
-        if (speedX > 0 && invisibilitytimer < 0) {
-            context.drawImage(movingImage, displayx, y);
-        } else if (invisibilitytimer > 0) {
+        double displayX = x - camera.getX();
+        if (speedX > 0 && invisibilityTimer < 0) {
+            context.drawImage(movingImage, displayX, y);
+        } else if (invisibilityTimer > 0) {
             if (flicker) {
-                context.drawImage(damagedImage, displayx, y);
+                context.drawImage(damagedImage, displayX, y);
             }
-            flickercount += 1;
-            if (flickercount > 15) {
+            flickerCount += 1;
+            if (flickerCount > 15) {
                 flicker = !flicker;
-                flickercount = 0;
+                flickerCount = 0;
             }
         } else {
-            context.drawImage(baseImage, displayx, y);
+            context.drawImage(baseImage, displayX, y);
         }
 
     }

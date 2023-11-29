@@ -16,11 +16,11 @@ public class MovableObject extends GameObject {
         super(x, y, width, height);
     }
 
-    void calculatedx(double dt) {
+    void calculateDx(double dt) {
 
     }
 
-    void calculatedy(double dt) {
+    void calculateDy(double dt) {
 
     }
 
@@ -33,8 +33,8 @@ public class MovableObject extends GameObject {
 
     void physicsCalculate(double dt) {
 
-        calculatedx(dt);
-        calculatedy(dt);
+        calculateDx(dt);
+        calculateDy(dt);
     }
 
     void checkCollision(double screenWidth, double screenHeight, Camera camera) {

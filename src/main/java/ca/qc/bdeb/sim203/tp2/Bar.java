@@ -4,11 +4,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Bar {
-    int heartsLeft = 4;
+     private int heartsLeft = 4;
 
-     final int pixelsAdded = 20;
+     private final int PIXELS_ADDED = 20;
 
-     final int valueToAlign = pixelsAdded + 10;
+     private final int VALUE_TO_ALIGN = PIXELS_ADDED + 10;
 
     ProjectileType current = ProjectileType.BASIC;
     Image heartImage = new Image("./heart.png");
@@ -24,17 +24,17 @@ public class Bar {
         this.current = current;
     }
 
-    void draw(GraphicsContext context) {
+   public void draw(GraphicsContext context) {
         int xdrawn = 0;
         for (int i = 0; i < heartsLeft; i++) {
             xdrawn = i * 24;
-            context.drawImage(heartImage, pixelsAdded + xdrawn, valueToAlign);
+            context.drawImage(heartImage, PIXELS_ADDED + xdrawn, VALUE_TO_ALIGN);
         }
-        xdrawn += valueToAlign;
+        xdrawn += VALUE_TO_ALIGN;
         switch (current) {
-            case BASIC -> context.drawImage(basicImage, pixelsAdded + xdrawn, pixelsAdded);
-            case TRIPLE -> context.drawImage(tripleImage, pixelsAdded + xdrawn, pixelsAdded);
-            case MAGNET -> context.drawImage(magnetImage, pixelsAdded + xdrawn, pixelsAdded);
+            case BASIC -> context.drawImage(basicImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
+            case TRIPLE -> context.drawImage(tripleImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
+            case MAGNET -> context.drawImage(magnetImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
         }
     }
 }

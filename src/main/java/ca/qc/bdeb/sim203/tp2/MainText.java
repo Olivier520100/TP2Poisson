@@ -8,7 +8,7 @@ public class MainText {
     String text;
     double width;
     double height;
-    double fontheight = 100;
+    double fontHeight = 100;
 
     public MainText(String text, double width, double height) {
         this.text = text;
@@ -19,7 +19,7 @@ public class MainText {
 
     void draw(GraphicsContext context, Camera camera, double offset) {
         context.setFill(Color.WHITE);
-        context.setFont(Font.font(fontheight));
+        context.setFont(Font.font(fontHeight));
         context.fillText(text, offset + width / 3 - camera.getX(), height / 2);
     }
 
