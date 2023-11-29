@@ -1,7 +1,10 @@
 package ca.qc.bdeb.sim203.tp2;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class MovableObject extends GameObject {
 
+    static boolean debug;
     double speedX = 0;
     double speedY = 0;
     double acceleration = 1000;
@@ -19,7 +22,13 @@ public class MovableObject extends GameObject {
     void calculateDx(double dt) {
 
     }
+    void drawDebug(GraphicsContext context, Camera camera)
+    {
+        if (debug) {
+            context.strokeRect(x - camera.getX(), y, width, height);
+        }
 
+    }
     void calculateDy(double dt) {
 
     }

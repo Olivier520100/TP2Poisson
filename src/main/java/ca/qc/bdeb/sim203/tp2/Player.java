@@ -34,9 +34,10 @@ public class Player extends Actor {
         return health;
     }
 
-    public Player(double x, double y) {
+    public Player(double x, double y,int health) {
         super(x, y, 102, 90);
-        health = maxHealth;
+
+        this.health = health;
         projectileLauncher = new ProjectileLauncher();
         baseImage = new Image("charlotte.png");
         movingImage = new Image("charlotte-avant.png");

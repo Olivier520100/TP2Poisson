@@ -33,8 +33,11 @@ public class Level {
 
     boolean levelDead = false;
 
-    public Level(double width, double height, int levelNumber) {
-        player = new Player(50, 50);
+
+
+    public Level(double width, double height, int levelNumber, int health) {
+
+        player = new Player(50, 50,health);
         camera = new Camera(0, 0, width, height);
         this.levelNumber = levelNumber;
         respawnTime = 0.75 + 1 / (Math.sqrt(levelNumber));
@@ -79,6 +82,9 @@ public class Level {
     public void spaceRelease() {
         player.shootRelease();
     }
+    public void debug(){
+        MovableObject.debug = !MovableObject.debug;
+    }
 
     public void updateGame(double dt, double width, double height) {
         displayTime -= dt;
@@ -118,6 +124,7 @@ public class Level {
             backgroundElement.draw(context, camera);
         }
         player.draw(context, camera);
+        player.drawDebug(context, camera);
         enemyDraw(context, camera);
         baril.draw(context, camera);
         projectileDraw(context, camera);
@@ -144,6 +151,8 @@ public class Level {
     public void enemyDraw(GraphicsContext context, Camera camera) {
         for (Enemy enemy : enemies) {
             enemy.draw(context, camera);
+            enemy.drawDebug(context, camera);
+
         }
     }
 
@@ -160,6 +169,8 @@ public class Level {
     public void projectileDraw(GraphicsContext context, Camera camera) {
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
+            projectile.drawDebug(context, camera);
+
         }
     }
 
@@ -202,5 +213,7 @@ public class Level {
         return levelDead;
     }
 
-
+    public int getHealth(){
+        return player.getHealth();
+    }
 }

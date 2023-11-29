@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Game {
     int levelNumber = 1;
+    int maxHealth = 4;
+    int lastHealth = 4;
     Level level;
     double width;
     double height;
@@ -42,7 +44,7 @@ public class Game {
     public void spaceRelease() {
         level.spaceRelease();
     }
-
+    public void debug() { level.debug();}
     public void screenClick(double x, double y) {
         if (!inGame) {
             menu.windowClick(x, y);
@@ -52,7 +54,7 @@ public class Game {
     public Game(double width, double height) {
         this.width = width;
         this.height = height;
-        level = new Level(width, height, levelNumber);
+        level = new Level(width, height, levelNumber,maxHealth);
     }
 
     public void update(GraphicsContext context, double dt) {
@@ -65,12 +67,13 @@ public class Game {
             } else {
                 if (!level.isLevelDead()) {
                     levelNumber += 1;
-                    level = new Level(width, height, levelNumber);
+                    lastHealth = level.getHealth();
+                    level = new Level(width, height, levelNumber,lastHealth);
                 } else {
                     menu = new Menu();
                     inGame = false;
                     levelNumber = 1;
-                    level = new Level(width, height, levelNumber);
+                    level = new Level(width, height, levelNumber,maxHealth);
                 }
             }
 
