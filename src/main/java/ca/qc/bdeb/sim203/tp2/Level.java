@@ -37,7 +37,7 @@ public class Level {
 
     public Level(double width, double height, int levelNumber, int health) {
 
-        player = new Player(50, 50,health);
+        player = new Player(0, 260,health);
         camera = new Camera(0, 0, width, height);
         this.levelNumber = levelNumber;
         respawnTime = 0.75 + 1 / (Math.sqrt(levelNumber));

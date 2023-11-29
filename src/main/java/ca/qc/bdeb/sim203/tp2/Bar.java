@@ -2,9 +2,14 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
 public class Bar {
-     private int heartsLeft = 4;
+     private double heartsLeft = 4;
+
+     private final double MAX_HP = 4;
 
      private final int PIXELS_ADDED = 20;
 
@@ -25,16 +30,27 @@ public class Bar {
     }
 
    public void draw(GraphicsContext context) {
-        int xdrawn = 0;
-        for (int i = 0; i < heartsLeft; i++) {
-            xdrawn = i * 24;
-            context.drawImage(heartImage, PIXELS_ADDED + xdrawn, VALUE_TO_ALIGN);
-        }
-        xdrawn += VALUE_TO_ALIGN;
-        switch (current) {
-            case BASIC -> context.drawImage(basicImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
-            case TRIPLE -> context.drawImage(tripleImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
-            case MAGNET -> context.drawImage(magnetImage, PIXELS_ADDED + xdrawn, PIXELS_ADDED);
+        int xdrawn = 25;
+
+        double percentageOfBar = heartsLeft/MAX_HP * 150;
+
+
+        context.setFill(Color.WHITE);
+        context.fillRect(xdrawn,VALUE_TO_ALIGN,percentageOfBar, basicImage.getHeight());
+        context.setStroke(Color.WHITE);
+        context.strokeRect(xdrawn,VALUE_TO_ALIGN,150, basicImage.getHeight());
+
+
+
+
+
+
+
+
+       switch (current) {
+            case BASIC -> context.drawImage(basicImage, PIXELS_ADDED + 160 , VALUE_TO_ALIGN);
+            case TRIPLE -> context.drawImage(tripleImage, PIXELS_ADDED + 160, VALUE_TO_ALIGN);
+            case MAGNET -> context.drawImage(magnetImage, PIXELS_ADDED + 160 , VALUE_TO_ALIGN);
         }
     }
 }
