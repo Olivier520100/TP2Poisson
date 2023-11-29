@@ -160,10 +160,8 @@ public class Level {
     public void projectileUpdate(double dt, double width, double height, Camera camera, ArrayList<Enemy> enemies) {
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            projectile.update(dt, width, height, camera, enemies);
-            if (projectile.isUsed()/* || (projectile.isOob()*/) {
-                projectiles.remove(i);
-            }
+            projectile.update(dt, width, height, camera);
+
         }
     }
 

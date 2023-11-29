@@ -51,7 +51,6 @@ public class Baril extends MovableObject {
      public void update(double dt, double screenWidth, double screenheight, Camera camera) {
         moveObject(dt);
         updateTime(dt);
-        checkCollision(screenWidth, screenheight, camera);
     }
 
     public void draw(GraphicsContext context, Camera camera) {

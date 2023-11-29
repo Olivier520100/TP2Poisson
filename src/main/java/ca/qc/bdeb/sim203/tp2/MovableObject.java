@@ -7,7 +7,7 @@ public class MovableObject extends GameObject {
     static boolean debug;
     double speedX = 0;
     double speedY = 0;
-    double acceleration = 1000;
+    double acceleration = 0;
     double maximumSpeed = 300;
 
     public boolean checkCollisionWithObject(MovableObject moveableObject) {
@@ -20,7 +20,7 @@ public class MovableObject extends GameObject {
     }
 
     void calculateDx(double dt) {
-
+        speedX += acceleration * dt ;
     }
     void drawDebug(GraphicsContext context, Camera camera)
     {
@@ -46,21 +46,16 @@ public class MovableObject extends GameObject {
         calculateDy(dt);
     }
 
-    void checkCollision(double screenWidth, double screenHeight, Camera camera) {
 
-    }
 
     void update(double dt, double screenWidth, double screenheight, Camera camera) {
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
     }
     @Override
     void draw(GraphicsContext context, Camera camera) {
-
         double displayX = x - camera.getX();
         context.drawImage(baseImage, displayX, y, width, height);
-
     }
 
 }
