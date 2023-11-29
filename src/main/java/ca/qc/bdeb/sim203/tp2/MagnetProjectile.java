@@ -60,12 +60,16 @@ public class MagnetProjectile extends Projectile {
         forceY = 0;
         forceX = 0;
     }
-    void update(double dt, double screenheight, ArrayList<Enemy> enemies) {
+
+    public void preprocess(ArrayList<Enemy> enemies) {
         resetForces();
         sumForces(enemies);
-        physicsCalculate(dt);
+
+    }
+    void update(double dt, double screenheight) {
+        super.update(dt);
         checkCollision(screenheight);
-        moveObject(dt);
+
     }
 
     public void checkCollision(double screenHeight) {
@@ -85,7 +89,7 @@ public class MagnetProjectile extends Projectile {
         if (value < lowerCap){
             value = lowerCap;
         }else if (value > upperCap){
-         value = upperCap;
+            value = upperCap;
         }
 
         return value;

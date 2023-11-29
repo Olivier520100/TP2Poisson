@@ -13,18 +13,13 @@ public class Player extends Actor {
     Image damagedImage;
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
-
     boolean directionRight = false;
     boolean directionUp = false;
-
     boolean shootPressed = false;
-
     double invisibilityTimer = 0;
     final double invisibilityConst = 2;
     double shootTimer = 0;
     final double shootConst = 0.5;
-    final int maxHealth = 4;
-
     boolean flicker = false;
     int flickerCount = 0;
     ProjectileLauncher projectileLauncher;
@@ -179,13 +174,10 @@ public class Player extends Actor {
     }
 
     void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
+        super.update(dt);
+        checkCollision(screenWidth, screenheight, camera);
         invisibilityTimer -= dt;
         shootTimer -= dt;
-
-        physicsCalculate(dt);
-        moveObject(dt);
-        checkCollision(screenWidth, screenheight, camera);
-
         shoot();
         moveCamera(camera, dt, levelLength);
     }

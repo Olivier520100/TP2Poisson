@@ -104,7 +104,7 @@ public class Level {
             player.update(dt, width, height, camera, levelLength);
             enemyUpdate(dt);
             baril.update(dt, width, height, camera);
-            projectileUpdate(dt);
+            projectileUpdate(dt, height);
 
             GameObjectHandler.addProjectiles(player,projectiles);
             checkCollisions();
@@ -162,10 +162,15 @@ public class Level {
         }
     }
 
-    public void projectileUpdate(double dt) {
+    public void projectileUpdate(double dt, double height) {
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            projectile.update(dt);
+            if (projectile instanceof MagnetProjectile) {
+                GameObjectHandler.preprocessMagnetic(((MagnetProjectile) projectile),enemies);
+                ((MagnetProjectile) projectile).update(dt, height);
+            } else {
+                projectile.update(dt);
+            }
 
         }
     }
