@@ -29,9 +29,7 @@ public class GameObject {
 
     double height;
     double width;
-
-    Color color; // why is this here?
-
+    
     public void setHeight(double height) {
         this.height = height;
     }

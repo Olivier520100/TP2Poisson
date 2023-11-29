@@ -38,9 +38,9 @@ public class Player extends Actor {
         super(x, y, 102, 90);
         health = maxHealth;
         projectileLauncher = new ProjectileLauncher();
-        baseImage = new Image("./charlotte.png");
-        movingImage = new Image("./charlotte-avant.png");
-        damagedImage = new Image("./charlotte-outch.png");
+        baseImage = new Image("charlotte.png");
+        movingImage = new Image("charlotte-avant.png");
+        damagedImage = new Image("charlotte-outch.png");
 
     }
 
