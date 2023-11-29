@@ -5,14 +5,15 @@ import javafx.scene.image.Image;
 
 public class Menu {
 
-    private Bouton retourBouton = new Bouton(true, "./bouton3.png", 400, 400);
-    private Bouton jouer = new Bouton(true, "./bouton.png", 80, 80);
+    Bouton retourBouton = new Bouton(false, "boutonretour.png", 400, 400);
+    Bouton jouer = new Bouton(true, "boutoncommencer.png", 80, 80);
 
-    private Bouton infoBouton = new Bouton(false, "./bouton2.png", 400, 400);
+    Bouton infoBouton = new Bouton(true, "boutoninfo.png", 400, 400);
 
 
-    private boolean inInfo = false;
-    private boolean toGame = false;
+    boolean inInfo = false;
+
+    boolean toGame = false;
 
     Image backgroundInfo = new Image("./info.png");
     Image backgroundMain = new Image("./logo.png");

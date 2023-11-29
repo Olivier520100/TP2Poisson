@@ -29,6 +29,8 @@ public class Level {
     boolean levelEnd = false;
     Bar topBar = new Bar();
 
+    Color colorFond;
+
     boolean levelDead = false;
 
     public Level(double width, double height, int levelNumber) {
@@ -37,6 +39,7 @@ public class Level {
         this.levelNumber = levelNumber;
         respawnTime = 0.75 + 1 / (Math.sqrt(levelNumber));
         levelLength = 8 * width;
+        colorFond  = Color.hsb((new Random()).nextInt(190,270),0.84,1);
         double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * levelLength;
         baril = new Baril(placementBaril, height / 2, height);
         enemyCreation();
@@ -109,7 +112,7 @@ public class Level {
 
     public void drawGame(GraphicsContext context) {
 
-        context.setFill(new Color(0x2a / 255.0, 0x7f / 255.0, 0xff / 255.0, 1.0));
+        context.setFill(colorFond);
         context.fillRect(0, 0, camera.getWidth(), camera.getHeight());
         for (BackgroundElement backgroundElement : backgroundElements) {
             backgroundElement.draw(context, camera);
