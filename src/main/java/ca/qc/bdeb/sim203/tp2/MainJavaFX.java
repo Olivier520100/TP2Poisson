@@ -57,8 +57,13 @@ public class MainJavaFX extends Application {
                 case SPACE:
                     game.spacePress();
                     break;
+                case D:
+                    game.debug();
+                    break;
                 case ESCAPE:
                     Platform.exit();
+
+
             }
         });
 
