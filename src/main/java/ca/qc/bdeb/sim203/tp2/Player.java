@@ -181,20 +181,14 @@ public class Player extends Actor {
         shoot();
         moveCamera(camera, dt, levelLength);
     }
-
-
     void enemyHit(boolean hitBoolean) {
         if (invisibilityTimer < 0 && hitBoolean == true) {
             invisibilityTimer = invisibilityConst;
             health-=1;
         }
     }
-
-
     @Override
     void draw(GraphicsContext context, Camera camera) {
-
-
         double displayX = x - camera.getX();
         if (speedX > 0 && invisibilityTimer < 0) {
             context.drawImage(movingImage, displayX, y);
@@ -210,7 +204,6 @@ public class Player extends Actor {
         } else {
             context.drawImage(baseImage, displayX, y);
         }
-
     }
 
     void moveCamera(Camera camera, double dt, double levellength) {

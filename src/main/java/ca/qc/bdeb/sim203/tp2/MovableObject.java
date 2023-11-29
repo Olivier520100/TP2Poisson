@@ -33,7 +33,6 @@ public class MovableObject extends GameObject {
         y += speedY * dt;
 
     }
-
     void physicsCalculate(double dt) {
         calculateDx(dt);
         calculateDy(dt);

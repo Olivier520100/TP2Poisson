@@ -18,7 +18,6 @@ public class TripleProjectile extends Projectile {
         initialY = y;
         baseImage = new Image("./hippocampe.png");
     }
-
     void moveObject(double dt) {
         timeSinceStart += dt;
         y = sinCoefficient * Math.sin(((2 * Math.PI) / period) * (timeSinceStart)) + initialY;

@@ -28,7 +28,6 @@ public class Menu {
             }
         }
     }
-
     public void draw(GraphicsContext context) {
         if (inInfo) {
             context.clearRect(0, 0, 900, 520);
