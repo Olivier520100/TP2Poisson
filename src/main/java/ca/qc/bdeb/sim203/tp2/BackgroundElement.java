@@ -19,25 +19,11 @@ public class BackgroundElement extends GameObject {
 
     private void initialize() {
         baseImage = new Image("./decor" + new Random().nextInt(1, 7) + ".png");
-        initializeColorAdjust();
     }
-
-    private void initializeColorAdjust() {
-        hue = new Random().nextInt(190, 270);
-        saturation = 0.84;
-        brightness = 1.0;
-        colorAdjust = new ColorAdjust();
-        colorAdjust.setHue(hue);
-        colorAdjust.setBrightness(brightness);
-        colorAdjust.setSaturation(saturation);
-    }
-
 
    public void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
-        context.setEffect(colorAdjust);
         context.drawImage(baseImage, displayX, y);
-        context.setEffect(new ColorAdjust());
     }
 }
 
