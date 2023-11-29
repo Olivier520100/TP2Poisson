@@ -22,12 +22,12 @@ public class MagnetProjectile extends Projectile {
             double dy = enemy.getY() - y;
             double distanceSquared = dx * dx + dy * dy;
             double distance = Math.sqrt(distanceSquared);
-           /* if (distance < 0.01){
+            if (distance < 0.01){
 
                 distance = 0.01;
             }
 
-            */
+
             double forceTotal = (1000 * 200 * 100) / distanceSquared;
             forceX += forceTotal * (dx / distance);
             forceY += forceTotal * (dy / distance);
@@ -39,28 +39,18 @@ public class MagnetProjectile extends Projectile {
         speedX += dt * forceX;
 
 
-        if (speedX < 300){
-            speedX = 300;
-        }else if (speedX > 500){
-            speedX = 500 ;
-        }
+       speedX = capValues(speedX,300,500);
 
 
 
     }
 
+
     @Override
     void calculateDy(double dt) {
         speedY += dt * forceY;
 
-        if (speedY > 500){
-            speedY = 500;
-        }else if (speedY < -500){
-            speedY = -500;
-        }
-
-
-
+      speedY =  capValues(speedY,-500,500);
     }
 
     void sumForces(ArrayList<Enemy> enemies) {
@@ -93,6 +83,18 @@ public class MagnetProjectile extends Projectile {
             speedY = -speedY;
         }
 
+    }
+
+    private double capValues(double value, double lowerCap, double upperCap){
+
+
+        if (value < lowerCap){
+            value = lowerCap;
+        }else if (value > upperCap){
+         value = upperCap;
+        }
+
+        return value;
     }
 }
 

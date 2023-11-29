@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,8 +32,11 @@ public class MainJavaFX extends Application {
         configureInputHandling(scene, game);
         startGameLoop(context, game);
 
+
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
     private void configureInputHandling(Scene scene, Game game) {
@@ -53,6 +57,8 @@ public class MainJavaFX extends Application {
                 case SPACE:
                     game.spacePress();
                     break;
+                case ESCAPE:
+                    Platform.exit();
             }
         });
 

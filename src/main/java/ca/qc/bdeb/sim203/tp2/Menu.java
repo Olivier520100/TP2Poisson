@@ -5,20 +5,20 @@ import javafx.scene.image.Image;
 
 public class Menu {
 
-    Bouton retourBouton = new Bouton(true, "./bouton3.png", 400, 400);
-    Bouton jouer = new Bouton(true, "./bouton.png", 80, 80);
+    private Bouton retourBouton = new Bouton(true, "./bouton3.png", 400, 400);
+    private Bouton jouer = new Bouton(true, "./bouton.png", 80, 80);
 
-    Bouton infoBouton = new Bouton(false, "./bouton2.png", 400, 400);
+    private Bouton infoBouton = new Bouton(false, "./bouton2.png", 400, 400);
 
 
-    boolean inInfo = false;
-    boolean toGame = false;
+    private boolean inInfo = false;
+    private boolean toGame = false;
 
     Image backgroundInfo = new Image("./info.png");
     Image backgroundMain = new Image("./logo.png");
 
 
-    void windowClick(double x, double y) {
+    public void windowClick(double x, double y) {
         if (inInfo) {
             inInfo = !(infoBouton.clicked(x, y));
         } else {
@@ -28,7 +28,7 @@ public class Menu {
         }
     }
 
-    void draw(GraphicsContext context) {
+    public void draw(GraphicsContext context) {
         if (inInfo) {
             context.clearRect(0, 0, 900, 520);
             context.drawImage(backgroundInfo, 0, 0);
@@ -43,7 +43,7 @@ public class Menu {
         }
     }
 
-    boolean isToGame() {
+    public boolean isToGame() {
         return toGame;
     }
 
