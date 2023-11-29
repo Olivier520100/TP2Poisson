@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Level {
-
     Player player;
     ArrayList<Enemy> enemies;
     Baril baril;
@@ -130,6 +129,8 @@ public class Level {
         projectileDraw(context, camera);
         topBar.draw(context);
 
+        checkCollisions();
+
 
         if (levelDead) {
             if (displayTime > 0) {
@@ -144,7 +145,7 @@ public class Level {
 
     public void enemyUpdate(double dt, double width, double height, Camera camera, ArrayList<Projectile> projectiles) {
         for (Enemy enemy : enemies) {
-            enemy.update(dt, width, height, camera, projectiles);
+            enemy.update(dt, width, height, camera);
         }
     }
 
@@ -215,5 +216,10 @@ public class Level {
 
     public int getHealth(){
         return player.getHealth();
+    }
+    public void checkCollisions(){
+        CollisionChecker.playerEnemy(player,enemies);
+        CollisionChecker.projectileEnemy(projectiles,enemies);
+        CollisionChecker.playerBaril(player,baril);
     }
 }

@@ -55,5 +55,12 @@ public class MovableObject extends GameObject {
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
     }
+    @Override
+    void draw(GraphicsContext context, Camera camera) {
+
+        double displayX = x - camera.getX();
+        context.drawImage(baseImage, displayX, y, width, height);
+
+    }
 
 }

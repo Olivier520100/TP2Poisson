@@ -37,9 +37,7 @@ public class MagnetProjectile extends Projectile {
     @Override
     void calculateDx(double dt) {
         speedX += dt * forceX;
-
-
-       speedX = capValues(speedX,300,500);
+        speedX = capValues(speedX,300,500);
 
 
 
@@ -49,8 +47,7 @@ public class MagnetProjectile extends Projectile {
     @Override
     void calculateDy(double dt) {
         speedY += dt * forceY;
-
-      speedY =  capValues(speedY,-500,500);
+        speedY =  capValues(speedY,-500,500);
     }
 
     void sumForces(ArrayList<Enemy> enemies) {
@@ -63,7 +60,6 @@ public class MagnetProjectile extends Projectile {
         forceY = 0;
         forceX = 0;
     }
-
     void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Enemy> enemies) {
         resetForces();
         sumForces(enemies);
@@ -71,7 +67,6 @@ public class MagnetProjectile extends Projectile {
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
         outOfBounds(camera);
-        objectCollision(enemies);
     }
 
     public void checkCollision(double screenWidth, double screenHeight, Camera camera) {

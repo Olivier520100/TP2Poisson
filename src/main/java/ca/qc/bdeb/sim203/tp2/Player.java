@@ -54,6 +54,10 @@ public class Player extends Actor {
     ProjectileType getPT() {
         return projectileLauncher.getCurrent();
     }
+    void setPT(ProjectileType pt) {
+        projectileLauncher.setCurrent(pt);
+    }
+
 
     void moveRight() {
         horizontalPressed = true;
@@ -177,33 +181,17 @@ public class Player extends Actor {
         physicsCalculate(dt);
         checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
-        objectCollision(enemies, baril);
         shoot(projectiles);
         moveCamera(camera, dt, levelLength);
     }
 
-    void objectCollision(ArrayList<Enemy> enemies, Baril baril) {
-        boolean hit = false;
-        if (invisibilityTimer < 0) {
-            for (Enemy enemy : enemies) {
-                hit = checkCollisionWithObject(enemy);
-                if (hit) {
-                    invisibilityTimer = invisibilityConst;
-                    health -= 1;
-                    System.out.println("Hit");
-                    break;
-                }
-            }
-
-        }
-        if (!baril.isOpen()) {
-            if (checkCollisionWithObject(baril)) {
-                baril.setOpen(true);
-                projectileLauncher.setCurrent(baril.getProjectileInside());
-            }
-
+    void enemyHit(boolean hitBoolean) {
+        if (invisibilityTimer < 0 && hitBoolean == true) {
+            invisibilityTimer = invisibilityConst;
+            health-=1;
         }
     }
+
 
     @Override
     void draw(GraphicsContext context, Camera camera) {

@@ -11,19 +11,15 @@ public class Baril extends MovableObject {
     Image openImage;
     ProjectileType projectileInside;
     boolean open = false;
-   private double functionOffset;
-   private double sinCoefficient;
+   private final double functionOffset;
+   private final double sinCoefficient;
 
-    public boolean isOpen() {
+   public boolean isOpen() {
         return open;
     }
-
     public void setOpen(boolean open) {
         this.open = open;
     }
-
-
-
 
    private double timeSinceStart = 0;
 
@@ -41,45 +37,30 @@ public class Baril extends MovableObject {
 
 
     }
-
     public ProjectileType getProjectileInside() {
         return projectileInside;
     }
-
     public void updateTime(double dt) {
         timeSinceStart += dt;
     }
-
     @Override
     public void moveObject(double dt) {
-
         y = sinCoefficient * Math.sin(((2 * Math.PI) / 3) * (timeSinceStart - functionOffset)) + sinCoefficient;
-
     }
 
      public void update(double dt, double screenWidth, double screenheight, Camera camera) {
         moveObject(dt);
         updateTime(dt);
         checkCollision(screenWidth, screenheight, camera);
-
     }
 
     public void draw(GraphicsContext context, Camera camera) {
-        context.setFill((Color.PURPLE));
         double displayX = x - camera.getX();
         if (open) {
-
-
             context.drawImage(openImage, displayX, y);
-
         } else {
-
             context.drawImage(baseImage, displayX, y);
-
-
         }
-
-
     }
 
 }

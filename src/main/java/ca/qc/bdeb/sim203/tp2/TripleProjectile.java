@@ -10,8 +10,6 @@ public class TripleProjectile extends Projectile {
     double timeSinceStart;
     double initialY;
 
-
-
     public TripleProjectile(double x, double y) {
         super(x, y, 20, 36);
         speedX = 500;

@@ -19,31 +19,10 @@ public class Enemy extends Actor {
     }
 
 
-
-
-
-
-
-
-
     void calculateDx(double dt) {
         speedX -= acceleration * dt ;
     }
 
-    void update(double dt, double screenWidth, double screenHeight, Camera camera, ArrayList<Projectile> projectiles) { // why is this here?
 
-        physicsCalculate(dt);
-        checkCollision(screenWidth, screenHeight, camera);
-        moveObject(dt);
-
-    }
-
-    @Override
-    void draw(GraphicsContext context, Camera camera) {
-
-        double displayX = x - camera.getX();
-        context.drawImage(baseImage, displayX, y, width, height);
-
-    }
 
 }
