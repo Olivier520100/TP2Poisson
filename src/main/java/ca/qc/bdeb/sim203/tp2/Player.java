@@ -39,6 +39,7 @@ public class Player extends Actor {
 
         this.health = health;
         projectileLauncher = new ProjectileLauncher();
+        acceleration = 1000;
         baseImage = new Image("charlotte.png");
         movingImage = new Image("charlotte-avant.png");
         damagedImage = new Image("charlotte-outch.png");
@@ -54,6 +55,10 @@ public class Player extends Actor {
     ProjectileType getPT() {
         return projectileLauncher.getCurrent();
     }
+    void setPT(ProjectileType pt) {
+        projectileLauncher.setCurrent(pt);
+    }
+
 
     void moveRight() {
         horizontalPressed = true;
@@ -162,48 +167,37 @@ public class Player extends Actor {
 
     }
 
-    void shoot(ArrayList<Projectile> projectiles) {
+    void shoot() {
         if (shootPressed && shootTimer < 0) {
-            projectileLauncher.shoot(x + width, y + height / 4, projectiles);
+            projectileLauncher.shoot(x + width, y + height / 4);
             shootTimer = shootConst;
         }
     }
 
-    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles,
-                ArrayList<Enemy> enemies, Baril baril, double levelLength) {
+    public ProjectileLauncher getProjectileLauncher() {
+        return projectileLauncher;
+    }
+
+    void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
         invisibilityTimer -= dt;
         shootTimer -= dt;
 
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
-        objectCollision(enemies, baril);
-        shoot(projectiles);
+        checkCollision(screenWidth, screenheight, camera);
+
+        shoot();
         moveCamera(camera, dt, levelLength);
     }
 
-    void objectCollision(ArrayList<Enemy> enemies, Baril baril) {
-        boolean hit = false;
-        if (invisibilityTimer < 0) {
-            for (Enemy enemy : enemies) {
-                hit = checkCollisionWithObject(enemy);
-                if (hit) {
-                    invisibilityTimer = invisibilityConst;
-                    health -= 1;
-                    System.out.println("Hit");
-                    break;
-                }
-            }
 
-        }
-        if (!baril.isOpen()) {
-            if (checkCollisionWithObject(baril)) {
-                baril.setOpen(true);
-                projectileLauncher.setCurrent(baril.getProjectileInside());
-            }
-
+    void enemyHit(boolean hitBoolean) {
+        if (invisibilityTimer < 0 && hitBoolean == true) {
+            invisibilityTimer = invisibilityConst;
+            health-=1;
         }
     }
+
 
     @Override
     void draw(GraphicsContext context, Camera camera) {
