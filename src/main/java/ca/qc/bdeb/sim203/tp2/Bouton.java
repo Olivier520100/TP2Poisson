@@ -21,12 +21,11 @@ public class Bouton {
     /**
      * Constructeur pour créer un nouveau bouton.
      *
-     *
      * @param cheminButtonImage Le chemin vers l'image du bouton.
-     * @param x La position en x du bouton.
-     * @param y La position en y du bouton.
+     * @param x                 La position en x du bouton.
+     * @param y                 La position en y du bouton.
      */
-    public Bouton( String cheminButtonImage, double x, double y) {
+    public Bouton(String cheminButtonImage, double x, double y) {
 
         this.buttonImage = new Image(cheminButtonImage);
         this.x = x;

@@ -3,7 +3,6 @@ package ca.qc.bdeb.sim203.tp2;
 import java.util.ArrayList;
 
 /**
- *
  * Elle gère les différents types de projectiles et leur lancement.
  */
 public class ProjectileLauncher {
@@ -27,8 +26,6 @@ public class ProjectileLauncher {
     }
 
     /**
-     *
-     *
      * @return La liste des projectiles.
      */
     public ArrayList<Projectile> getProjectilesDisponibles() {
@@ -55,8 +52,6 @@ public class ProjectileLauncher {
     }
 
     /**
-     *
-     *
      * @return Le type de projectile actuel.
      */
     public ProjectileType getCurrent() {
