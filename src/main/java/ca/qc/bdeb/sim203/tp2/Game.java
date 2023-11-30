@@ -61,6 +61,7 @@ public class Game {
 
     public void tPress() {
         if (debug) {
+            debug = false;
             augmenterNiveau();
         }
     }

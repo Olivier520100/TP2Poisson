@@ -73,6 +73,13 @@ public class GameObjectHandler {
         enemies.addAll(enemiestoadd);
 
     }
+    public static void createBackgroundElements(ArrayList<BackgroundElement> backgroundElements, double height, double levelLength){
+        int x = 0;
+        while (x < levelLength * 9 / 8) {
+            backgroundElements.add((new BackgroundElement(x, height)));
+            x += (new Random()).nextInt(50, 100) + 80; // explain pls
+        }
+    }
     public static void garbageCollectEnemies(ArrayList<Enemy> enemies, Camera camera){
         for (int i = enemies.size() - 1; i >= 0; i--) {
             if (enemies.get(i).getX() + enemies.get(i).getWidth()< camera.getX()){
@@ -94,6 +101,7 @@ public class GameObjectHandler {
             }
         }
     }
+
 
 
 

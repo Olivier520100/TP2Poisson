@@ -134,16 +134,18 @@ public class Level {
 
     public void drawGame(GraphicsContext context) {
 
-        context.setFill(colorFond);
-        context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
-        for (BackgroundElement backgroundElement : backgroundElements) {
-            backgroundElement.draw(context, camera);
-        }
+        bgDraw(context,camera);
+
         drawObject(player, context, camera);
+
         enemyDraw(context, camera);
+
         drawObject(baril, context, camera);
+
         projectileDraw(context);
+
         topBar.draw(context);
+
         if (debug){
             context.setFont(Font.font(12));
             context.fillText("NB Poissons : " + enemies.size(),25, 100 );
@@ -151,12 +153,9 @@ public class Level {
             context.fillText("Position Charlotte : " + ( player.getX()/levelLength * 100 ) + "%", 25, 140);
         }
 
-
-
         if (levelDead) {
             if (displayTime > 0) {
                 levelDeadText.draw(context, camera, player.getX() - 350,Color.RED);
-
             }
         } else {
             if (displayTime > 0) {
@@ -169,6 +168,9 @@ public class Level {
         go.draw(context, camera);
         go.drawDebug(context, camera);
     }
+    public void drawObject(GameObject go, GraphicsContext context, Camera camera){
+        go.draw(context, camera);
+    }
     public void enemyUpdate(double dt) {
         for (Enemy enemy : enemies) {
             enemy.update(dt);
@@ -178,6 +180,13 @@ public class Level {
     public void enemyDraw(GraphicsContext context, Camera camera) {
         for (Enemy enemy : enemies) {
             drawObject(enemy,context,camera);
+        }
+    }
+    public void bgDraw(GraphicsContext context, Camera camera) {
+        context.setFill(colorFond);
+        context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
+        for (BackgroundElement backgroundElement : backgroundElements) {
+            drawObject(backgroundElement,context,camera);
         }
     }
 
@@ -217,11 +226,7 @@ public class Level {
     }
 
     public void backgroundElementsCreation(double height) {
-        int x = 0;
-        while (x < levelLength * 9 / 8) {
-            backgroundElements.add((new BackgroundElement(x, height)));
-            x += (new Random()).nextInt(50, 100) + 80; // explain pls
-        }
+        GameObjectHandler.createBackgroundElements(backgroundElements, height, levelLength);
     }
 
     public boolean isLevelEnd() {
