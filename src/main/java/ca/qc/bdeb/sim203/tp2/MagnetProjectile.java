@@ -11,12 +11,10 @@ public class MagnetProjectile extends Projectile {
 
     public MagnetProjectile(double x, double y) {
         super(x, y, 35, 29);
-<<<<<<< HEAD
+
         System.out.println("MAGNET!");
         vitesseX = 300;
-=======
-        speedX = 300;
->>>>>>> eff347bfabccb8de0edbe820c088d8876d186570
+
         imageDeBase = new Image("./sardines.png");
     }
 
@@ -44,8 +42,8 @@ public class MagnetProjectile extends Projectile {
 
     @Override
     void calculateDy(double dt) {
-        speedY += dt * forceY;
-        speedY =  capValues(speedY,-500,500);
+        vitesseY += dt * forceY;
+        vitesseY =  capValues(vitesseY,-500,500);
     }
 
     void sumForces(ArrayList<Enemy> enemies) {
@@ -73,10 +71,10 @@ public class MagnetProjectile extends Projectile {
     public void checkCollision(double screenHeight) {
         if (y + hauteur > screenHeight) {
             y = screenHeight - hauteur;
-            speedY = -speedY;
+            vitesseY = -vitesseY;
         } else if (y < 0) {
             y = 0;
-            speedY = -speedY;
+            vitesseY = -vitesseY;
         }
 
     }

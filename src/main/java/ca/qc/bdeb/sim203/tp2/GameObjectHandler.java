@@ -69,8 +69,8 @@ public class GameObjectHandler {
 
             double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
             double enemyWidth = enemyHeight / 120 * 104;
-            enemiestoadd.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
-                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
+            enemiestoadd.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
+                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), enemyHeight, enemyWidth, levelNumber));
         }
 
 

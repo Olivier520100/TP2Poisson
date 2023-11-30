@@ -29,10 +29,10 @@ public class Menu {
      */
     public void windowClick(double x, double y) {
         if (inInfo) {
-            inInfo = !(infoBouton.clicked(x, y));
+            inInfo = !(infoBouton.clique(x, y));
         } else {
-            if (!(inInfo = retourBouton.clicked(x, y))) {
-                toGame = jouer.clicked(x, y);
+            if (!(inInfo = retourBouton.clique(x, y))) {
+                toGame = jouer.clique(x, y);
             } else {
                 randomEnemy = new Image("./poisson" + new Random().nextInt(1, 6) + ".png");
             }

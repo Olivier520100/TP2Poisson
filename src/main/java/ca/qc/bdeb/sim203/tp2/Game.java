@@ -3,79 +3,49 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Game {
-    int levelNumber = 1;
-    int maxHealth = 4;
-    int lastHealth = 4;
-    Level level;
-    double width;
-    double height;
-    boolean inGame = false;
+    private int numeroNiveau = 1;
+    private int vieMaximum = 4;
+    private int vieRestante = 4;
+    private Level niveau;
+    private double largeur;
+    private double hauteur;
+    private boolean inGame = false;
 
-    boolean debug = false;
-    Menu menu = new Menu();
+    private boolean debug = false;
+     private Menu menu = new Menu();
 
-    public void downPress() {
-        level.downPress();
-    }
-
-    public void upPress() {
-        level.upPress();
-    }
-
-    public void leftPress() {
-        level.leftPress();
-    }
-
-    public void rightPress() {
-        level.rightPress();
-    }
-
-    public void verticalRelease() {
-        level.verticalRelease();
-    }
-
-    public void horizontalRelease() {
-        level.horizontalRelease();
-    }
-
-    public void spacePress() {
-        level.spacePress();
-    }
-
-    public void spaceRelease() {
-        level.spaceRelease();
-    }
     public void debug() {
-        level.debug();
+        niveau.debug();
         debug = !debug;
     }
+
     public void screenClick(double x, double y) {
         if (!inGame) {
             menu.windowClick(x, y);
         }
     }
 
-    public Game(double width, double height) {
-        this.width = width;
-        this.height = height;
-        level = new Level(width, height, levelNumber,maxHealth);
+    public Game(double largeur, double hauteur) {
+        this.largeur = largeur;
+        this.hauteur = hauteur;
+        niveau = new Level(largeur, hauteur, numeroNiveau, vieMaximum);
     }
 
     public void update(GraphicsContext context, double dt) {
 
         if (inGame) {
-            if (!level.isLevelEnd()) {
-                context.clearRect(0, 0, width, height);
-                level.updateGame(dt, width, height);
-                level.drawGame(context);
+            if (!niveau.isLevelEnd()) {
+                context.clearRect(0, 0, largeur, hauteur);
+                niveau.updateGame(dt, largeur, hauteur);
+                niveau.drawGame(context);
             } else {
-                if (!level.isLevelDead()) {
-                    nextLevel();
+                if (!niveau.isLevelDead()) {
+                    augmenterNiveau();
                 } else {
                     menu = new Menu();
                     inGame = false;
-                    levelNumber = 1;
-                    level = new Level(width, height, levelNumber,maxHealth);
+                    numeroNiveau = 1;
+                    niveau = new Level(largeur, hauteur, numeroNiveau, vieMaximum);
                 }
             }
 
@@ -86,30 +56,63 @@ public class Game {
     }
 
     public void qPress() {
-        level.setProjectileType1();
-    }
-
-    public void wPress() {
-        level.setProjectileType2();
-    }
-
-    public void ePress() {
-        level.setProjectileType3();
-    }
-
-    public void rPress() {
-        level.setMaxHealth();
+        niveau.setProjectileType1();
     }
 
     public void tPress() {
         if (debug) {
-            nextLevel();
+            augmenterNiveau();
         }
     }
-    public void nextLevel(){
-        levelNumber += 1;
-        lastHealth = level.getHealth();
-        level = new Level(width, height, levelNumber, lastHealth);
 
+    public void augmenterNiveau() {
+        numeroNiveau += 1;
+        vieRestante = niveau.getHealth();
+        niveau = new Level(largeur, hauteur, numeroNiveau, vieRestante);
+
+    }
+
+    public void wPress() {
+        niveau.setProjectileType2();
+    }
+
+    public void ePress() {
+        niveau.setProjectileType3();
+    }
+
+    public void rPress() {
+        niveau.setMaxHealth();
+    }
+
+    public void downPress() {
+        niveau.downPress();
+    }
+
+    public void upPress() {
+        niveau.upPress();
+    }
+
+    public void leftPress() {
+        niveau.leftPress();
+    }
+
+    public void rightPress() {
+        niveau.rightPress();
+    }
+
+    public void verticalRelease() {
+        niveau.verticalRelease();
+    }
+
+    public void horizontalRelease() {
+        niveau.horizontalRelease();
+    }
+
+    public void spacePress() {
+        niveau.spacePress();
+    }
+
+    public void spaceRelease() {
+        niveau.spaceRelease();
     }
 }

@@ -121,23 +121,23 @@ public class Player extends Actor {
     @Override
     void calculateDy(double dt) {
         if (verticalPressed) {
-            if (Math.abs(speedY) < vitesseMaximum) {
+            if (Math.abs(vitesseY) < vitesseMaximum) {
                 if (directionUp) {
-                    speedY -= acceleration * dt;
+                    vitesseY -= acceleration * dt;
                 } else {
-                    speedY += acceleration * dt;
+                    vitesseY += acceleration * dt;
                 }
             }
         } else {
-            if (speedY > 0) {
-                speedY -= acceleration * dt;
-                if (speedY < 0) {
-                    speedY = 0;
+            if (vitesseY > 0) {
+                vitesseY -= acceleration * dt;
+                if (vitesseY < 0) {
+                    vitesseY = 0;
                 }
-            } else if (speedY < 0) {
-                speedY += acceleration * dt;
-                if (speedY > 0) {
-                    speedY = 0;
+            } else if (vitesseY < 0) {
+                vitesseY += acceleration * dt;
+                if (vitesseY > 0) {
+                    vitesseY = 0;
                 }
             }
 
@@ -148,10 +148,10 @@ public class Player extends Actor {
     public void verifierCollision(double largeurEcran, double hauteurEcran, Camera camera) {
         if (y + hauteur > hauteurEcran) {
             y = hauteurEcran - hauteur;
-            speedY = 0;
+            vitesseY = 0;
         } else if (y < 0) {
             y = 0;
-            speedY = 0;
+            vitesseY = 0;
         }
         if (x < camera.getX()) {
             x = camera.getX();

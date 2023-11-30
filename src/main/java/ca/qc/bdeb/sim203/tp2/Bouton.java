@@ -40,7 +40,7 @@ public class Bouton {
      * @param clickY La coordonnée y du clic.
      * @return true si le bouton a été cliqué, false sinon.
      */
-    public boolean clicked(double clickX, double clickY) {
+    public boolean clique(double clickX, double clickY) {
         return clickX > x && clickX < x + largeur && clickY > y && clickY < y + hauteur;
     }
 

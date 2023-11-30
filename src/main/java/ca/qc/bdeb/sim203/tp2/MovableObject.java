@@ -10,7 +10,7 @@ public class MovableObject extends GameObject {
 
     static boolean debug;
     double vitesseX = 0;
-    double speedY = 0;
+    double vitesseY = 0;
     double acceleration = 0;
     double vitesseMaximum = 300;
 
@@ -63,7 +63,7 @@ public class MovableObject extends GameObject {
      */
     void deplacerObjet(double dt) {
         x += vitesseX * dt;
-        y += speedY * dt;
+        y += vitesseY * dt;
     }
 
     /**
