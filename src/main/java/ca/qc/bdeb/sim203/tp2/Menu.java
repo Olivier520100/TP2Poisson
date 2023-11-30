@@ -2,42 +2,70 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import java.util.Random;
 
+/**
+ * Cette classe représente l'écran du menu dans le jeu.
+ * Elle gère l'affichage et les interactions dans le menu principal.
+ */
 public class Menu {
+    private Image randomEnemy;
+    private Bouton retourBouton = new Bouton(false, "boutonretour.png", 400, 400);
+    private Bouton jouer = new Bouton(true, "boutoncommencer.png", 80, 80);
+    private Bouton infoBouton = new Bouton(true, "boutoninfo.png", 400, 400);
 
-    Bouton info =new Bouton(true,"./bouton3.png",30,30);
-    Bouton jouer = new Bouton(true,"./bouton.png", 200,30);
+    private boolean inInfo = false;
+    private boolean toGame = false;
 
-    Bouton retour = new Bouton(false, "./bouton2.png",30,30);
+    private Image backgroundInfo = new Image("./info.png");
+    private Image backgroundMain = new Image("./logo.png");
 
-    boolean inInfo = false;
-    boolean toGame = false;
-
-    Image backgroundInfo = new Image("./info.png");
-
-    void windowClick(double x, double y){
-        if (inInfo ){
-           inInfo = !(retour.clicked(x,y));
+    /**
+     * Traite les événements de clics dans la fenêtre.
+     * Cette méthode décide des actions à effectuer en fonction de l'endroit cliqué.
+     *
+     * @param x La coordonnée x du clic.
+     * @param y La coordonnée y du clic.
+     */
+    public void windowClick(double x, double y) {
+        if (inInfo) {
+            inInfo = !(infoBouton.clicked(x, y));
         } else {
-            if(!(inInfo = info.clicked(x, y))){
-                toGame = jouer.clicked(x,y);
+            if (!(inInfo = retourBouton.clicked(x, y))) {
+                toGame = jouer.clicked(x, y);
+            } else {
+                randomEnemy = new Image("./poisson" + new Random().nextInt(1, 6) + ".png");
             }
         }
     }
-    void draw(GraphicsContext context){
-        if (inInfo){
-            context.drawImage(backgroundInfo,0,0);
 
-            info.draw(context);
+    /**
+     * Dessine le menu sur le contexte graphique fourni.
+     * Cette méthode gère l'affichage de l'écran d'information et de l'écran principal du menu.
+     *
+     * @param context Le contexte graphique sur lequel dessiner.
+     */
+    public void draw(GraphicsContext context) {
+        context.clearRect(0, 0, 900, 520);
+
+        if (inInfo) {
+            context.drawImage(backgroundInfo, 0, 0);
+            context.drawImage(randomEnemy, 350, 100);
+            retourBouton.draw(context);
         } else {
-            context.clearRect(0,0,900,520);
+            context.drawImage(backgroundMain, 0, 0, 900, 520);
             jouer.draw(context);
-            retour.draw(context);
+            infoBouton.draw(context);
         }
     }
-    boolean isToGame(){
+
+    /**
+     * Vérifie si le jeu est prêt à commencer.
+     * Cette méthode permet de savoir si l'utilisateur a choisi de démarrer le jeu.
+     *
+     * @return true si le jeu est prêt à commencer, false sinon.
+     */
+    public boolean isToGame() {
         return toGame;
     }
-
-
 }

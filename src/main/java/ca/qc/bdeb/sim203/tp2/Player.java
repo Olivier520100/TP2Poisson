@@ -2,7 +2,6 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -14,20 +13,15 @@ public class Player extends Actor {
     Image damagedImage;
     boolean horizontalPressed = false;
     boolean verticalPressed = false;
-
     boolean directionRight = false;
     boolean directionUp = false;
-
     boolean shootPressed = false;
-
-    double invisibilitytimer = 0;
-    final double invisibilityconst = 2;
-    double shoottimer = 0;
-    final double shootconst = 0.5;
-    final int maxHealth = 4;
-
+    double invisibilityTimer = 0;
+    final double invisibilityConst = 2;
+    double shootTimer = 0;
+    final double shootConst = 0.5;
     boolean flicker = false;
-    int flickercount = 0;
+    int flickerCount = 0;
     ProjectileLauncher projectileLauncher;
     int health;
 
@@ -35,13 +29,15 @@ public class Player extends Actor {
         return health;
     }
 
-    public Player(double x, double y) {
+    public Player(double x, double y,int health) {
         super(x, y, 102, 90);
-        health = maxHealth;
+
+        this.health = health;
         projectileLauncher = new ProjectileLauncher();
-        baseImage = new Image("./charlotte.png");
-        movingImage = new Image("./charlotte-avant.png");
-        damagedImage = new Image("./charlotte-outch.png");
+        acceleration = 1000;
+        baseImage = new Image("charlotte.png");
+        movingImage = new Image("charlotte-avant.png");
+        damagedImage = new Image("charlotte-outch.png");
 
     }
 
@@ -50,9 +46,14 @@ public class Player extends Actor {
         directionRight = false;
 
     }
-    ProjectileType getPT(){
+
+    ProjectileType getPT() {
         return projectileLauncher.getCurrent();
     }
+    void setPT(ProjectileType pt) {
+        projectileLauncher.setCurrent(pt);
+    }
+
 
     void moveRight() {
         horizontalPressed = true;
@@ -88,7 +89,7 @@ public class Player extends Actor {
     }
 
     @Override
-    void calculatedx(double dt) {
+    void calculateDx(double dt) {
         if (horizontalPressed) {
             if (Math.abs(speedX) < maximumSpeed) {
                 if (directionRight) {
@@ -120,7 +121,7 @@ public class Player extends Actor {
     }
 
     @Override
-    void calculatedy(double dt) {
+    void calculateDy(double dt) {
         if (verticalPressed) {
             if (Math.abs(speedY) < maximumSpeed) {
                 if (directionUp) {
@@ -161,69 +162,48 @@ public class Player extends Actor {
 
     }
 
-    void shoot(ArrayList<Projectile> projectiles) {
-        if (shootPressed && shoottimer < 0) {
-            projectileLauncher.shoot(x + width, y + height / 4, projectiles);
-            shoottimer = shootconst;
+    void shoot() {
+        if (shootPressed && shootTimer < 0) {
+            projectileLauncher.shoot(x + width, y + height / 4);
+            shootTimer = shootConst;
         }
     }
 
-    void update(double dt, double screenWidth, double screenheight, Camera camera, ArrayList<Projectile> projectiles,
-                ArrayList<Enemy> enemies, Baril baril, double levelength) {
-        invisibilitytimer -= dt;
-        shoottimer -= dt;
+    public ProjectileLauncher getProjectileLauncher() {
+        return projectileLauncher;
+    }
 
-        physicsCalculate(dt);
+    void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
+        super.update(dt);
         checkCollision(screenWidth, screenheight, camera);
-        moveObject(dt);
-        objectCollision(enemies, baril);
-        shoot(projectiles);
-        moveCamera(camera, dt, levelength);
+        invisibilityTimer -= dt;
+        shootTimer -= dt;
+        shoot();
+        moveCamera(camera, dt, levelLength);
     }
-
-    void objectCollision(ArrayList<Enemy> enemies, Baril baril) {
-        boolean hit = false;
-        if (invisibilitytimer < 0) {
-            for (Enemy enemy : enemies) {
-                hit = checkCollisionWithObject(enemy);
-                if (hit) {
-                    invisibilitytimer = invisibilityconst;
-                    health -= 1;
-                    System.out.println("Hit");
-                    break;
-                }
-            }
-
-        }
-        if (!baril.isOuvert()) {
-            if (checkCollisionWithObject(baril)) {
-                baril.setOuvert(true);
-                projectileLauncher.setCurrent(baril.getProjectileInside());
-            }
-
+    void enemyHit(boolean hitBoolean) {
+        if (invisibilityTimer < 0 && hitBoolean == true) {
+            invisibilityTimer = invisibilityConst;
+            health-=1;
         }
     }
-
     @Override
     void draw(GraphicsContext context, Camera camera) {
-
-
-        double displayx = x - camera.getX();
-        if (speedX > 0 && invisibilitytimer < 0) {
-            context.drawImage(movingImage, displayx, y);
-        } else if (invisibilitytimer>0) {
-            if (flicker){
-                context.drawImage(damagedImage, displayx, y);
+        double displayX = x - camera.getX();
+        if (speedX > 0 && invisibilityTimer < 0) {
+            context.drawImage(movingImage, displayX, y);
+        } else if (invisibilityTimer > 0) {
+            if (flicker) {
+                context.drawImage(damagedImage, displayX, y);
             }
-            flickercount+=1;
-            if (flickercount>15) {
+            flickerCount += 1;
+            if (flickerCount > 15) {
                 flicker = !flicker;
-                flickercount=0;
+                flickerCount = 0;
             }
         } else {
-            context.drawImage(baseImage, displayx, y);
+            context.drawImage(baseImage, displayX, y);
         }
-
     }
 
     void moveCamera(Camera camera, double dt, double levellength) {
@@ -233,7 +213,8 @@ public class Player extends Actor {
             }
         }
     }
-    boolean isDead(){
+
+    boolean isDead() {
         return (health <= 0);
     }
 }

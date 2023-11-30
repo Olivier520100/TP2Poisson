@@ -1,49 +1,94 @@
 package ca.qc.bdeb.sim203.tp2;
 
-public class MovableObject extends GameObject{
+import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Cette classe représente un objet mobile dans le jeu.
+ * Elle gère les déplacements et la physique de l'objet.
+ */
+public class MovableObject extends GameObject {
+
+    static boolean debug;
     double speedX = 0;
     double speedY = 0;
-    double acceleration = 1000;
+    double acceleration = 0;
     double maximumSpeed = 300;
 
-    public boolean checkCollisionWithObject(MovableObject moveableObject){
-
-        return x < moveableObject.getX() + moveableObject.getWidth() && x + width > moveableObject.getX() && y < moveableObject.getY() + moveableObject.getHeight() && y + height > moveableObject.getY();
-    }
-
+    /**
+     * Constructeur pour créer un nouvel objet mobile.
+     *
+     * @param x Position en x de l'objet.
+     * @param y Position en y de l'objet.
+     * @param width Largeur de l'objet.
+     * @param height Hauteur de l'objet.
+     */
     public MovableObject(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
 
-    void calculatedx(double dt) {
-
+    /**
+     * Calcule le déplacement en x en fonction du temps écoulé.
+     *
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
+    void calculateDx(double dt) {
+        speedX += acceleration * dt;
     }
 
-    void calculatedy(double dt) {
-
+    /**
+     * Affiche un cadre de débogage autour de l'objet si le mode debug est activé.
+     *
+     * @param context Contexte graphique sur lequel dessiner.
+     * @param camera La caméra utilisée pour l'affichage.
+     */
+    void drawDebug(GraphicsContext context, Camera camera) {
+        if (debug) {
+            context.strokeRect(x - camera.getX(), y, width, height);
+        }
     }
+
+    /**
+     * Calcule le déplacement en y en fonction du temps écoulé.
+     *
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
+    void calculateDy(double dt) {
+        // Implémentation actuelle vide.
+    }
+
+    /**
+     * Déplace l'objet en fonction de sa vitesse et du temps écoulé.
+     *
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
     void moveObject(double dt) {
-
-        x += speedX*dt;
-        y += speedY*dt;
-
+        x += speedX * dt;
+        y += speedY * dt;
     }
 
+    /**
+     * Calcule la physique de l'objet en fonction du temps écoulé.
+     *
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
     void physicsCalculate(double dt) {
-
-        calculatedx(dt);
-        calculatedy(dt);
+        calculateDx(dt);
+        calculateDy(dt);
     }
 
-    void checkCollision(double screenWidth, double screenHeight, Camera camera) {
-
-    }
-
-    void update(double dt, double screenWidth, double screenheight, Camera camera) {
+    /**
+     * Met à jour l'état de l'objet en fonction du temps écoulé.
+     *
+     * @param dt Temps écoulé depuis la dernière mise à jour.
+     */
+    void update(double dt) {
         physicsCalculate(dt);
-        checkCollision(screenWidth, screenheight, camera);
         moveObject(dt);
     }
 
+    @Override
+    void draw(GraphicsContext context, Camera camera) {
+        double displayX = x - camera.getX();
+        context.drawImage(baseImage, displayX, y, width, height);
+    }
 }

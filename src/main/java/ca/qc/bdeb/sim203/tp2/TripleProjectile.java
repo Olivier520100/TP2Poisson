@@ -2,16 +2,13 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class TripleProjectile extends Projectile {
     double sinCoefficient;
     double period;
-    double timesincestart;
+    double timeSinceStart;
     double initialY;
-    final double PI = 3.1415926535;
-
 
     public TripleProjectile(double x, double y) {
         super(x, y, 20, 36);
@@ -21,10 +18,9 @@ public class TripleProjectile extends Projectile {
         initialY = y;
         baseImage = new Image("./hippocampe.png");
     }
-
     void moveObject(double dt) {
-        timesincestart += dt;
-        y = sinCoefficient * Math.sin(((2 * PI) / period) * (timesincestart)) + initialY;
+        timeSinceStart += dt;
+        y = sinCoefficient * Math.sin(((2 * Math.PI) / period) * (timeSinceStart)) + initialY;
         x += speedX * dt;
     }
 }

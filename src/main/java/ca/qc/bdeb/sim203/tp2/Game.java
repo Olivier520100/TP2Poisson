@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Game {
     int levelNumber = 1;
+    int maxHealth = 4;
+    int lastHealth = 4;
     Level level;
     double width;
     double height;
@@ -11,39 +13,51 @@ public class Game {
     Menu menu = new Menu();
 
 
-    public void downPress(){
+    public void downPress() {
         level.downPress();
     }
-    public void upPress(){
+
+    public void upPress() {
         level.upPress();
     }
-    public void leftPress(){
+
+    public void leftPress() {
         level.leftPress();
     }
-    public void rightPress(){
+
+    public void rightPress() {
         level.rightPress();
     }
-    public void verticalRelease(){
+
+    public void verticalRelease() {
         level.verticalRelease();
     }
-    public void horizontalRelease(){
+
+    public void horizontalRelease() {
         level.horizontalRelease();
     }
-    public void spacePress(){
+
+    public void spacePress() {
         level.spacePress();
     }
-    public void spaceRelease(){ level.spaceRelease(); }
 
-    public void screenClick(double x, double y){
-        menu.windowClick(x,y);
+    public void spaceRelease() {
+        level.spaceRelease();
+    }
+    public void debug() { level.debug();}
+    public void screenClick(double x, double y) {
+        if (!inGame) {
+            menu.windowClick(x, y);
+        }
     }
 
     public Game(double width, double height) {
         this.width = width;
         this.height = height;
-        level = new Level(width,height, levelNumber);
+        level = new Level(width, height, levelNumber,maxHealth);
     }
-    void update(GraphicsContext context, double dt){
+
+    public void update(GraphicsContext context, double dt) {
 
         if (inGame) {
             if (!level.isLevelEnd()) {
@@ -53,10 +67,13 @@ public class Game {
             } else {
                 if (!level.isLevelDead()) {
                     levelNumber += 1;
-                    level = new Level(width, height, levelNumber);
+                    lastHealth = level.getHealth();
+                    level = new Level(width, height, levelNumber,lastHealth);
                 } else {
                     menu = new Menu();
                     inGame = false;
+                    levelNumber = 1;
+                    level = new Level(width, height, levelNumber,maxHealth);
                 }
             }
 
