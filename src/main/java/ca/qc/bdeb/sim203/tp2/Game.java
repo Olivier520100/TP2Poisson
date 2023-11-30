@@ -34,12 +34,12 @@ public class Game {
     public void update(GraphicsContext context, double dt) {
 
         if (inGame) {
-            if (!niveau.isLevelEnd()) {
+            if (!niveau.isFinNiveau()) {
                 context.clearRect(0, 0, largeur, hauteur);
                 niveau.updateGame(dt, largeur, hauteur);
                 niveau.drawGame(context);
             } else {
-                if (!niveau.isLevelDead()) {
+                if (!niveau.isJoeurMort()) {
                     augmenterNiveau();
                 } else {
                     menu = new Menu();
@@ -82,7 +82,7 @@ public class Game {
     }
 
     public void rPress() {
-        niveau.setMaxHealth();
+        niveau.setVIES_MAXIMUM();
     }
 
     public void downPress() {
