@@ -18,11 +18,11 @@ public class GameObjectHandler {
         player.enemyHit(false);
     }
     static void playerBaril(Player player, Baril baril){
-        if (!(baril.isOpen())) {
+        if (!(baril.isOuvert())) {
             boolean hit = checkCollisionWithObject(player, baril);
             if ((hit)) {
-                player.setPT(baril.getProjectileInside());
-                baril.setOpen(true);
+                player.setPT(baril.getProjectileDisponible());
+                baril.setOuvert(true);
             }
         }
 
@@ -30,7 +30,7 @@ public class GameObjectHandler {
 
     static boolean checkCollisionWithObject(MovableObject moveableObject1, MovableObject moveableObject2) {
 
-        return moveableObject1.getX() < moveableObject2.getX() + moveableObject2.getWidth() && moveableObject1.getX() + moveableObject1.getWidth() > moveableObject2.getX() && moveableObject1.getY() < moveableObject2.getY() + moveableObject2.getHeight() && moveableObject1.getY() + moveableObject1.getHeight() > moveableObject2.getY();
+        return moveableObject1.getX() < moveableObject2.getX() + moveableObject2.getWidth() && moveableObject1.getX() + moveableObject1.getWidth() > moveableObject2.getX() && moveableObject1.getY() < moveableObject2.getY() + moveableObject2.getHauteur() && moveableObject1.getY() + moveableObject1.getHauteur() > moveableObject2.getY();
     }
     static void projectileEnemy(ArrayList<Projectile> projectiles, ArrayList<Enemy> enemies) {
         for (Projectile projectile : projectiles){

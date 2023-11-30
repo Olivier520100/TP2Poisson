@@ -103,7 +103,7 @@ public class Level {
             }
             player.update(dt, width, height, camera, levelLength);
             enemyUpdate(dt);
-            baril.update(dt, width, height, camera);
+            baril.update(dt);
             projectileUpdate(dt, height);
 
             GameObjectHandler.addProjectiles(player,projectiles);
@@ -124,7 +124,7 @@ public class Level {
     public void drawGame(GraphicsContext context) {
 
         context.setFill(colorFond);
-        context.fillRect(0, 0, camera.getWidth(), camera.getHeight());
+        context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
         for (BackgroundElement backgroundElement : backgroundElements) {
             backgroundElement.draw(context, camera);
         }
@@ -193,8 +193,8 @@ public class Level {
 
             double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
             double enemyWidth = enemyHeight / 120 * 104;
-            enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
-                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
+            enemies.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
+                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), enemyHeight, enemyWidth, levelNumber));
         }
     }
 

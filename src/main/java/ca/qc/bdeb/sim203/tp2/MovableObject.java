@@ -9,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class MovableObject extends GameObject {
 
     static boolean debug;
-    double speedX = 0;
+    double vitesseX = 0;
     double speedY = 0;
     double acceleration = 0;
     double vitesseMaximum = 300;
@@ -32,7 +32,7 @@ public class MovableObject extends GameObject {
      * @param dt Temps écoulé depuis le dernier calcul.
      */
     void calculateDx(double dt) {
-        speedX += acceleration * dt;
+        vitesseX += acceleration * dt;
     }
 
     /**
@@ -43,7 +43,7 @@ public class MovableObject extends GameObject {
      */
     void drawDebug(GraphicsContext context, Camera camera) {
         if (debug) {
-            context.strokeRect(x - camera.getX(), y, width, height);
+            context.strokeRect(x - camera.getX(), y, width, hauteur);
         }
     }
 
@@ -61,8 +61,8 @@ public class MovableObject extends GameObject {
      *
      * @param dt Temps écoulé depuis le dernier calcul.
      */
-    void moveObject(double dt) {
-        x += speedX * dt;
+    void deplacerObjet(double dt) {
+        x += vitesseX * dt;
         y += speedY * dt;
     }
 
@@ -83,12 +83,12 @@ public class MovableObject extends GameObject {
      */
     void update(double dt) {
         physicsCalculate(dt);
-        moveObject(dt);
+        deplacerObjet(dt);
     }
 
     @Override
     void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
-        context.drawImage(imageDeBase, displayX, y, width, height);
+        context.drawImage(imageDeBase, displayX, y, width, hauteur);
     }
 }

@@ -12,16 +12,16 @@ public class TripleProjectile extends Projectile {
 
     public TripleProjectile(double x, double y) {
         super(x, y, 20, 36);
-        speedX = 500;
+        vitesseX = 500;
         sinCoefficient = (double) (Math.pow(-1, (new Random()).nextInt(0, 2))) * (new Random()).nextDouble(30, 60);
         period = (new Random()).nextDouble(1, 3);
         initialY = y;
         imageDeBase = new Image("./hippocampe.png");
     }
-    void moveObject(double dt) {
+    void deplacerObjet(double dt) {
         timeSinceStart += dt;
         y = sinCoefficient * Math.sin(((2 * Math.PI) / period) * (timeSinceStart)) + initialY;
-        x += speedX * dt;
+        x += vitesseX * dt;
     }
 }
 

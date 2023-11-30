@@ -4,18 +4,18 @@ public class Camera {
 
     private double x;
     private double y;
-    private double height;
-    private double width;
+    private double hauteur;
+    private double largeur;
 
     public void setX(double x) {
         this.x = x;
     }
 
-    public Camera(double x, double y, double width, double height) {
+    public Camera(double x, double y, double largeur, double hauteur) {
         this.x = x;
         this.y = y;
-        this.height = height;
-        this.width = width;
+        this.hauteur = hauteur;
+        this.largeur = largeur;
     }
 
     public double getX() {
@@ -26,12 +26,12 @@ public class Camera {
         return y;
     }
 
-    public double getHeight() {
-        return height;
+    public double getHauteur() {
+        return hauteur;
     }
 
-    public double getWidth() {
-        return width;
+    public double getLargeur() {
+        return largeur;
     }
 
 }

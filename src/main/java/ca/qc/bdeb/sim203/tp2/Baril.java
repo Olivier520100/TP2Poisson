@@ -7,58 +7,58 @@ import java.util.Random;
 
 public class Baril extends MovableObject {
 
-    Image openImage;
-    ProjectileType projectileInside;
-    boolean open = false;
-   private final double functionOffset;
-   private final double sinCoefficient;
+  private Image barilOuvert;
+  private  ProjectileType projectileDisponible;
+  private  boolean ouvert = false;
+   private final double decalageFonction;
+   private final double coefficientSin;
 
-   public boolean isOpen() {
-        return open;
+   public boolean isOuvert() {
+        return ouvert;
     }
-    public void setOpen(boolean open) {
-        this.open = open;
+    public void setOuvert(boolean ouvert) {
+        this.ouvert = ouvert;
     }
 
-   private double timeSinceStart = 0;
+   private double tempsDepuisLeDebut = 0;
 
-    public Baril(double x, double y, double screenHeight) {
+    public Baril(double x, double y, double hauteurEcran) {
         super(x, y, 70, 83);
-        sinCoefficient = (screenHeight - height) / 2;
-        functionOffset = (3 / (2 * Math.PI)) * Math.asin((y - sinCoefficient) / sinCoefficient);
+        coefficientSin = (hauteurEcran - hauteur) / 2;
+        decalageFonction = (3 / (2 * Math.PI)) * Math.asin((y - coefficientSin) / coefficientSin);
         if ((new Random()).nextInt(0, 2) == 0) {
-            projectileInside = ProjectileType.TRIPLE;
+            projectileDisponible = ProjectileType.TRIPLE;
         } else {
-            projectileInside = ProjectileType.MAGNET;
+            projectileDisponible = ProjectileType.MAGNET;
         }
         imageDeBase = new Image("./baril.png");
-        openImage = new Image("./baril-ouvert.png");
+        barilOuvert = new Image("./baril-ouvert.png");
 
 
-    }
-    public ProjectileType getProjectileInside() {
-        return projectileInside;
-    }
-    public void updateTime(double dt) {
-        timeSinceStart += dt;
     }
     @Override
-    public void moveObject(double dt) {
-        y = sinCoefficient * Math.sin(((2 * Math.PI) / 3) * (timeSinceStart - functionOffset)) + sinCoefficient;
+    public void deplacerObjet(double dt) {
+        y = coefficientSin * Math.sin(((2 * Math.PI) / 3) * (tempsDepuisLeDebut - decalageFonction)) + coefficientSin;
     }
-
-     public void update(double dt, double screenWidth, double screenheight, Camera camera) {
-        moveObject(dt);
+     public void update(double dt) {
+        deplacerObjet(dt);
         updateTime(dt);
     }
 
     public void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
-        if (open) {
-            context.drawImage(openImage, displayX, y);
+        if (ouvert) {
+            context.drawImage(barilOuvert, displayX, y);
         } else {
             context.drawImage(imageDeBase, displayX, y);
         }
+    }
+
+    public ProjectileType getProjectileDisponible() {
+        return projectileDisponible;
+    }
+    public void updateTime(double dt) {
+        tempsDepuisLeDebut += dt;
     }
 
 }

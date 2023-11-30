@@ -89,29 +89,29 @@ public class Player extends Actor {
     @Override
     void calculateDx(double dt) {
         if (horizontalPressed) {
-            if (Math.abs(speedX) < vitesseMaximum) {
+            if (Math.abs(vitesseX) < vitesseMaximum) {
                 if (directionRight) {
-                    speedX += acceleration * dt;
-                    if (speedX > vitesseMaximum) {
-                        speedX = vitesseMaximum;
+                    vitesseX += acceleration * dt;
+                    if (vitesseX > vitesseMaximum) {
+                        vitesseX = vitesseMaximum;
                     }
                 } else {
-                    speedX -= acceleration * dt;
-                    if (Math.abs(speedX) > vitesseMaximum) {
-                        speedX = -vitesseMaximum;
+                    vitesseX -= acceleration * dt;
+                    if (Math.abs(vitesseX) > vitesseMaximum) {
+                        vitesseX = -vitesseMaximum;
                     }
                 }
             }
         } else {
-            if (speedX > 0) {
-                speedX -= acceleration * dt;
-                if (speedX < 0) {
-                    speedX = 0;
+            if (vitesseX > 0) {
+                vitesseX -= acceleration * dt;
+                if (vitesseX < 0) {
+                    vitesseX = 0;
                 }
-            } else if (speedX < 0) {
-                speedX += acceleration * dt;
-                if (speedX > 0) {
-                    speedX = 0;
+            } else if (vitesseX < 0) {
+                vitesseX += acceleration * dt;
+                if (vitesseX > 0) {
+                    vitesseX = 0;
                 }
             }
 
@@ -146,8 +146,8 @@ public class Player extends Actor {
 
     @Override
     public void verifierCollision(double largeurEcran, double hauteurEcran, Camera camera) {
-        if (y + height > hauteurEcran) {
-            y = hauteurEcran - height;
+        if (y + hauteur > hauteurEcran) {
+            y = hauteurEcran - hauteur;
             speedY = 0;
         } else if (y < 0) {
             y = 0;
@@ -155,14 +155,14 @@ public class Player extends Actor {
         }
         if (x < camera.getX()) {
             x = camera.getX();
-            speedX = 0;
+            vitesseX = 0;
         }
 
     }
 
     void shoot() {
         if (shootPressed && shootTimer < 0) {
-            projectileLauncher.shoot(x + width, y + height / 4);
+            projectileLauncher.shoot(x + width, y + hauteur / 4);
             shootTimer = shootConst;
         }
     }
@@ -188,7 +188,7 @@ public class Player extends Actor {
     @Override
     void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
-        if (speedX > 0 && invisibilityTimer < 0) {
+        if (vitesseX > 0 && invisibilityTimer < 0) {
             context.drawImage(movingImage, displayX, y);
         } else if (invisibilityTimer > 0) {
             if (flicker) {
@@ -205,9 +205,9 @@ public class Player extends Actor {
     }
 
     void moveCamera(Camera camera, double dt, double levellength) {
-        if ((camera.getX() + camera.getWidth()) < levellength) {
-            if (((x - camera.getX()) >= camera.getWidth() / 5)) {
-                camera.setX(camera.getX() + speedX * dt);
+        if ((camera.getX() + camera.getLargeur()) < levellength) {
+            if (((x - camera.getX()) >= camera.getLargeur() / 5)) {
+                camera.setX(camera.getX() + vitesseX * dt);
             }
         }
     }

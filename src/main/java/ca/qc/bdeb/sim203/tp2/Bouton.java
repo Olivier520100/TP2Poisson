@@ -9,38 +9,28 @@ import javafx.scene.image.Image;
  */
 public class Bouton {
 
-    private double height = 40;
-    private double width = 120;
+    private double hauteur = 40;
+    private double largeur = 120;
 
     private double x;
     private double y;
 
-    private boolean active;
 
     private Image buttonImage;
 
     /**
      * Constructeur pour créer un nouveau bouton.
      *
-     * @param active Indique si le bouton est actif.
-     * @param buttonImagePath Le chemin vers l'image du bouton.
+     *
+     * @param cheminButtonImage Le chemin vers l'image du bouton.
      * @param x La position en x du bouton.
      * @param y La position en y du bouton.
      */
-    public Bouton(boolean active, String buttonImagePath, double x, double y) {
-        this.active = active;
-        this.buttonImage = new Image(buttonImagePath);
+    public Bouton( String cheminButtonImage, double x, double y) {
+
+        this.buttonImage = new Image(cheminButtonImage);
         this.x = x;
         this.y = y;
-    }
-
-    /**
-     * Dessine le bouton sur le contexte graphique fourni.
-     *
-     * @param context Le contexte graphique sur lequel dessiner le bouton.
-     */
-    public void draw(GraphicsContext context) {
-        context.drawImage(buttonImage, x, y);
     }
 
     /**
@@ -51,6 +41,15 @@ public class Bouton {
      * @return true si le bouton a été cliqué, false sinon.
      */
     public boolean clicked(double clickX, double clickY) {
-        return clickX > x && clickX < x + width && clickY > y && clickY < y + height;
+        return clickX > x && clickX < x + largeur && clickY > y && clickY < y + hauteur;
+    }
+
+    /**
+     * Dessine le bouton sur le contexte graphique fourni.
+     *
+     * @param context Le contexte graphique sur lequel dessiner le bouton.
+     */
+    public void draw(GraphicsContext context) {
+        context.drawImage(buttonImage, x, y);
     }
 }

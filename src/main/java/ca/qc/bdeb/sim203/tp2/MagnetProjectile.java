@@ -12,7 +12,7 @@ public class MagnetProjectile extends Projectile {
     public MagnetProjectile(double x, double y) {
         super(x, y, 35, 29);
         System.out.println("MAGNET!");
-        speedX = 300;
+        vitesseX = 300;
         imageDeBase = new Image("./sardines.png");
     }
 
@@ -34,8 +34,8 @@ public class MagnetProjectile extends Projectile {
 
     @Override
     void calculateDx(double dt) {
-        speedX += dt * forceX;
-        speedX = capValues(speedX,300,500);
+        vitesseX += dt * forceX;
+        vitesseX = capValues(vitesseX,300,500);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class MagnetProjectile extends Projectile {
     }
 
     public void checkCollision(double screenHeight) {
-        if (y + height > screenHeight) {
-            y = screenHeight - height;
+        if (y + hauteur > screenHeight) {
+            y = screenHeight - hauteur;
             speedY = -speedY;
         } else if (y < 0) {
             y = 0;
