@@ -13,24 +13,39 @@ public class Game {
 
     private boolean debug = false;
     private Menu menu = new Menu();
-
-    public void debug() {
-        niveau.debug();
-        debug = !debug;
-    }
-
-    public void screenClick(double x, double y) {
-        if (!inGame) {
-            menu.windowClick(x, y);
-        }
-    }
-
     public Game(double largeur, double hauteur) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         niveau = new Level(largeur, hauteur, numeroNiveau, vieMaximum);
     }
 
+    /**
+     * set debug to opposee de debug courant
+     */
+    public void debug() {
+        niveau.debug();
+        debug = !debug;
+    }
+
+    /**
+     * click sur bouton dans menu
+     * @param x
+     * @param y
+     */
+    public void screenClick(double x, double y) {
+        if (!inGame) {
+            menu.windowClick(x, y);
+        }
+    }
+
+
+
+
+    /**
+     * update jeu, si inGame alors niveau, sinon menu
+     * @param context
+     * @param dt
+     */
     public void update(GraphicsContext context, double dt) {
 
         if (inGame) {

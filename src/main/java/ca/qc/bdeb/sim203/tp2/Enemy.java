@@ -6,6 +6,14 @@ import java.util.Random;
 
 public class Enemy extends Actor {
 
+    /**
+     * Genere enemy et vitesse aleatoire ainsi que hauteur aleatoire
+     * @param x
+     * @param y
+     * @param largeur
+     * @param hauteur
+     * @param niveau
+     */
     public Enemy(double x, double y, double largeur, double hauteur, double niveau) {
         super(x, y, largeur, hauteur);
         vitesseX = -(100 * Math.pow(niveau, 0.333) + 200);

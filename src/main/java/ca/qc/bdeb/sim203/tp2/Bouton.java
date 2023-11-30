@@ -21,7 +21,7 @@ public class Bouton {
     /**
      * Constructeur pour créer un nouveau bouton.
      *
-     * @param cheminButtonImage Le chemin vers l'image du bouton.
+     * @param cheminButtonImage Le file vers l'image du bouton.
      * @param x                 La position en x du bouton.
      * @param y                 La position en y du bouton.
      */
@@ -35,8 +35,8 @@ public class Bouton {
     /**
      * Vérifie si le bouton a été cliqué.
      *
-     * @param clickX La coordonnée x du clic.
-     * @param clickY La coordonnée y du clic.
+     * @param clickX .
+     * @param clickY
      * @return true si le bouton a été cliqué, false sinon.
      */
     public boolean clique(double clickX, double clickY) {
@@ -46,7 +46,7 @@ public class Bouton {
     /**
      * Dessine le bouton sur le contexte graphique fourni.
      *
-     * @param context Le contexte graphique sur lequel dessiner le bouton.
+     * @param context
      */
     public void draw(GraphicsContext context) {
         context.drawImage(buttonImage, x, y);
