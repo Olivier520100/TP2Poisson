@@ -10,6 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * @Authors Olivier Saint-Vincent et Joe El-Hachem
+ * @DA 2238102 et 2265609
+ * @DESCRIPTION Charlotte la Barbotte est un jeu de poisson de style side scrolling shoot-em-ups.
+ */
+
 public class MainJavaFX extends Application {
 
     private static final int WINDOW_HEIGHT = 520;
