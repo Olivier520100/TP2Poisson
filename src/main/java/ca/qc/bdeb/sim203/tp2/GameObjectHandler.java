@@ -100,7 +100,7 @@ public class GameObjectHandler {
     }
 
     public static void setMaxHealth(Player joueur, int vieMaximum) {
-        joueur.setHealth(vieMaximum);
+        joueur.setVie(vieMaximum);
     }
 
 
