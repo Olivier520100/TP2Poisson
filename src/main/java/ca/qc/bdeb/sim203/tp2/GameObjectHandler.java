@@ -87,6 +87,13 @@ public class GameObjectHandler {
             }
         }
     }
+    public static void moveCamera(Player player, Camera camera, double levellength){
+        if ((camera.getX() + camera.getLargeur()) < levellength) {
+            if (((player.getX() - camera.getX()) >= camera.getLargeur() / 5)) {
+                camera.setX(player.getX()+- camera.getLargeur()/5);
+            }
+        }
+    }
 
 
 

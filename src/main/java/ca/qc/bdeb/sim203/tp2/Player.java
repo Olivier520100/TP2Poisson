@@ -170,14 +170,12 @@ public class Player extends Actor {
     public ProjectileLauncher getProjectileLauncher() {
         return projectileLauncher;
     }
-
-    void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
+    void update(double dt, double screenWidth, double screenheight, Camera camera) {
         super.update(dt);
         verifierCollision(screenWidth, screenheight, camera);
         invisibilityTimer -= dt;
         shootTimer -= dt;
         shoot();
-        moveCamera(camera, dt, levelLength);
     }
     void enemyHit(boolean hitBoolean) {
         if (invisibilityTimer < 0 && hitBoolean == true) {
@@ -206,14 +204,6 @@ public class Player extends Actor {
             }
         } else {
             context.drawImage(imageDeBase, displayX, y);
-        }
-    }
-
-    void moveCamera(Camera camera, double dt, double levellength) {
-        if ((camera.getX() + camera.getLargeur()) < levellength) {
-            if (((x - camera.getX()) >= camera.getLargeur() / 5)) {
-                camera.setX(camera.getX() + vitesseX * dt);
-            }
         }
     }
 

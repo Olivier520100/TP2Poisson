@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
@@ -40,6 +41,7 @@ public class Level {
     final int MAXHEALTH = 4;
 
     public Level(double width, double height, int levelNumber, int health) {
+        MovableObject.debug = false;
         enemies = new ArrayList<>();
 
         player = new Player(0, 260,health);
@@ -109,12 +111,13 @@ public class Level {
                 lastSpawn = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera, levelLength);
+            player.update(dt, width, height, camera);
             enemyUpdate(dt);
             baril.update(dt);
             projectileUpdate(dt, height);
 
             GameObjectHandler.addProjectiles(player,projectiles);
+            GameObjectHandler.moveCamera(player,camera,levelLength);
             checkCollisions();
             topBar.setViesRestantes(player.getHealth());
             topBar.setActuel(player.getPT());
@@ -136,10 +139,9 @@ public class Level {
         for (BackgroundElement backgroundElement : backgroundElements) {
             backgroundElement.draw(context, camera);
         }
-        player.draw(context, camera);
-        player.drawDebug(context, camera);
+        drawObject(player, context, camera);
         enemyDraw(context, camera);
-        baril.draw(context, camera);
+        drawObject(baril, context, camera);
         projectileDraw(context);
         topBar.draw(context);
         if (debug){
@@ -163,6 +165,10 @@ public class Level {
         }
     }
 
+    public void drawObject(MovableObject go, GraphicsContext context, Camera camera){
+        go.draw(context, camera);
+        go.drawDebug(context, camera);
+    }
     public void enemyUpdate(double dt) {
         for (Enemy enemy : enemies) {
             enemy.update(dt);
@@ -171,8 +177,7 @@ public class Level {
 
     public void enemyDraw(GraphicsContext context, Camera camera) {
         for (Enemy enemy : enemies) {
-            enemy.draw(context, camera);
-            enemy.drawDebug(context, camera);
+            drawObject(enemy,context,camera);
         }
     }
 
@@ -190,9 +195,7 @@ public class Level {
 
     public void projectileDraw(GraphicsContext context) {
         for (Projectile projectile : projectiles) {
-            projectile.draw(context, camera);
-            projectile.drawDebug(context, camera);
-
+            drawObject(projectile,context,camera);
         }
     }
 
@@ -258,7 +261,6 @@ public class Level {
         }
 
     }
-
     public void setMaxHealth() {
         if (debug) {
             GameObjectHandler.setMaxHealth(player,MAXHEALTH);
