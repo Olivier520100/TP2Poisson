@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class Baril extends MovableObject {
 
-    private Image barilOuvert;
-    private ProjectileType projectileDisponible;
+    private final Image barilOuvert;
+    private final ProjectileType projectileDisponible;
     private boolean ouvert = false;
     private final double decalageFonction;
     private final double coefficientSin;
@@ -25,8 +25,9 @@ public class Baril extends MovableObject {
 
     /**
      * Ceci est le contructeur du baril
-     * @param x la postion en x initial du baril
-     * @param y la position en y initial du baril
+     *
+     * @param x            la postion en x initial du baril
+     * @param y            la position en y initial du baril
      * @param hauteurEcran
      */
     public Baril(double x, double y, double hauteurEcran) {
@@ -46,6 +47,7 @@ public class Baril extends MovableObject {
 
     /**
      * Cette méthode calcule le y du baril par rapport à un variation de temps
+     *
      * @param dt Temps écoulé depuis le dernier calcul.
      */
     @Override

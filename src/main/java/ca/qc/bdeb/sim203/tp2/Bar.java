@@ -15,9 +15,9 @@ public class Bar {
 
     private ProjectileType actuel = ProjectileType.BASIC;
 
-    private Image imageBasique = new Image("./etoile.png");
-    private Image imageHippocampe = new Image("./hippocampe.png");
-    private Image imageSardines = new Image("./sardines.png");
+    private final Image imageBasique = new Image("./etoile.png");
+    private final Image imageHippocampe = new Image("./hippocampe.png");
+    private final Image imageSardines = new Image("./sardines.png");
 
     public void setViesRestantes(int viesRestantes) {
         this.viesRestantes = viesRestantes;
@@ -30,6 +30,7 @@ public class Bar {
     /**
      * Cette methode permet de dessiner la barre de vie sur l'écran. Elle prend en consideration le pourcentage de vie
      * restant du joueur, et elle dessine le type de projectile utilisé aussi.
+     *
      * @param context
      */
     public void draw(GraphicsContext context) {

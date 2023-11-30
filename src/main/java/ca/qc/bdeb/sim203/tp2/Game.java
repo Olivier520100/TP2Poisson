@@ -13,6 +13,7 @@ public class Game {
 
     private boolean debug = false;
     private Menu menu = new Menu();
+
     public Game(double largeur, double hauteur) {
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -29,6 +30,7 @@ public class Game {
 
     /**
      * click sur bouton dans menu
+     *
      * @param x
      * @param y
      */
@@ -39,10 +41,9 @@ public class Game {
     }
 
 
-
-
     /**
      * update jeu, si inGame alors niveau, sinon menu
+     *
      * @param context
      * @param dt
      */

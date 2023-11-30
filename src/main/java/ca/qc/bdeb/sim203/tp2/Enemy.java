@@ -8,6 +8,7 @@ public class Enemy extends Actor {
 
     /**
      * Genere enemy et vitesse aleatoire ainsi que hauteur aleatoire
+     *
      * @param x
      * @param y
      * @param largeur

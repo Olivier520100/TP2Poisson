@@ -20,7 +20,7 @@ public class Player extends Actor {
     private final double shootConst = 0.5;
     private boolean flicker = false;
     private int flickerCount = 0;
-    private ProjectileLauncher projectileLauncher;
+    private final ProjectileLauncher projectileLauncher;
     private int vie;
 
     /**
