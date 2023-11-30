@@ -154,11 +154,11 @@ public class Level {
 
         if (levelDead) {
             if (displayTime > 0) {
-                textFinNiveau.draw(context, camera, joueur.getX() - 350,Color.RED);
+                textFinNiveau.draw(context, Color.RED);
             }
         } else {
             if (displayTime > 0) {
-                textDebutNiveau.draw(context, camera, 0, Color.WHITE);
+                textDebutNiveau.draw(context, Color.WHITE);
             }
         }
     }

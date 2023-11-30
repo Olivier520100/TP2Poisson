@@ -31,13 +31,11 @@ public class MainText {
      * Dessine le texte sur le contexte graphique fourni.
      *
      * @param context Le contexte graphique sur lequel dessiner le texte.
-     * @param camera La caméra utilisée pour l'affichage.
-     * @param offset Le décalage horizontal pour l'affichage du texte.
      * @param color La couleur du texte.
      */
-    void draw(GraphicsContext context, Camera camera, double offset, Color color) {
+    void draw(GraphicsContext context, Color color) {
         context.setFill(color);
         context.setFont(Font.font(fontHeight));
-        context.fillText(text, offset + largeur / 3 - camera.getX(), hauteur / 2);
+        context.fillText(text, largeur / 5, hauteur / 2);
     }
 }
