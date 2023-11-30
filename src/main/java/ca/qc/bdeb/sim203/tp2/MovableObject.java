@@ -3,8 +3,7 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Cette classe représente un objet mobile dans le jeu.
- * Elle gère les déplacements et la physique de l'objet.
+ * Cette classe représente un objet qui bouge dans le jeu.
  */
 public class MovableObject extends GameObject {
 
@@ -15,7 +14,7 @@ public class MovableObject extends GameObject {
     double vitesseMaximum = 300;
 
     /**
-     * Constructeur pour créer un nouvel objet mobile.
+     *
      *
      * @param x Position en x de l'objet.
      * @param y Position en y de l'objet.
@@ -66,21 +65,13 @@ public class MovableObject extends GameObject {
         y += vitesseY * dt;
     }
 
-    /**
-     * Calcule la physique de l'objet en fonction du temps écoulé.
-     *
-     * @param dt Temps écoulé depuis le dernier calcul.
-     */
+
     void physicsCalculate(double dt) {
         calculateDx(dt);
         calculateDy(dt);
     }
 
-    /**
-     * Met à jour l'état de l'objet en fonction du temps écoulé.
-     *
-     * @param dt Temps écoulé depuis la dernière mise à jour.
-     */
+
     void update(double dt) {
         physicsCalculate(dt);
         deplacerObjet(dt);
