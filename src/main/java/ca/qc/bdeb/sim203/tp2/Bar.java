@@ -27,6 +27,11 @@ public class Bar {
         this.actuel = actuel;
     }
 
+    /**
+     * Cette methode permet de dessiner la barre de vie sur l'écran. Elle prend en consideration le pourcentage de vie
+     * restant du joueur, et elle dessine le type de projectile utilisé aussi.
+     * @param context
+     */
     public void draw(GraphicsContext context) {
         final int xDessin = 25;
         final double largeurBarVie = 150;
