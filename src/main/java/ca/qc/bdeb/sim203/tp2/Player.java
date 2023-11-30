@@ -33,7 +33,7 @@ public class Player extends Actor {
         this.health = health;
         projectileLauncher = new ProjectileLauncher();
         acceleration = 1000;
-        baseImage = new Image("charlotte.png");
+        imageDeBase = new Image("charlotte.png");
         movingImage = new Image("charlotte-avant.png");
         damagedImage = new Image("charlotte-outch.png");
 
@@ -200,7 +200,7 @@ public class Player extends Actor {
                 flickerCount = 0;
             }
         } else {
-            context.drawImage(baseImage, displayX, y);
+            context.drawImage(imageDeBase, displayX, y);
         }
     }
 

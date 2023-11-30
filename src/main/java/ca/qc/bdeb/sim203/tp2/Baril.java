@@ -2,7 +2,6 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 import java.util.Random;
 
@@ -32,7 +31,7 @@ public class Baril extends MovableObject {
         } else {
             projectileInside = ProjectileType.MAGNET;
         }
-        baseImage = new Image("./baril.png");
+        imageDeBase = new Image("./baril.png");
         openImage = new Image("./baril-ouvert.png");
 
 
@@ -58,7 +57,7 @@ public class Baril extends MovableObject {
         if (open) {
             context.drawImage(openImage, displayX, y);
         } else {
-            context.drawImage(baseImage, displayX, y);
+            context.drawImage(imageDeBase, displayX, y);
         }
     }
 

@@ -12,7 +12,7 @@ public class MagnetProjectile extends Projectile {
     public MagnetProjectile(double x, double y) {
         super(x, y, 35, 29);
         speedX = 300;
-        baseImage = new Image("./sardines.png");
+        imageDeBase = new Image("./sardines.png");
     }
 
     void calculateForce(Enemy enemy) {

@@ -89,6 +89,6 @@ public class MovableObject extends GameObject {
     @Override
     void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
-        context.drawImage(baseImage, displayX, y, width, height);
+        context.drawImage(imageDeBase, displayX, y, width, height);
     }
 }

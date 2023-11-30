@@ -110,8 +110,8 @@ public class Level {
 
             GameObjectHandler.addProjectiles(player,projectiles);
             checkCollisions();
-            topBar.setHeartsLeft(player.getHealth());
-            topBar.setCurrent(player.getPT());
+            topBar.setViesRestantes(player.getHealth());
+            topBar.setActuel(player.getPT());
 
         }
         if (levelDead) {
