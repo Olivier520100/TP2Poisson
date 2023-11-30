@@ -5,25 +5,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
 
 public class Level {
-    Player player;
+    Player joueur;
     ArrayList<Enemy> enemies;
     Baril baril;
-    MainText levelStart;
-    MainText levelDeadText;
+    MainText textDebutNiveau;
+    MainText textFinNiveau;
     ArrayList<Projectile> projectiles = new ArrayList<>();
-    double levelLength;
-    int levelNumber;
+    double longueurNiveau;
+    int nombreNiveau;
     Camera camera;
-    ArrayList<BackgroundElement> backgroundElements = new ArrayList<>();
+    ArrayList<BackgroundElement> objetsDuFond = new ArrayList<>();
 
 
-    double lastSpawn = 0;
+    double tempsDepuisDernierAjout = 0;
     double displayTime = 4;
 
     double respawnTime;
@@ -40,55 +39,55 @@ public class Level {
 
     final int MAXHEALTH = 4;
 
-    public Level(double width, double height, int levelNumber, int health) {
+    public Level(double width, double height, int nombreNiveau, int health) {
         MovableObject.debug = false;
         enemies = new ArrayList<>();
 
-        player = new Player(0, 260,health);
+        joueur = new Player(0, 260,health);
         camera = new Camera(0, 0, width, height);
-        this.levelNumber = levelNumber;
-        respawnTime = 0.75 + 1 / (Math.sqrt(levelNumber));
-        levelLength = 8 * width;
+        this.nombreNiveau = nombreNiveau;
+        respawnTime = 0.75 + 1 / (Math.sqrt(nombreNiveau));
+        longueurNiveau = 8 * width;
         colorFond  = Color.hsb((new Random()).nextInt(190,270),0.84,1);
-        double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * levelLength;
+        double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * longueurNiveau;
         baril = new Baril(placementBaril, height / 2, height);
         enemyCreation();
         backgroundElementsCreation(height);
-        levelStart = new MainText("NIVEAU " + levelNumber, width, height);
-        levelDeadText = new MainText("FIN DE PARTIE  ", width, height);
+        textDebutNiveau = new MainText("NIVEAU " + nombreNiveau, width, height);
+        textFinNiveau = new MainText("FIN DE PARTIE  ", width, height);
 
     }
 
     public void downPress() {
-        player.moveDown();
+        joueur.moveDown();
     }
 
     public void upPress() {
-        player.moveUp();
+        joueur.moveUp();
     }
 
     public void leftPress() {
-        player.moveLeft();
+        joueur.moveLeft();
     }
 
     public void rightPress() {
-        player.moveRight();
+        joueur.moveRight();
     }
 
     public void verticalRelease() {
-        player.stopMoveVertical();
+        joueur.stopMoveVertical();
     }
 
     public void horizontalRelease() {
-        player.stopMoveHorizontal();
+        joueur.stopMoveHorizontal();
     }
 
     public void spacePress() {
-        player.shootDown();
+        joueur.shootDown();
     }
 
     public void spaceRelease() {
-        player.shootRelease();
+        joueur.shootRelease();
     }
     public void debug(){
         MovableObject.debug = !MovableObject.debug;
@@ -106,21 +105,21 @@ public class Level {
             if (levelDead) {
                 displayTime = 4;
             }
-            lastSpawn += dt;
-            if (lastSpawn > respawnTime) {
-                lastSpawn = 0;
+            tempsDepuisDernierAjout += dt;
+            if (tempsDepuisDernierAjout > respawnTime) {
+                tempsDepuisDernierAjout = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera);
+            joueur.update(dt, width, height, camera);
             enemyUpdate(dt);
             baril.update(dt);
             projectileUpdate(dt, height);
 
-            GameObjectHandler.addProjectiles(player,projectiles);
-            GameObjectHandler.moveCamera(player,camera,levelLength);
+            GameObjectHandler.addProjectiles(joueur,projectiles);
+            GameObjectHandler.moveCamera(joueur,camera, longueurNiveau);
             checkCollisions();
-            topBar.setViesRestantes(player.getHealth());
-            topBar.setActuel(player.getPT());
+            topBar.setViesRestantes(joueur.getHealth());
+            topBar.setActuel(joueur.getPT());
 
         }
         if (levelDead) {
@@ -136,7 +135,7 @@ public class Level {
 
         bgDraw(context,camera);
 
-        drawObject(player, context, camera);
+        drawObject(joueur, context, camera);
 
         enemyDraw(context, camera);
 
@@ -150,16 +149,16 @@ public class Level {
             context.setFont(Font.font(12));
             context.fillText("NB Poissons : " + enemies.size(),25, 100 );
             context.fillText("NB Projectiles : " + projectiles.size(), 25, 120);
-            context.fillText("Position Charlotte : " + ( player.getX()/levelLength * 100 ) + "%", 25, 140);
+            context.fillText("Position Charlotte : " + ( joueur.getX()/ longueurNiveau * 100 ) + "%", 25, 140);
         }
 
         if (levelDead) {
             if (displayTime > 0) {
-                levelDeadText.draw(context, camera, player.getX() - 350,Color.RED);
+                textFinNiveau.draw(context, camera, joueur.getX() - 350,Color.RED);
             }
         } else {
             if (displayTime > 0) {
-                levelStart.draw(context, camera, 0, Color.WHITE);
+                textDebutNiveau.draw(context, camera, 0, Color.WHITE);
             }
         }
     }
@@ -185,7 +184,7 @@ public class Level {
     public void bgDraw(GraphicsContext context, Camera camera) {
         context.setFill(colorFond);
         context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
-        for (BackgroundElement backgroundElement : backgroundElements) {
+        for (BackgroundElement backgroundElement : objetsDuFond) {
             drawObject(backgroundElement,context,camera);
         }
     }
@@ -214,19 +213,19 @@ public class Level {
     }
 
     public void enemyCreation() {
-        GameObjectHandler.addEnemies(enemies,camera,levelNumber);
+        GameObjectHandler.addEnemies(enemies,camera, nombreNiveau);
     }
 
     public void levelEndCheck() {
-        levelEnd = (player.getX() > levelLength);
+        levelEnd = (joueur.getX() > longueurNiveau);
     }
 
     public void levelDeadCheck() {
-        levelDead = (player.isDead());
+        levelDead = (joueur.isDead());
     }
 
     public void backgroundElementsCreation(double height) {
-        GameObjectHandler.createBackgroundElements(backgroundElements, height, levelLength);
+        GameObjectHandler.createBackgroundElements(objetsDuFond, height, longueurNiveau);
     }
 
     public boolean isLevelEnd() {
@@ -238,37 +237,37 @@ public class Level {
     }
 
     public int getHealth(){
-        return player.getHealth();
+        return joueur.getHealth();
     }
     public void checkCollisions(){
-        GameObjectHandler.playerEnemy(player,enemies);
+        GameObjectHandler.playerEnemy(joueur,enemies);
         GameObjectHandler.projectileEnemy(projectiles,enemies);
-        GameObjectHandler.playerBaril(player,baril);
+        GameObjectHandler.playerBaril(joueur,baril);
     }
 
     public void setProjectileType1() {
         if (debug){
-            GameObjectHandler.setProjectile(player, BASIC);
+            GameObjectHandler.setProjectile(joueur, BASIC);
 
         }
     }
 
     public void setProjectileType2() {
         if (debug) {
-            GameObjectHandler.setProjectile(player, TRIPLE);
+            GameObjectHandler.setProjectile(joueur, TRIPLE);
         }
 
     }
 
     public void setProjectileType3() {
         if (debug) {
-            GameObjectHandler.setProjectile(player, MAGNET);
+            GameObjectHandler.setProjectile(joueur, MAGNET);
         }
 
     }
     public void setMaxHealth() {
         if (debug) {
-            GameObjectHandler.setMaxHealth(player,MAXHEALTH);
+            GameObjectHandler.setMaxHealth(joueur,MAXHEALTH);
         }
     }
 

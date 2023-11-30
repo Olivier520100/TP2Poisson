@@ -125,7 +125,6 @@ public class Player extends Actor {
     @Override
     void calculateDy(double dt) {
         vitesseY = calculateSpeed(dt, verticalPressed,vitesseY, !directionUp);
-
     }
 
     @Override
