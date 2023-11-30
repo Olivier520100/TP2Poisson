@@ -1,26 +1,26 @@
-package ca.qc.bdeb.sim203.tp2;
+    package ca.qc.bdeb.sim203.tp2;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+    import javafx.scene.canvas.GraphicsContext;
+    import javafx.scene.image.Image;
 
-import java.util.Random;
+    import java.util.Random;
 
-public class Baril extends MovableObject {
+    public class Baril extends MovableObject {
 
-  private Image barilOuvert;
-  private  ProjectileType projectileDisponible;
-  private  boolean ouvert = false;
-   private final double decalageFonction;
-   private final double coefficientSin;
+    private Image barilOuvert;
+    private  ProjectileType projectileDisponible;
+    private  boolean ouvert = false;
+    private final double decalageFonction;
+    private final double coefficientSin;
 
-   public boolean isOuvert() {
+    public boolean isOuvert() {
         return ouvert;
     }
     public void setOuvert(boolean ouvert) {
         this.ouvert = ouvert;
     }
 
-   private double tempsDepuisLeDebut = 0;
+    private double tempsDepuisLeDebut = 0;
 
     public Baril(double x, double y, double hauteurEcran) {
         super(x, y, 70, 83);
@@ -60,5 +60,4 @@ public class Baril extends MovableObject {
     public void updateTime(double dt) {
         tempsDepuisLeDebut += dt;
     }
-
-}
+    }
