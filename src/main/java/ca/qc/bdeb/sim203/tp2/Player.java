@@ -86,61 +86,46 @@ public class Player extends Actor {
         verticalPressed = false;
     }
 
-    @Override
-    void calculateDx(double dt) {
-        if (horizontalPressed) {
-            if (Math.abs(vitesseX) < vitesseMaximum) {
-                if (directionRight) {
-                    vitesseX += acceleration * dt;
-                    if (vitesseX > vitesseMaximum) {
-                        vitesseX = vitesseMaximum;
+    double calculateSpeed(double dt, boolean pressed, double currentSpeed, boolean direction){
+        if (pressed) {
+            if (Math.abs(currentSpeed) < vitesseMaximum) {
+                if (direction) {
+                    currentSpeed += acceleration * dt;
+                    if (currentSpeed > vitesseMaximum) {
+                        currentSpeed = vitesseMaximum;
                     }
                 } else {
-                    vitesseX -= acceleration * dt;
-                    if (Math.abs(vitesseX) > vitesseMaximum) {
-                        vitesseX = -vitesseMaximum;
+                    currentSpeed -= acceleration * dt;
+                    if (Math.abs(currentSpeed) > vitesseMaximum) {
+                        currentSpeed = -vitesseMaximum;
                     }
                 }
             }
         } else {
-            if (vitesseX > 0) {
-                vitesseX -= acceleration * dt;
-                if (vitesseX < 0) {
-                    vitesseX = 0;
+            if (currentSpeed > 0) {
+                currentSpeed -= acceleration * dt;
+                if (currentSpeed < 0) {
+                    currentSpeed = 0;
                 }
-            } else if (vitesseX < 0) {
-                vitesseX += acceleration * dt;
-                if (vitesseX > 0) {
-                    vitesseX = 0;
+            } else if (currentSpeed < 0) {
+                currentSpeed += acceleration * dt;
+                if (currentSpeed > 0) {
+                    currentSpeed = 0;
                 }
             }
 
         }
+        return currentSpeed;
+    }
+    @Override
+    void calculateDx(double dt) {
+        vitesseX = calculateSpeed(dt, horizontalPressed,vitesseX, directionRight);
     }
 
     @Override
     void calculateDy(double dt) {
-        if (verticalPressed) {
-            if (Math.abs(vitesseY) < vitesseMaximum) {
-                if (directionUp) {
-                    vitesseY -= acceleration * dt;
-                } else {
-                    vitesseY += acceleration * dt;
-                }
-            }
-        } else {
-            if (vitesseY > 0) {
-                vitesseY -= acceleration * dt;
-                if (vitesseY < 0) {
-                    vitesseY = 0;
-                }
-            } else if (vitesseY < 0) {
-                vitesseY += acceleration * dt;
-                if (vitesseY > 0) {
-                    vitesseY = 0;
-                }
-            }
-        }
+        vitesseY = calculateSpeed(dt, verticalPressed,vitesseY, !directionUp);
+
     }
 
     @Override
