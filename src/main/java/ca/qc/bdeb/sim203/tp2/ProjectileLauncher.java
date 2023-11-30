@@ -3,7 +3,7 @@ package ca.qc.bdeb.sim203.tp2;
 import java.util.ArrayList;
 
 /**
- * Cette classe représente un lanceur de projectiles dans le jeu.
+ *
  * Elle gère les différents types de projectiles et leur lancement.
  */
 public class ProjectileLauncher {
@@ -11,8 +11,7 @@ public class ProjectileLauncher {
     private ArrayList<Projectile> projectilesDisponibles = new ArrayList<>();
 
     /**
-     * Constructeur pour créer un nouveau lanceur de projectiles.
-     * Initialise le type de projectile par défaut à BASIC.
+     * Constructor et set le type a basic
      */
     public ProjectileLauncher() {
         current = ProjectileType.BASIC;
@@ -28,7 +27,7 @@ public class ProjectileLauncher {
     }
 
     /**
-     * Récupère la liste des projectiles actuellement dans le lanceur.
+     *
      *
      * @return La liste des projectiles.
      */
@@ -38,10 +37,9 @@ public class ProjectileLauncher {
 
     /**
      * Tire un projectile du type actuellement sélectionné.
-     * Les projectiles sont lancés à partir des coordonnées spécifiées.
      *
-     * @param x La coordonnée x d'où le projectile est tiré.
-     * @param y La coordonnée y d'où le projectile est tiré.
+     * @param x coordonnée x
+     * @param y coordonnée y
      */
     public void shoot(double x, double y) {
         projectilesDisponibles.clear();
@@ -57,7 +55,7 @@ public class ProjectileLauncher {
     }
 
     /**
-     * Récupère le type de projectile actuellement sélectionné pour le lanceur.
+     *
      *
      * @return Le type de projectile actuel.
      */

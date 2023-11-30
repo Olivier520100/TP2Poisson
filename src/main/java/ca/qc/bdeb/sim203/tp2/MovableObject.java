@@ -52,7 +52,7 @@ public class MovableObject extends GameObject {
      * @param dt Temps écoulé depuis le dernier calcul.
      */
     void calculateDy(double dt) {
-        // Implémentation actuelle vide.
+
     }
 
     /**
@@ -65,6 +65,10 @@ public class MovableObject extends GameObject {
         y += vitesseY * dt;
     }
 
+    /**
+     * calcul physic
+     * @param dt
+     */
 
     void physicsCalculate(double dt) {
         calculateDx(dt);

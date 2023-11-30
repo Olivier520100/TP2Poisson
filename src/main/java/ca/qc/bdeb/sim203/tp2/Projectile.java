@@ -8,8 +8,8 @@ public class Projectile extends MovableObject {
     /**
      * Constructeur pour créer un nouveau projectile.
      *
-     * @param x La position initiale en x du projectile.
-     * @param y La position initiale en y du projectile.
+     * @param x pos x initial
+     * @param y pos y initial
      * @param largeur La largeur du projectile.
      * @param hauteur La hauteur du projectile.
      */
