@@ -44,8 +44,8 @@ public class GameObjectHandler {
         }
     }
     static void addProjectiles(Player player,ArrayList<Projectile> projectiles){
-        projectiles.addAll(player.getProjectileLauncher().getProjectilesInside());
-        player.getProjectileLauncher().getProjectilesInside().clear();
+        projectiles.addAll(player.getProjectileLauncher().getProjectilesDisponibles());
+        player.getProjectileLauncher().getProjectilesDisponibles().clear();
     }
     static void preprocessMagnetic(MagnetProjectile mP, ArrayList<Enemy> enemies){
         mP.preprocess(enemies);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class ProjectileLauncher {
     private ProjectileType current;
-    private ArrayList<Projectile> projectilesInside = new ArrayList<>();
+    private ArrayList<Projectile> projectilesDisponibles = new ArrayList<>();
 
     /**
      * Constructeur pour créer un nouveau lanceur de projectiles.
@@ -32,8 +32,8 @@ public class ProjectileLauncher {
      *
      * @return La liste des projectiles.
      */
-    public ArrayList<Projectile> getProjectilesInside() {
-        return projectilesInside;
+    public ArrayList<Projectile> getProjectilesDisponibles() {
+        return projectilesDisponibles;
     }
 
     /**
@@ -44,15 +44,15 @@ public class ProjectileLauncher {
      * @param y La coordonnée y d'où le projectile est tiré.
      */
     public void shoot(double x, double y) {
-        projectilesInside.clear();
+        projectilesDisponibles.clear();
         switch (current) {
-            case BASIC -> projectilesInside.add(new BasicProjectile(x, y));
+            case BASIC -> projectilesDisponibles.add(new BasicProjectile(x, y));
             case TRIPLE -> {
                 for (int i = 0; i < 3; i++) {
-                    projectilesInside.add(new TripleProjectile(x, y));
+                    projectilesDisponibles.add(new TripleProjectile(x, y));
                 }
             }
-            case MAGNET -> projectilesInside.add(new MagnetProjectile(x, y));
+            case MAGNET -> projectilesDisponibles.add(new MagnetProjectile(x, y));
         }
     }
 
