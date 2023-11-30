@@ -10,8 +10,9 @@ public class Game {
     double width;
     double height;
     boolean inGame = false;
-    Menu menu = new Menu();
 
+    boolean debug = false;
+    Menu menu = new Menu();
 
     public void downPress() {
         level.downPress();
@@ -44,7 +45,10 @@ public class Game {
     public void spaceRelease() {
         level.spaceRelease();
     }
-    public void debug() { level.debug();}
+    public void debug() {
+        level.debug();
+        debug = !debug;
+    }
     public void screenClick(double x, double y) {
         if (!inGame) {
             menu.windowClick(x, y);
@@ -66,9 +70,7 @@ public class Game {
                 level.drawGame(context);
             } else {
                 if (!level.isLevelDead()) {
-                    levelNumber += 1;
-                    lastHealth = level.getHealth();
-                    level = new Level(width, height, levelNumber,lastHealth);
+                    nextLevel();
                 } else {
                     menu = new Menu();
                     inGame = false;
@@ -84,18 +86,30 @@ public class Game {
     }
 
     public void qPress() {
-        
+        level.setProjectileType1();
     }
 
     public void wPress() {
+        level.setProjectileType2();
     }
 
     public void ePress() {
+        level.setProjectileType3();
     }
 
     public void rPress() {
+        level.setMaxHealth();
     }
 
     public void tPress() {
+        if (debug) {
+            nextLevel();
+        }
+    }
+    public void nextLevel(){
+        levelNumber += 1;
+        lastHealth = level.getHealth();
+        level = new Level(width, height, levelNumber, lastHealth);
+
     }
 }

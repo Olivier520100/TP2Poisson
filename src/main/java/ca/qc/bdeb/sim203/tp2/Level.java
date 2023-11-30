@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
+
 public class Level {
     Player player;
     ArrayList<Enemy> enemies;
@@ -25,6 +27,7 @@ public class Level {
 
     double respawnTime;
 
+
     boolean levelEnd = false;
     Bar topBar = new Bar();
 
@@ -32,7 +35,9 @@ public class Level {
 
     boolean levelDead = false;
 
+    boolean debug = false;
 
+    final int MAXHEALTH = 4;
 
     public Level(double width, double height, int levelNumber, int health) {
 
@@ -85,6 +90,7 @@ public class Level {
     }
     public void debug(){
         MovableObject.debug = !MovableObject.debug;
+        debug = MovableObject.debug;
     }
 
     public void updateGame(double dt, double width, double height) {
@@ -230,4 +236,32 @@ public class Level {
         GameObjectHandler.projectileEnemy(projectiles,enemies);
         GameObjectHandler.playerBaril(player,baril);
     }
+
+    public void setProjectileType1() {
+        if (debug){
+            GameObjectHandler.setProjectile(player, BASIC);
+
+        }
+    }
+
+    public void setProjectileType2() {
+        if (debug) {
+            GameObjectHandler.setProjectile(player, TRIPLE);
+        }
+
+    }
+
+    public void setProjectileType3() {
+        if (debug) {
+            GameObjectHandler.setProjectile(player, MAGNET);
+        }
+
+    }
+
+    public void setMaxHealth() {
+        if (debug) {
+            GameObjectHandler.setMaxHealth(player,MAXHEALTH);
+        }
+    }
+
 }

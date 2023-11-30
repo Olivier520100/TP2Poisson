@@ -11,8 +11,12 @@ public class MagnetProjectile extends Projectile {
 
     public MagnetProjectile(double x, double y) {
         super(x, y, 35, 29);
+<<<<<<< HEAD
         System.out.println("MAGNET!");
         vitesseX = 300;
+=======
+        speedX = 300;
+>>>>>>> eff347bfabccb8de0edbe820c088d8876d186570
         imageDeBase = new Image("./sardines.png");
     }
 
