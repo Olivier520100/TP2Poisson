@@ -6,6 +6,6 @@ public class BasicProjectile extends Projectile {
     public BasicProjectile(double x, double y) {
         super(x, y, 35, 36);
         speedX = 800;
-        baseImage = new Image("./etoile.png");
+        imageDeBase = new Image("./etoile.png");
     }
 }

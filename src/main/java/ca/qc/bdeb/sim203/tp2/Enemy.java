@@ -1,9 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends Actor {
@@ -13,7 +11,7 @@ public class Enemy extends Actor {
         speedX = -(100 * Math.pow(niveau, 0.333) + 200);
         acceleration = -500;
         speedY = (new Random()).nextInt(-100, 100);
-        baseImage = new Image("./poisson" + (new Random()).nextInt(1, 6) + ".png");
+        imageDeBase = new Image("./poisson" + (new Random()).nextInt(1, 6) + ".png");
     }
 
 }
