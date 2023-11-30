@@ -170,15 +170,15 @@ public class Player extends Actor {
     public ProjectileLauncher getProjectileLauncher() {
         return projectileLauncher;
     }
-    void update(double dt, double screenWidth, double screenheight, Camera camera) {
+    void update(double dt, double largeurEcran, double hauteurEcran, Camera camera) {
         super.update(dt);
-        verifierCollision(screenWidth, screenheight, camera);
+        verifierCollision(largeurEcran, hauteurEcran, camera);
         invisibilityTimer -= dt;
         shootTimer -= dt;
         shoot();
     }
     void enemyHit(boolean hitBoolean) {
-        if (invisibilityTimer < 0 && hitBoolean == true) {
+        if (invisibilityTimer < 0 && hitBoolean) {
             invisibilityTimer = invisibilityConst;
             health-=1;
         }
