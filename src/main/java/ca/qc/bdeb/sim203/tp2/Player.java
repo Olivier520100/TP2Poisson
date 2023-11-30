@@ -185,6 +185,11 @@ public class Player extends Actor {
             health-=1;
         }
     }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     @Override
     void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();

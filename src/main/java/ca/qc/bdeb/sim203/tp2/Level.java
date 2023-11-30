@@ -27,6 +27,7 @@ public class Level {
 
     double respawnTime;
 
+
     boolean levelEnd = false;
     Bar topBar = new Bar();
 
@@ -34,7 +35,9 @@ public class Level {
 
     boolean levelDead = false;
 
+    boolean debug = false;
 
+    final int MAXHEALTH = 4;
 
     public Level(double width, double height, int levelNumber, int health) {
 
@@ -87,6 +90,7 @@ public class Level {
     }
     public void debug(){
         MovableObject.debug = !MovableObject.debug;
+        debug = MovableObject.debug;
     }
 
     public void updateGame(double dt, double width, double height) {
@@ -234,22 +238,30 @@ public class Level {
     }
 
     public void setProjectileType1() {
-        GameObjectHandler.setProjectile(player, BASIC);
+        if (debug){
+            GameObjectHandler.setProjectile(player, BASIC);
+
+        }
     }
 
     public void setProjectileType2() {
-        GameObjectHandler.setProjectile(player, TRIPLE);
+        if (debug) {
+            GameObjectHandler.setProjectile(player, TRIPLE);
+        }
 
     }
 
     public void setProjectileType3() {
-        GameObjectHandler.setProjectile(player, MAGNET);
+        if (debug) {
+            GameObjectHandler.setProjectile(player, MAGNET);
+        }
 
     }
 
     public void setMaxHealth() {
+        if (debug) {
+            GameObjectHandler.setMaxHealth(player,MAXHEALTH);
+        }
     }
 
-    public void nextLevel() {
-    }
 }

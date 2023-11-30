@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameObjectHandler {
 
@@ -53,4 +54,23 @@ public class GameObjectHandler {
         player.setPT(projectileType);
     }
 
+    public static void setMaxHealth(Player player, int maxhealth) {
+        player.setHealth(maxhealth);
+    }
+    /*
+    public static void addEnemies(ArrayList<Enemy> enemies, Cam){
+        Random rand = (new Random());
+        int enemyCount = rand.nextInt(1, 6);
+        enemiestoadd = new ArrayList<>();
+
+        for (int i = 0; i < enemyCount; i++) {
+
+            double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
+            double enemyWidth = enemyHeight / 120 * 104;
+            enemiestoadd.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
+                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
+        }
+    }
+
+     */
 }
