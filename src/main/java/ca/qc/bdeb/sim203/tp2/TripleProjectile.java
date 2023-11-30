@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.image.Image;
+
 import java.util.Random;
 
 /**

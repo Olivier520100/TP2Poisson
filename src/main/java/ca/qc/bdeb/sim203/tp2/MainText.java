@@ -17,7 +17,7 @@ public class MainText {
     /**
      * Constructeur pour créer un nouveau texte .
      *
-     * @param text Le texte à afficher.
+     * @param text    Le texte à afficher.
      * @param largeur La largeur de la zone où le texte sera affiché.
      * @param hauteur La hauteur de la zone où le texte sera affiché.
      */

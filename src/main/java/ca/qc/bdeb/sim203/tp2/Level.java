@@ -60,9 +60,9 @@ public class Level {
         textFinNiveau = new MainText("FIN DE PARTIE  ", largeur, hauteur);
 
     }
+
     /**
      * Met à jourles positions des objets, les collisions et les états du joueur et des ennemis.
-     *
      */
     public void updateGame(double dt, double largeur, double hauteur) {
         displayTime -= dt;
@@ -100,6 +100,7 @@ public class Level {
 
 
     }
+
     /**
      * Dessine les éléments du jeu, y compris les objets, les ennemis, et les textes d'information.
      */
@@ -137,6 +138,7 @@ public class Level {
 
     /**
      * dessine objet qui bouge
+     *
      * @param go
      * @param context
      * @param camera
@@ -145,8 +147,10 @@ public class Level {
         go.draw(context, camera);
         go.drawDebug(context, camera);
     }
+
     /**
      * dessine objet qui bouge pas
+     *
      * @param go
      * @param context
      * @param camera

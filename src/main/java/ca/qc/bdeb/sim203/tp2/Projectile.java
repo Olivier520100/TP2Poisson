@@ -1,15 +1,13 @@
 package ca.qc.bdeb.sim203.tp2;
 
-import java.util.ArrayList;
-
 public class Projectile extends MovableObject {
 
 
     /**
      * Constructeur pour créer un nouveau projectile.
      *
-     * @param x pos x initial
-     * @param y pos y initial
+     * @param x       pos x initial
+     * @param y       pos y initial
      * @param largeur La largeur du projectile.
      * @param hauteur La hauteur du projectile.
      */

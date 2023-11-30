@@ -12,7 +12,7 @@ public class Game {
     private boolean inGame = false;
 
     private boolean debug = false;
-     private Menu menu = new Menu();
+    private Menu menu = new Menu();
 
     public void debug() {
         niveau.debug();

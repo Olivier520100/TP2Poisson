@@ -13,6 +13,7 @@ public class Actor extends MovableObject {
     public Actor(double x, double y, double largeur, double hauteur) {
         super(x, y, largeur, hauteur);
     }
+
     /**
      * Vérifie s'il y a des collisions entre l'acteur et les éléments du jeu.
      *
