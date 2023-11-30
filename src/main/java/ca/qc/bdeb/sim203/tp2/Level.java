@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
@@ -116,8 +115,8 @@ public class Level {
             baril.update(dt);
             projectileUpdate(dt, height);
 
-            GameObjectHandler.addProjectiles(player,projectiles);
-            GameObjectHandler.moveCamera(player,camera,levelLength);
+            GameObjectHandler.ajouterProjectiles(player,projectiles);
+            GameObjectHandler.bougerCamera(player,camera,levelLength);
             checkCollisions();
             topBar.setViesRestantes(player.getHealth());
             topBar.setActuel(player.getPT());
@@ -209,12 +208,12 @@ public class Level {
     }
 
     public void garbageCollection(){
-        GameObjectHandler.garbageCollectEnemies(enemies, camera);
-        GameObjectHandler.garbageCollectProjectiles(projectiles, camera);
+        GameObjectHandler.supprimerEnnemis(enemies, camera);
+        GameObjectHandler.supprimerProjectiles(projectiles, camera);
     }
 
     public void enemyCreation() {
-        GameObjectHandler.addEnemies(enemies,camera,levelNumber);
+        GameObjectHandler.ajouterEnnemi(enemies,camera,levelNumber);
     }
 
     public void levelEndCheck() {
@@ -226,7 +225,7 @@ public class Level {
     }
 
     public void backgroundElementsCreation(double height) {
-        GameObjectHandler.createBackgroundElements(backgroundElements, height, levelLength);
+        GameObjectHandler.creerBackgroundElements(backgroundElements, height, levelLength);
     }
 
     public boolean isLevelEnd() {
@@ -241,9 +240,9 @@ public class Level {
         return player.getHealth();
     }
     public void checkCollisions(){
-        GameObjectHandler.playerEnemy(player,enemies);
-        GameObjectHandler.projectileEnemy(projectiles,enemies);
-        GameObjectHandler.playerBaril(player,baril);
+        GameObjectHandler.genererCollisionsJoueurEnnemi(player,enemies);
+        GameObjectHandler.genererCollisionsProjectileEnnemi(projectiles,enemies);
+        GameObjectHandler.genererCollisionsJoueurBaril(player,baril);
     }
 
     public void setProjectileType1() {
