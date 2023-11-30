@@ -170,8 +170,7 @@ public class Player extends Actor {
     public ProjectileLauncher getProjectileLauncher() {
         return projectileLauncher;
     }
-
-    void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
+    void update(double dt, double screenWidth, double screenheight, Camera camera) {
         super.update(dt);
         verifierCollision(screenWidth, screenheight, camera);
         invisibilityTimer -= dt;
@@ -207,8 +206,6 @@ public class Player extends Actor {
             context.drawImage(imageDeBase, displayX, y);
         }
     }
-
-
 
     boolean isDead() {
         return (health <= 0);

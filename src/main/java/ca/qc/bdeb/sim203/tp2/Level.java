@@ -111,7 +111,7 @@ public class Level {
                 lastSpawn = 0;
                 enemyCreation();
             }
-            player.update(dt, width, height, camera, levelLength);
+            player.update(dt, width, height, camera);
             enemyUpdate(dt);
             baril.update(dt);
             projectileUpdate(dt, height);
