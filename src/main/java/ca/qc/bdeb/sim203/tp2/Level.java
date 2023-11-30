@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -141,6 +142,12 @@ public class Level {
         baril.draw(context, camera);
         projectileDraw(context);
         topBar.draw(context);
+        if (debug){
+            context.setFont(Font.font(12));
+            context.fillText("NB Poissons : " + enemies.size(),25, 100 );
+            context.fillText("NB Projectiles : " + projectiles.size(), 25, 120);
+            context.fillText("Position Charlotte : " + ( player.getX()/levelLength * 100 ) + "%", 25, 140);
+        }
 
 
 
