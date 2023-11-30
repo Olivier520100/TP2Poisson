@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
+
 public class Level {
     Player player;
     ArrayList<Enemy> enemies;
@@ -229,5 +231,25 @@ public class Level {
         GameObjectHandler.playerEnemy(player,enemies);
         GameObjectHandler.projectileEnemy(projectiles,enemies);
         GameObjectHandler.playerBaril(player,baril);
+    }
+
+    public void setProjectileType1() {
+        GameObjectHandler.setProjectile(player, BASIC);
+    }
+
+    public void setProjectileType2() {
+        GameObjectHandler.setProjectile(player, TRIPLE);
+
+    }
+
+    public void setProjectileType3() {
+        GameObjectHandler.setProjectile(player, MAGNET);
+
+    }
+
+    public void setMaxHealth() {
+    }
+
+    public void nextLevel() {
     }
 }

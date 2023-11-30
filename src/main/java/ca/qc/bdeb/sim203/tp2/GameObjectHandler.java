@@ -49,5 +49,8 @@ public class GameObjectHandler {
     static void preprocessMagnetic(MagnetProjectile mP, ArrayList<Enemy> enemies){
         mP.preprocess(enemies);
     }
+    static void setProjectile(Player player, ProjectileType projectileType){
+        player.setPT(projectileType);
+    }
 
 }

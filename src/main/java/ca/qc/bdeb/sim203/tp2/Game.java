@@ -84,18 +84,22 @@ public class Game {
     }
 
     public void qPress() {
-        
+        level.setProjectileType1();
     }
 
     public void wPress() {
+        level.setProjectileType2();
     }
 
     public void ePress() {
+        level.setProjectileType3();
     }
 
     public void rPress() {
+        level.setMaxHealth();
     }
 
     public void tPress() {
+        level.nextLevel();
     }
 }
