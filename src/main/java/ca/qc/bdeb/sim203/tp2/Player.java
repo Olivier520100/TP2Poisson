@@ -3,8 +3,6 @@ package ca.qc.bdeb.sim203.tp2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-
 
 public class Player extends Actor {
 
@@ -91,16 +89,16 @@ public class Player extends Actor {
     @Override
     void calculateDx(double dt) {
         if (horizontalPressed) {
-            if (Math.abs(speedX) < maximumSpeed) {
+            if (Math.abs(speedX) < vitesseMaximum) {
                 if (directionRight) {
                     speedX += acceleration * dt;
-                    if (speedX > maximumSpeed) {
-                        speedX = maximumSpeed;
+                    if (speedX > vitesseMaximum) {
+                        speedX = vitesseMaximum;
                     }
                 } else {
                     speedX -= acceleration * dt;
-                    if (Math.abs(speedX) > maximumSpeed) {
-                        speedX = -maximumSpeed;
+                    if (Math.abs(speedX) > vitesseMaximum) {
+                        speedX = -vitesseMaximum;
                     }
                 }
             }
@@ -123,7 +121,7 @@ public class Player extends Actor {
     @Override
     void calculateDy(double dt) {
         if (verticalPressed) {
-            if (Math.abs(speedY) < maximumSpeed) {
+            if (Math.abs(speedY) < vitesseMaximum) {
                 if (directionUp) {
                     speedY -= acceleration * dt;
                 } else {
@@ -147,9 +145,9 @@ public class Player extends Actor {
     }
 
     @Override
-    public void checkCollision(double screenWidth, double screenHeight, Camera camera) {
-        if (y + height > screenHeight) {
-            y = screenHeight - height;
+    public void verifierCollision(double largeurEcran, double hauteurEcran, Camera camera) {
+        if (y + height > hauteurEcran) {
+            y = hauteurEcran - height;
             speedY = 0;
         } else if (y < 0) {
             y = 0;
@@ -175,7 +173,7 @@ public class Player extends Actor {
 
     void update(double dt, double screenWidth, double screenheight, Camera camera, double levelLength) {
         super.update(dt);
-        checkCollision(screenWidth, screenheight, camera);
+        verifierCollision(screenWidth, screenheight, camera);
         invisibilityTimer -= dt;
         shootTimer -= dt;
         shoot();

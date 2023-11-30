@@ -12,7 +12,7 @@ public class MovableObject extends GameObject {
     double speedX = 0;
     double speedY = 0;
     double acceleration = 0;
-    double maximumSpeed = 300;
+    double vitesseMaximum = 300;
 
     /**
      * Constructeur pour créer un nouvel objet mobile.

@@ -16,7 +16,7 @@ public class Bar {
      private final int VALUE_TO_ALIGN = PIXELS_ADDED + 10;
 
     ProjectileType current = ProjectileType.BASIC;
-    Image heartImage = new Image("./heart.png");
+
     Image basicImage = new Image("./etoile.png");
     Image tripleImage = new Image("./hippocampe.png");
     Image magnetImage = new Image("./sardines.png");
