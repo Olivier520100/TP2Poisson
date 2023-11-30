@@ -15,9 +15,9 @@ public class Bar {
 
     private ProjectileType actuel = ProjectileType.BASIC;
 
-    private final Image imageBasique = new Image("./etoile.png");
-    private final Image imageHippocampe = new Image("./hippocampe.png");
-    private final Image imageSardines = new Image("./sardines.png");
+    private Image imageBasique = new Image("./etoile.png");
+    private Image imageHippocampe = new Image("./hippocampe.png");
+    private Image imageSardines = new Image("./sardines.png");
 
     public void setViesRestantes(int viesRestantes) {
         this.viesRestantes = viesRestantes;

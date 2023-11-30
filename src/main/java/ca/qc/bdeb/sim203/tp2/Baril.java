@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class Baril extends MovableObject {
 
-    private final Image barilOuvert;
-    private final ProjectileType projectileDisponible;
+    private Image barilOuvert;
+    private ProjectileType projectileDisponible;
     private boolean ouvert = false;
     private final double decalageFonction;
     private final double coefficientSin;

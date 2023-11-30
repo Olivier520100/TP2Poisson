@@ -168,8 +168,7 @@ public class GameObjectHandler {
     }
 
 
-
-    public static void setProjectile(Player joueur, ProjectileType projectileType){
+    public static void setProjectile(Player joueur, ProjectileType projectileType) {
         joueur.setPt(projectileType);
     }
 
