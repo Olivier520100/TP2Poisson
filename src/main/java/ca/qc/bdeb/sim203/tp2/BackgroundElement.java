@@ -7,11 +7,6 @@ import java.util.Random;
 
 public class BackgroundElement extends GameObject {
 
-    private double hue;
-    private double saturation;
-    private double brightness;
-    private ColorAdjust colorAdjust;
-
     public BackgroundElement(double x, double frameHeight) {
         super(x, frameHeight - 119, 80, 119);
         initialize();
