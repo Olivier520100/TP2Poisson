@@ -3,9 +3,9 @@ package ca.qc.bdeb.sim203.tp2;
 public class Camera {
 
     private double x;
-    private double y;
-    private double hauteur;
-    private double largeur;
+    private final double y;
+    private final double hauteur;
+    private final double largeur;
 
     public void setX(double x) {
         this.x = x;

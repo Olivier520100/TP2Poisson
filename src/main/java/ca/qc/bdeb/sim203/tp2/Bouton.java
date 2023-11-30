@@ -9,24 +9,23 @@ import javafx.scene.image.Image;
  */
 public class Bouton {
 
-    private double hauteur = 40;
-    private double largeur = 120;
+    private final double hauteur = 40;
+    private final double largeur = 120;
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
 
-    private Image buttonImage;
+    private final Image buttonImage;
 
     /**
      * Constructeur pour créer un nouveau bouton.
      *
-     *
      * @param cheminButtonImage Le chemin vers l'image du bouton.
-     * @param x La position en x du bouton.
-     * @param y La position en y du bouton.
+     * @param x                 La position en x du bouton.
+     * @param y                 La position en y du bouton.
      */
-    public Bouton( String cheminButtonImage, double x, double y) {
+    public Bouton(String cheminButtonImage, double x, double y) {
 
         this.buttonImage = new Image(cheminButtonImage);
         this.x = x;

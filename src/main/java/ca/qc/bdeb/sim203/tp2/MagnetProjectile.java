@@ -11,6 +11,7 @@ public class MagnetProjectile extends Projectile {
 
     /**
      * Constructeur
+     *
      * @param x
      * @param y
      */
@@ -25,6 +26,7 @@ public class MagnetProjectile extends Projectile {
 
     /**
      * Calcule la force exerce par un enemy
+     *
      * @param enemy
      */
     void calculateForce(Enemy enemy) {
@@ -33,7 +35,7 @@ public class MagnetProjectile extends Projectile {
             double dy = enemy.getY() - y;
             double distanceAuCarre = dx * dx + dy * dy;
             double distance = Math.sqrt(distanceAuCarre);
-            if (distance < 0.01){
+            if (distance < 0.01) {
 
                 distance = 0.01;
             }
@@ -45,18 +47,19 @@ public class MagnetProjectile extends Projectile {
 
     /**
      * calcul de dx avec force
+     *
      * @param dt Temps écoulé depuis le dernier calcul.
      */
     @Override
     void calculateDx(double dt) {
         vitesseX += dt * forceX;
-        vitesseX = capValues(vitesseX,300,500);
+        vitesseX = capValues(vitesseX, 300, 500);
     }
 
     @Override
     void calculateDy(double dt) {
         vitesseY += dt * forceY;
-        vitesseY =  capValues(vitesseY,-500,500);
+        vitesseY = capValues(vitesseY, -500, 500);
     }
 
     void sumForces(ArrayList<Enemy> ennemis) {
@@ -75,6 +78,7 @@ public class MagnetProjectile extends Projectile {
         sumForces(ennemis);
 
     }
+
     void update(double dt, double hauteurEcran) {
         super.update(dt);
         checkCollision(hauteurEcran);
@@ -92,12 +96,12 @@ public class MagnetProjectile extends Projectile {
 
     }
 
-    private double capValues(double valeur, double minimum, double maximum){
+    private double capValues(double valeur, double minimum, double maximum) {
 
 
-        if (valeur < minimum){
+        if (valeur < minimum) {
             valeur = minimum;
-        }else if (valeur > maximum){
+        } else if (valeur > maximum) {
             valeur = maximum;
         }
 

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.image.Image;
+
 import java.util.Random;
 
 /**
@@ -8,10 +9,10 @@ import java.util.Random;
  * Ce projectile a un mouvement ondulatoire unique.
  */
 public class TripleProjectile extends Projectile {
-    private double sinCoefficient; // Coefficient pour le mouvement sinusoïdal
-    private double periode; // Période du mouvement sinusoïdal
+    private final double sinCoefficient; // Coefficient pour le mouvement sinusoïdal
+    private final double periode; // Période du mouvement sinusoïdal
     private double tempsDepuisLeDebut; // Temps écoulé depuis le lancement du projectile
-    private double initialY; // Position Y initiale
+    private final double initialY; // Position Y initiale
 
     /*
      * @param x Position X initiale du projectile.

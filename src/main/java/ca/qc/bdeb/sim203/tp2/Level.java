@@ -10,28 +10,28 @@ import java.util.Random;
 import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
 
 public class Level {
-    private Player joueur;
-    private ArrayList<Enemy> ennemis;
-    private Baril baril;
-    private MainText textDebutNiveau;
-    private MainText textFinNiveau;
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
-    private double longueurNiveau;
-    private int nombreNiveau;
-    private Camera camera;
-    private ArrayList<BackgroundElement> objetsDuFond = new ArrayList<>();
+    private final Player joueur;
+    private final ArrayList<Enemy> ennemis;
+    private final Baril baril;
+    private final MainText textDebutNiveau;
+    private final MainText textFinNiveau;
+    private final ArrayList<Projectile> projectiles = new ArrayList<>();
+    private final double longueurNiveau;
+    private final int nombreNiveau;
+    private final Camera camera;
+    private final ArrayList<BackgroundElement> objetsDuFond = new ArrayList<>();
 
 
     private double tempsDepuisDernierAjout = 0;
     private double displayTime = 4;
 
-    private double respawnTime;
+    private final double respawnTime;
 
 
     private boolean finNiveau = false;
-    private Bar barDeVie = new Bar();
+    private final Bar barDeVie = new Bar();
 
-    private Color colorFond;
+    private final Color colorFond;
 
     private boolean joeurMort = false;
 
@@ -60,9 +60,9 @@ public class Level {
         textFinNiveau = new MainText("FIN DE PARTIE  ", largeur, hauteur);
 
     }
+
     /**
      * Met à jourles positions des objets, les collisions et les états du joueur et des ennemis.
-     *
      */
     public void updateGame(double dt, double largeur, double hauteur) {
         displayTime -= dt;
@@ -100,6 +100,7 @@ public class Level {
 
 
     }
+
     /**
      * Dessine les éléments du jeu, y compris les objets, les ennemis, et les textes d'information.
      */
@@ -137,6 +138,7 @@ public class Level {
 
     /**
      * dessine objet qui bouge
+     *
      * @param go
      * @param context
      * @param camera
@@ -145,8 +147,10 @@ public class Level {
         go.draw(context, camera);
         go.drawDebug(context, camera);
     }
+
     /**
      * dessine objet qui bouge pas
+     *
      * @param go
      * @param context
      * @param camera

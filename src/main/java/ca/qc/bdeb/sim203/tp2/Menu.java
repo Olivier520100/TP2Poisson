@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim203.tp2;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
 import java.util.Random;
 
 /**
@@ -10,15 +11,15 @@ import java.util.Random;
  */
 public class Menu {
     private Image randomEnemy;
-    private Bouton retourBouton = new Bouton( "boutonretour.png", 400, 400);
-    private Bouton jouer = new Bouton( "boutoncommencer.png", 80, 80);
-    private Bouton infoBouton = new Bouton( "boutoninfo.png", 400, 400);
+    private final Bouton retourBouton = new Bouton("boutonretour.png", 400, 400);
+    private final Bouton jouer = new Bouton("boutoncommencer.png", 80, 80);
+    private final Bouton infoBouton = new Bouton("boutoninfo.png", 400, 400);
 
     private boolean inInfo = false;
     private boolean toGame = false;
 
-    private Image backgroundInfo = new Image("./info.png");
-    private Image backgroundMain = new Image("./logo.png");
+    private final Image backgroundInfo = new Image("./info.png");
+    private final Image backgroundMain = new Image("./logo.png");
 
     /**
      * Traite les événements de clics dans la fenêtre.

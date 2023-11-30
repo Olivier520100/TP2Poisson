@@ -9,15 +9,15 @@ import javafx.scene.text.Font;
  * Elle gère la mise en forme et l'affichage du texte.
  */
 public class MainText {
-    private String text;
-    private double largeur;
-    private double hauteur;
-    private double fontHeight = 100;
+    private final String text;
+    private final double largeur;
+    private final double hauteur;
+    private final double fontHeight = 100;
 
     /**
      * Constructeur pour créer un nouveau texte .
      *
-     * @param text Le texte à afficher.
+     * @param text    Le texte à afficher.
      * @param largeur La largeur de la zone où le texte sera affiché.
      * @param hauteur La hauteur de la zone où le texte sera affiché.
      */

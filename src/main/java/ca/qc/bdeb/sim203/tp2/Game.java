@@ -4,15 +4,15 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Game {
     private int numeroNiveau = 1;
-    private int vieMaximum = 4;
+    private final int vieMaximum = 4;
     private int vieRestante = 4;
     private Level niveau;
-    private double largeur;
-    private double hauteur;
+    private final double largeur;
+    private final double hauteur;
     private boolean inGame = false;
 
     private boolean debug = false;
-     private Menu menu = new Menu();
+    private Menu menu = new Menu();
 
     public void debug() {
         niveau.debug();

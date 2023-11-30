@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 public class Player extends Actor {
 
 
-    private Image imageEnMovement;
-    private Image poissonBlesse;
+    private final Image imageEnMovement;
+    private final Image poissonBlesse;
     private boolean horizontalPressed = false;
     private boolean verticalPressed = false;
     private boolean directionRight = false;
@@ -17,19 +17,18 @@ public class Player extends Actor {
     private double tempsInvisibilite = 0;
     private final double constanteInvisibilite = 2;
     private double shootTimer = 0;
-    private  final double shootConst = 0.5;
+    private final double shootConst = 0.5;
     private boolean flicker = false;
-    private  int flickerCount = 0;
-    private ProjectileLauncher projectileLauncher;
-    private  int vie;
+    private int flickerCount = 0;
+    private final ProjectileLauncher projectileLauncher;
+    private int vie;
 
     /**
-     *
      * @param x
      * @param y
      * @param vie
      */
-    public Player(double x, double y,int vie) {
+    public Player(double x, double y, int vie) {
         super(x, y, 102, 90);
 
         this.vie = vie;
@@ -41,7 +40,7 @@ public class Player extends Actor {
 
     }
 
-    double calculateSpeed(double dt, boolean pressed, double vitesse, boolean direction){
+    double calculateSpeed(double dt, boolean pressed, double vitesse, boolean direction) {
         if (pressed) {
             if (Math.abs(vitesse) < vitesseMaximum) {
                 if (direction) {
@@ -75,13 +74,14 @@ public class Player extends Actor {
 
     @Override
     void calculateDx(double dt) {
-        vitesseX = calculateSpeed(dt, horizontalPressed,vitesseX, directionRight);
+        vitesseX = calculateSpeed(dt, horizontalPressed, vitesseX, directionRight);
     }
 
     @Override
     void calculateDy(double dt) {
-        vitesseY = calculateSpeed(dt, verticalPressed,vitesseY, !directionUp);
+        vitesseY = calculateSpeed(dt, verticalPressed, vitesseY, !directionUp);
     }
+
     @Override
     public void verifierCollision(double largeurEcran, double hauteurEcran, Camera camera) {
         if (y + hauteur > hauteurEcran) {
@@ -119,9 +119,10 @@ public class Player extends Actor {
     void enemyHit(boolean hitBoolean) {
         if (tempsInvisibilite < 0 && hitBoolean) {
             tempsInvisibilite = constanteInvisibilite;
-            vie -=1;
+            vie -= 1;
         }
     }
+
     @Override
     void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
@@ -140,6 +141,7 @@ public class Player extends Actor {
             context.drawImage(imageDeBase, displayX, y);
         }
     }
+
     void moveLeft() {
         horizontalPressed = true;
         directionRight = false;

@@ -14,10 +14,8 @@ public class MovableObject extends GameObject {
     double vitesseMaximum = 300;
 
     /**
-     *
-     *
-     * @param x Position en x de l'objet.
-     * @param y Position en y de l'objet.
+     * @param x       Position en x de l'objet.
+     * @param y       Position en y de l'objet.
      * @param largeur Largeur de l'objet.
      * @param hauteur Hauteur de l'objet.
      */
@@ -38,7 +36,7 @@ public class MovableObject extends GameObject {
      * Affiche un cadre de débogage autour de l'objet si le mode debug est activé.
      *
      * @param context Contexte graphique sur lequel dessiner.
-     * @param camera La caméra utilisée pour l'affichage.
+     * @param camera  La caméra utilisée pour l'affichage.
      */
     void drawDebug(GraphicsContext context, Camera camera) {
         if (debug) {
@@ -67,6 +65,7 @@ public class MovableObject extends GameObject {
 
     /**
      * calcul physic
+     *
      * @param dt
      */
 
