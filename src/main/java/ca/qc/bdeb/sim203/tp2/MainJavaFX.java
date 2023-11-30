@@ -42,43 +42,18 @@ public class MainJavaFX extends Application {
     private void configureInputHandling(Scene scene, Game game) {
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case RIGHT:
-                    game.rightPress();
-                    break;
-                case LEFT:
-                    game.leftPress();
-                    break;
-                case UP:
-                    game.upPress();
-                    break;
-                case DOWN:
-                    game.downPress();
-                    break;
-                case SPACE:
-                    game.spacePress();
-                    break;
-                case D:
-                    game.debug();
-                    break;
-                case Q:
-                    game.qPress();
-                    break;
-                case W:
-                    game.wPress();
-                    break;
-                case E:
-                    game.ePress();
-                    break;
-                case R:
-                    game.rPress();
-                    break;
-                case T:
-                    game.tPress();
-                    break;
-                case ESCAPE:
-                    Platform.exit();
-
-
+                case RIGHT -> game.rightPress();
+                case LEFT -> game.leftPress();
+                case UP -> game.upPress();
+                case DOWN -> game.downPress();
+                case SPACE -> game.spacePress();
+                case D -> game.debug();
+                case Q -> game.qPress();
+                case W -> game.wPress();
+                case E -> game.ePress();
+                case R -> game.rPress();
+                case T -> game.tPress();
+                case ESCAPE -> Platform.exit();
             }
         });
 
