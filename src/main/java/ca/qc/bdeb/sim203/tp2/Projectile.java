@@ -10,11 +10,11 @@ public class Projectile extends MovableObject {
      *
      * @param x La position initiale en x du projectile.
      * @param y La position initiale en y du projectile.
-     * @param width La largeur du projectile.
-     * @param height La hauteur du projectile.
+     * @param largeur La largeur du projectile.
+     * @param hauteur La hauteur du projectile.
      */
-    public Projectile(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public Projectile(double x, double y, double largeur, double hauteur) {
+        super(x, y, largeur, hauteur);
     }
 
 

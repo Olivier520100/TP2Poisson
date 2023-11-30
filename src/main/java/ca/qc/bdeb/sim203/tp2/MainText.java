@@ -10,21 +10,21 @@ import javafx.scene.text.Font;
  */
 public class MainText {
     private String text;
-    private double width;
-    private double height;
+    private double largeur;
+    private double hauteur;
     private double fontHeight = 100;
 
     /**
      * Constructeur pour créer un nouveau texte principal.
      *
      * @param text Le texte à afficher.
-     * @param width La largeur de la zone où le texte sera affiché.
-     * @param height La hauteur de la zone où le texte sera affiché.
+     * @param largeur La largeur de la zone où le texte sera affiché.
+     * @param hauteur La hauteur de la zone où le texte sera affiché.
      */
-    public MainText(String text, double width, double height) {
+    public MainText(String text, double largeur, double hauteur) {
         this.text = text;
-        this.width = width;
-        this.height = height;
+        this.largeur = largeur;
+        this.hauteur = hauteur;
     }
 
     /**
@@ -38,6 +38,6 @@ public class MainText {
     void draw(GraphicsContext context, Camera camera, double offset, Color color) {
         context.setFill(color);
         context.setFont(Font.font(fontHeight));
-        context.fillText(text, offset + width / 3 - camera.getX(), height / 2);
+        context.fillText(text, offset + largeur / 3 - camera.getX(), hauteur / 2);
     }
 }
