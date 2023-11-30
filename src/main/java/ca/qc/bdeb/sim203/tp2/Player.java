@@ -20,13 +20,15 @@ public class Player extends Actor {
     private final double shootConst = 0.5;
     private boolean flicker = false;
     private int flickerCount = 0;
-    private final ProjectileLauncher projectileLauncher;
+    private ProjectileLauncher projectileLauncher;
     private int vie;
 
     /**
-     * @param x
-     * @param y
-     * @param vie
+     * Constructeur principale
+     *
+     * @param x   La coordonnée x de l'acteur.
+     * @param y   La coordonnée y de l'acteur.
+     * @param vie Le nombre de vie de l'acteur
      */
     public Player(double x, double y, int vie) {
         super(x, y, 102, 90);
@@ -40,7 +42,16 @@ public class Player extends Actor {
 
     }
 
-    double calculateSpeed(double dt, boolean pressed, double vitesse, boolean direction) {
+    /**
+     * Cette méthode permet de calculer la variation de la vitesse du joeur
+     *
+     * @param dt        Variation de temps
+     * @param pressed   boolean qui dit si une touche est enclenché
+     * @param vitesse   vitesse initiale de l'acteur
+     * @param direction direction de la vitesse
+     * @return vitesse final
+     */
+    public double calculateSpeed(double dt, boolean pressed, double vitesse, boolean direction) {
         if (pressed) {
             if (Math.abs(vitesse) < vitesseMaximum) {
                 if (direction) {
@@ -73,15 +84,22 @@ public class Player extends Actor {
     }
 
     @Override
-    void calculateDx(double dt) {
+    public void calculateDx(double dt) {
         vitesseX = calculateSpeed(dt, horizontalPressed, vitesseX, directionRight);
     }
 
     @Override
-    void calculateDy(double dt) {
+    public void calculateDy(double dt) {
         vitesseY = calculateSpeed(dt, verticalPressed, vitesseY, !directionUp);
     }
 
+    /**
+     * Verifie si l'acteur est en collision
+     *
+     * @param largeurEcran La largeur de l'écran.
+     * @param hauteurEcran La hauteur de l'écran.
+     * @param camera       La caméra utilisée pour ajuster la vue.
+     */
     @Override
     public void verifierCollision(double largeurEcran, double hauteurEcran, Camera camera) {
         if (y + hauteur > hauteurEcran) {
@@ -97,18 +115,25 @@ public class Player extends Actor {
         }
     }
 
-    void shoot() {
+    /**
+     * La méthode qui permet au joeur d'enclenché le processus de tirer
+     */
+    public void shoot() {
         if (shootPressed && shootTimer < 0) {
             projectileLauncher.shoot(x + width, y + hauteur / 4);
             shootTimer = shootConst;
         }
     }
 
-    public ProjectileLauncher getProjectileLauncher() {
-        return projectileLauncher;
-    }
-
-    void update(double dt, double largeurEcran, double hauteurEcran, Camera camera) {
+    /**
+     * La méthode classique update, rien de special
+     *
+     * @param dt           variation de temp
+     * @param largeurEcran largeur de l'écran
+     * @param hauteurEcran hauteur de l'écran
+     * @param camera       camera
+     */
+    public void update(double dt, double largeurEcran, double hauteurEcran, Camera camera) {
         super.update(dt);
         verifierCollision(largeurEcran, hauteurEcran, camera);
         tempsInvisibilite -= dt;
@@ -116,7 +141,12 @@ public class Player extends Actor {
         shoot();
     }
 
-    void enemyHit(boolean hitBoolean) {
+    /**
+     * Cette méthode check si le joueur est entré en contact avec un ennemi
+     *
+     * @param hitBoolean Boolean qui nous dit s'il y a contact ou non
+     */
+    public void enemyHit(boolean hitBoolean) {
         if (tempsInvisibilite < 0 && hitBoolean) {
             tempsInvisibilite = constanteInvisibilite;
             vie -= 1;
@@ -124,7 +154,7 @@ public class Player extends Actor {
     }
 
     @Override
-    void draw(GraphicsContext context, Camera camera) {
+    public void draw(GraphicsContext context, Camera camera) {
         double displayX = x - camera.getX();
         if (vitesseX > 0 && tempsInvisibilite < 0) {
             context.drawImage(imageEnMovement, displayX, y);
@@ -142,50 +172,50 @@ public class Player extends Actor {
         }
     }
 
-    void moveLeft() {
+    public void moveLeft() {
         horizontalPressed = true;
         directionRight = false;
 
     }
 
-    ProjectileType getPT() {
+    public ProjectileType getPT() {
         return projectileLauncher.getCurrent();
     }
 
-    void setPT(ProjectileType pt) {
+    public void setPt(ProjectileType pt) {
         projectileLauncher.setCurrent(pt);
     }
 
-    void moveRight() {
+    public void moveRight() {
         horizontalPressed = true;
         directionRight = true;
     }
 
-    void stopMoveHorizontal() {
+    public void stopMoveHorizontal() {
         horizontalPressed = false;
 
     }
 
-    void moveUp() {
+    public void moveUp() {
         verticalPressed = true;
         directionUp = true;
 
     }
 
-    void moveDown() {
+    public void moveDown() {
         verticalPressed = true;
         directionUp = false;
     }
 
-    void shootDown() {
+    public void shootDown() {
         shootPressed = true;
     }
 
-    void shootRelease() {
+    public void shootRelease() {
         shootPressed = false;
     }
 
-    void stopMoveVertical() {
+    public void stopMoveVertical() {
         verticalPressed = false;
     }
 
@@ -199,5 +229,9 @@ public class Player extends Actor {
 
     public int getVie() {
         return vie;
+    }
+
+    public ProjectileLauncher getProjectileLauncher() {
+        return projectileLauncher;
     }
 }

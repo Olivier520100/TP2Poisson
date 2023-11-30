@@ -11,9 +11,9 @@ import java.util.Random;
  */
 public class Menu {
     private Image randomEnemy;
-    private final Bouton retourBouton = new Bouton("boutonretour.png", 400, 400);
-    private final Bouton jouer = new Bouton("boutoncommencer.png", 80, 80);
-    private final Bouton infoBouton = new Bouton("boutoninfo.png", 400, 400);
+    private Bouton retourBouton = new Bouton("boutonretour.png", 400, 400);
+    private Bouton jouer = new Bouton("boutoncommencer.png", 80, 80);
+    private Bouton infoBouton = new Bouton("boutoninfo.png", 400, 400);
 
     private boolean inInfo = false;
     private boolean toGame = false;

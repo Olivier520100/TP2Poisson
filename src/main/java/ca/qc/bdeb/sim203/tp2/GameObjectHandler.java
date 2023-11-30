@@ -38,7 +38,7 @@ public class GameObjectHandler {
         if (!(baril.isOuvert())) {
             boolean touche = genererCollisionsObjet(joueur, baril);
             if ((touche)) {
-                joueur.setPT(baril.getProjectileDisponible());
+                joueur.setPt(baril.getProjectileDisponible());
                 baril.setOuvert(true);
             }
         }
@@ -168,8 +168,9 @@ public class GameObjectHandler {
     }
 
 
-    public static void setProjectile(Player joueur, ProjectileType projectileType) {
-        joueur.setPT(projectileType);
+
+    public static void setProjectile(Player joueur, ProjectileType projectileType){
+        joueur.setPt(projectileType);
     }
 
     public static void setMaxHealth(Player joueur, int vieMaximum) {
