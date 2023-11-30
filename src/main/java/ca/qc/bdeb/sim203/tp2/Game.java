@@ -82,4 +82,20 @@ public class Game {
             inGame = menu.isToGame();
         }
     }
+
+    public void qPress() {
+        
+    }
+
+    public void wPress() {
+    }
+
+    public void ePress() {
+    }
+
+    public void rPress() {
+    }
+
+    public void tPress() {
+    }
 }

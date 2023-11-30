@@ -60,6 +60,21 @@ public class MainJavaFX extends Application {
                 case D:
                     game.debug();
                     break;
+                case Q:
+                    game.qPress();
+                    break;
+                case W:
+                    game.wPress();
+                    break;
+                case E:
+                    game.ePress();
+                    break;
+                case R:
+                    game.rPress();
+                    break;
+                case T:
+                    game.tPress();
+                    break;
                 case ESCAPE:
                     Platform.exit();
 
