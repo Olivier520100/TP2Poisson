@@ -39,6 +39,7 @@ public class Level {
     final int MAXHEALTH = 4;
 
     public Level(double width, double height, int levelNumber, int health) {
+        enemies = new ArrayList<>();
 
         player = new Player(0, 260,health);
         camera = new Camera(0, 0, width, height);
@@ -52,7 +53,6 @@ public class Level {
         backgroundElementsCreation(height);
         levelStart = new MainText("NIVEAU " + levelNumber, width, height);
         levelDeadText = new MainText("FIN DE PARTIE  ", width, height);
-
 
     }
 
@@ -94,6 +94,8 @@ public class Level {
 
     public void updateGame(double dt, double width, double height) {
         displayTime -= dt;
+
+        garbageCollection();
 
         if (!levelEnd && !levelDead) {
             levelEndCheck();
@@ -137,7 +139,7 @@ public class Level {
         player.drawDebug(context, camera);
         enemyDraw(context, camera);
         baril.draw(context, camera);
-        projectileDraw(context, camera);
+        projectileDraw(context);
         topBar.draw(context);
 
 
@@ -176,11 +178,10 @@ public class Level {
             } else {
                 projectile.update(dt);
             }
-
         }
     }
 
-    public void projectileDraw(GraphicsContext context, Camera camera) {
+    public void projectileDraw(GraphicsContext context) {
         for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
             projectile.drawDebug(context, camera);
@@ -188,19 +189,13 @@ public class Level {
         }
     }
 
+    public void garbageCollection(){
+        GameObjectHandler.garbageCollectEnemies(enemies, camera);
+        GameObjectHandler.garbageCollectProjectiles(projectiles, camera);
+    }
 
     public void enemyCreation() {
-        Random rand = (new Random());
-        int enemyCount = rand.nextInt(1, 6);
-        enemies = new ArrayList<>();
-
-        for (int i = 0; i < enemyCount; i++) {
-
-            double enemyHeight = rand.nextDouble(50, 120);
-            double enemyWidth = enemyHeight / 120 * 104;
-            enemies.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
-                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), enemyHeight, enemyWidth, levelNumber));
-        }
+        GameObjectHandler.addEnemies(enemies,camera,levelNumber);
     }
 
     public void levelEndCheck() {
