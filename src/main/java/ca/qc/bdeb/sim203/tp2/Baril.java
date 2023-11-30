@@ -23,6 +23,12 @@ public class Baril extends MovableObject {
 
     private double tempsDepuisLeDebut = 0;
 
+    /**
+     * Ceci est le contructeur du baril
+     * @param x la postion en x initial du baril
+     * @param y la position en y initial du baril
+     * @param hauteurEcran
+     */
     public Baril(double x, double y, double hauteurEcran) {
         super(x, y, 70, 83);
         coefficientSin = (hauteurEcran - hauteur) / 2;
@@ -38,6 +44,10 @@ public class Baril extends MovableObject {
 
     }
 
+    /**
+     * Cette méthode calcule le y du baril par rapport à un variation de temps
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
     @Override
     public void deplacerObjet(double dt) {
         y = coefficientSin * Math.sin(((2 * Math.PI) / 3) * (tempsDepuisLeDebut - decalageFonction)) + coefficientSin;
