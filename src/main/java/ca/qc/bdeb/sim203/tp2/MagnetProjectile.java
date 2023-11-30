@@ -9,6 +9,11 @@ public class MagnetProjectile extends Projectile {
     double forceX = 0;
     double forceY = 0;
 
+    /**
+     * Constructeur
+     * @param x
+     * @param y
+     */
     public MagnetProjectile(double x, double y) {
         super(x, y, 35, 29);
 
@@ -18,6 +23,10 @@ public class MagnetProjectile extends Projectile {
         imageDeBase = new Image("./sardines.png");
     }
 
+    /**
+     * Calcule la force exerce par un enemy
+     * @param enemy
+     */
     void calculateForce(Enemy enemy) {
         if (x < enemy.getX()) {
             double dx = enemy.getX() - x;
@@ -34,6 +43,10 @@ public class MagnetProjectile extends Projectile {
         }
     }
 
+    /**
+     * calcul de dx avec force
+     * @param dt Temps écoulé depuis le dernier calcul.
+     */
     @Override
     void calculateDx(double dt) {
         vitesseX += dt * forceX;

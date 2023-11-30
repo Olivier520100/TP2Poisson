@@ -15,7 +15,7 @@ public class MainText {
     private double fontHeight = 100;
 
     /**
-     * Constructeur pour créer un nouveau texte principal.
+     * Constructeur pour créer un nouveau texte .
      *
      * @param text Le texte à afficher.
      * @param largeur La largeur de la zone où le texte sera affiché.
@@ -28,10 +28,10 @@ public class MainText {
     }
 
     /**
-     * Dessine le texte sur le contexte graphique fourni.
+     * Dessine le texte
      *
-     * @param context Le contexte graphique sur lequel dessiner le texte.
-     * @param color La couleur du texte.
+     * @param context
+     * @param color
      */
     void draw(GraphicsContext context, Color color) {
         context.setFill(color);

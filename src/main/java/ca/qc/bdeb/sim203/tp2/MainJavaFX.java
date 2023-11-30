@@ -29,7 +29,7 @@ public class MainJavaFX extends Application {
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         Game game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
-        configureInputHandling(scene, game);
+        inputHandling(scene, game);
         startGameLoop(context, game);
 
 
@@ -39,7 +39,7 @@ public class MainJavaFX extends Application {
 
     }
 
-    private void configureInputHandling(Scene scene, Game game) {
+    private void inputHandling(Scene scene, Game game) {
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case RIGHT -> game.rightPress();
