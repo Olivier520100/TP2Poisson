@@ -57,11 +57,13 @@ public class GameObjectHandler {
     public static void setMaxHealth(Player player, int maxhealth) {
         player.setHealth(maxhealth);
     }
-    /*
-    public static void addEnemies(ArrayList<Enemy> enemies, Cam){
+
+    public static void addEnemies(ArrayList<Enemy> enemies, Camera camera,int levelNumber){
         Random rand = (new Random());
         int enemyCount = rand.nextInt(1, 6);
-        enemiestoadd = new ArrayList<>();
+        ArrayList<Enemy> enemiestoadd = new ArrayList<>();
+        final int RANDOM_ENEMY_HEIGHT_ORIGIN = 50;
+
 
         for (int i = 0; i < enemyCount; i++) {
 
@@ -70,7 +72,8 @@ public class GameObjectHandler {
             enemiestoadd.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
                     camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
         }
+
+
     }
 
-     */
 }
