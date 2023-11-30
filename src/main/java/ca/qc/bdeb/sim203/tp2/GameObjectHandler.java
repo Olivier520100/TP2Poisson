@@ -63,17 +63,29 @@ public class GameObjectHandler {
         int enemyCount = rand.nextInt(1, 6);
         ArrayList<Enemy> enemiestoadd = new ArrayList<>();
         final int RANDOM_ENEMY_HEIGHT_ORIGIN = 50;
-
-
         for (int i = 0; i < enemyCount; i++) {
 
             double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
             double enemyWidth = enemyHeight / 120 * 104;
-            enemiestoadd.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
-                    camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
+            enemiestoadd.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
+                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), enemyHeight, enemyWidth, levelNumber));
         }
+        enemies.addAll(enemiestoadd);
 
-
+    }
+    public static void garbageCollectEnemies(ArrayList<Enemy> enemies, Camera camera){
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            if (enemies.get(i).getX() + enemies.get(i).getWidth()< camera.getX()){
+                enemies.remove(i);
+            }
+        }
+    }
+    public static void garbageCollectProjectiles(ArrayList<Projectile> projectiles, Camera camera){
+        for (int i = projectiles.size() - 1; i >= 0; i--) {
+            if (projectiles.get(i).getX() > camera.getX() + camera.getLargeur()){
+                projectiles.remove(i);
+            }
+        }
     }
 
 }
