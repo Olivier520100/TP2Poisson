@@ -82,7 +82,7 @@ public class Level {
             GameObjectHandler.ajouterProjectiles(joueur, projectiles);
             GameObjectHandler.bougerCamera(joueur, camera, longueurNiveau);
             checkCollisions();
-            barDeVie.setViesRestantes(joueur.getHealth());
+            barDeVie.setViesRestantes(joueur.getVie());
             barDeVie.setActuel(joueur.getPT());
 
         }
@@ -204,7 +204,7 @@ public class Level {
     }
 
     public int getHealth() {
-        return joueur.getHealth();
+        return joueur.getVie();
     }
 
     public void checkCollisions() {
