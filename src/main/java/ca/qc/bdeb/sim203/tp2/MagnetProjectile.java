@@ -22,13 +22,13 @@ public class MagnetProjectile extends Projectile {
         if (x < enemy.getX()) {
             double dx = enemy.getX() - x;
             double dy = enemy.getY() - y;
-            double distanceSquared = dx * dx + dy * dy;
-            double distance = Math.sqrt(distanceSquared);
+            double distanceAuCarre = dx * dx + dy * dy;
+            double distance = Math.sqrt(distanceAuCarre);
             if (distance < 0.01){
 
                 distance = 0.01;
             }
-            double forceTotal = (1000 * 200 * 100) / distanceSquared;
+            double forceTotal = (1000 * 200 * 100) / distanceAuCarre;
             forceX += forceTotal * (dx / distance);
             forceY += forceTotal * (dy / distance);
         }
@@ -46,9 +46,9 @@ public class MagnetProjectile extends Projectile {
         vitesseY =  capValues(vitesseY,-500,500);
     }
 
-    void sumForces(ArrayList<Enemy> enemies) {
-        for (Enemy enemy : enemies) {
-            calculateForce(enemy);
+    void sumForces(ArrayList<Enemy> ennemis) {
+        for (Enemy ennemi : ennemis) {
+            calculateForce(ennemi);
         }
     }
 
@@ -57,20 +57,20 @@ public class MagnetProjectile extends Projectile {
         forceX = 0;
     }
 
-    public void preprocess(ArrayList<Enemy> enemies) {
+    public void preprocess(ArrayList<Enemy> ennemis) {
         resetForces();
-        sumForces(enemies);
+        sumForces(ennemis);
 
     }
-    void update(double dt, double screenheight) {
+    void update(double dt, double hauteurEcran) {
         super.update(dt);
-        checkCollision(screenheight);
+        checkCollision(hauteurEcran);
 
     }
 
-    public void checkCollision(double screenHeight) {
-        if (y + hauteur > screenHeight) {
-            y = screenHeight - hauteur;
+    public void checkCollision(double hauteurEcran) {
+        if (y + hauteur > hauteurEcran) {
+            y = hauteurEcran - hauteur;
             vitesseY = -vitesseY;
         } else if (y < 0) {
             y = 0;
@@ -79,16 +79,16 @@ public class MagnetProjectile extends Projectile {
 
     }
 
-    private double capValues(double value, double lowerCap, double upperCap){
+    private double capValues(double valeur, double minimum, double maximum){
 
 
-        if (value < lowerCap){
-            value = lowerCap;
-        }else if (value > upperCap){
-            value = upperCap;
+        if (valeur < minimum){
+            valeur = minimum;
+        }else if (valeur > maximum){
+            valeur = maximum;
         }
 
-        return value;
+        return valeur;
     }
 
 }

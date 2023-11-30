@@ -19,11 +19,11 @@ public class MovableObject extends GameObject {
      *
      * @param x Position en x de l'objet.
      * @param y Position en y de l'objet.
-     * @param width Largeur de l'objet.
-     * @param height Hauteur de l'objet.
+     * @param largeur Largeur de l'objet.
+     * @param hauteur Hauteur de l'objet.
      */
-    public MovableObject(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public MovableObject(double x, double y, double largeur, double hauteur) {
+        super(x, y, largeur, hauteur);
     }
 
     /**

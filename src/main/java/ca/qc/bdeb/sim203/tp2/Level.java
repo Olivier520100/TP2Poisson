@@ -10,52 +10,234 @@ import java.util.Random;
 import static ca.qc.bdeb.sim203.tp2.ProjectileType.*;
 
 public class Level {
-    Player joueur;
-    ArrayList<Enemy> enemies;
-    Baril baril;
-    MainText textDebutNiveau;
-    MainText textFinNiveau;
-    ArrayList<Projectile> projectiles = new ArrayList<>();
-    double longueurNiveau;
-    int nombreNiveau;
-    Camera camera;
-    ArrayList<BackgroundElement> objetsDuFond = new ArrayList<>();
+    private Player joueur;
+    private ArrayList<Enemy> ennemis;
+    private Baril baril;
+    private MainText textDebutNiveau;
+    private MainText textFinNiveau;
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private double longueurNiveau;
+    private int nombreNiveau;
+    private Camera camera;
+    private ArrayList<BackgroundElement> objetsDuFond = new ArrayList<>();
 
 
-    double tempsDepuisDernierAjout = 0;
-    double displayTime = 4;
+    private double tempsDepuisDernierAjout = 0;
+    private double displayTime = 4;
 
-    double respawnTime;
+    private double respawnTime;
 
 
-    boolean levelEnd = false;
-    Bar topBar = new Bar();
+    private boolean finNiveau = false;
+    private Bar barDeVie = new Bar();
 
-    Color colorFond;
+    private Color colorFond;
 
-    boolean levelDead = false;
+    private boolean joeurMort = false;
 
-    boolean debug = false;
+    private boolean debug = false;
 
-    final int MAXHEALTH = 4;
+    private final int VIES_MAXIMUM = 4;
 
-    public Level(double width, double height, int nombreNiveau, int health) {
+    public Level(double largeur, double hauteur, int nombreNiveau, int vie) {
         MovableObject.debug = false;
-        enemies = new ArrayList<>();
+        ennemis = new ArrayList<>();
 
-        joueur = new Player(0, 260,health);
-        camera = new Camera(0, 0, width, height);
+        joueur = new Player(0, 260, vie);
+        camera = new Camera(0, 0, largeur, hauteur);
         this.nombreNiveau = nombreNiveau;
         respawnTime = 0.75 + 1 / (Math.sqrt(nombreNiveau));
-        longueurNiveau = 8 * width;
-        colorFond  = Color.hsb((new Random()).nextInt(190,270),0.84,1);
+        longueurNiveau = 8 * largeur;
+        colorFond = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1);
         double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * longueurNiveau;
-        baril = new Baril(placementBaril, height / 2, height);
-        enemyCreation();
-        backgroundElementsCreation(height);
-        textDebutNiveau = new MainText("NIVEAU " + nombreNiveau, width, height);
-        textFinNiveau = new MainText("FIN DE PARTIE  ", width, height);
+        baril = new Baril(placementBaril, hauteur / 2, hauteur);
+        creationDesEnnemis();
+        creationObjetsDuFond(hauteur);
+        textDebutNiveau = new MainText("NIVEAU " + nombreNiveau, largeur, hauteur);
+        textFinNiveau = new MainText("FIN DE PARTIE  ", largeur, hauteur);
 
+    }
+
+    public void updateGame(double dt, double largeur, double hauteur) {
+        displayTime -= dt;
+
+        collectionDesDechets();
+
+        if (!finNiveau && !joeurMort) {
+            checkFinNiveau();
+            checkJoueurMort();
+            if (joeurMort) {
+                displayTime = 4;
+            }
+            tempsDepuisDernierAjout += dt;
+            if (tempsDepuisDernierAjout > respawnTime) {
+                tempsDepuisDernierAjout = 0;
+                creationDesEnnemis();
+            }
+            joueur.update(dt, largeur, hauteur, camera);
+            ennemiUpdate(dt);
+            baril.update(dt);
+            projectileUpdate(dt, hauteur);
+
+            GameObjectHandler.ajouterProjectiles(joueur, projectiles);
+            GameObjectHandler.bougerCamera(joueur, camera, longueurNiveau);
+            checkCollisions();
+            barDeVie.setViesRestantes(joueur.getHealth());
+            barDeVie.setActuel(joueur.getPT());
+
+        }
+        if (joeurMort) {
+            if (displayTime < 0) {
+                finNiveau = true;
+            }
+        }
+
+
+    }
+
+    public void drawGame(GraphicsContext context) {
+
+        arrierePlanDraw(context, camera);
+
+        drawObjet(joueur, context, camera);
+
+        ennemiDraw(context, camera);
+
+        drawObjet(baril, context, camera);
+
+        projectileDraw(context);
+
+        barDeVie.draw(context);
+
+        if (debug) {
+            context.setFont(Font.font(12));
+            context.fillText("NB Poissons : " + ennemis.size(), 25, 100);
+            context.fillText("NB Projectiles : " + projectiles.size(), 25, 120);
+            context.fillText("Position Charlotte : " + (joueur.getX() / longueurNiveau * 100) + "%", 25, 140);
+        }
+
+        if (joeurMort) {
+            if (displayTime > 0) {
+                textFinNiveau.draw(context, Color.RED);
+            }
+        } else {
+            if (displayTime > 0) {
+                textDebutNiveau.draw(context, Color.WHITE);
+            }
+        }
+    }
+
+    public void drawObjet(MovableObject go, GraphicsContext context, Camera camera) {
+        go.draw(context, camera);
+        go.drawDebug(context, camera);
+    }
+
+    public void drawObjet(GameObject go, GraphicsContext context, Camera camera) {
+        go.draw(context, camera);
+    }
+
+    public void ennemiUpdate(double dt) {
+        for (Enemy enemy : ennemis) {
+            enemy.update(dt);
+        }
+    }
+
+    public void ennemiDraw(GraphicsContext context, Camera camera) {
+        for (Enemy enemy : ennemis) {
+            drawObjet(enemy, context, camera);
+        }
+    }
+
+    public void arrierePlanDraw(GraphicsContext context, Camera camera) {
+        context.setFill(colorFond);
+        context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
+        for (BackgroundElement backgroundElement : objetsDuFond) {
+            drawObjet(backgroundElement, context, camera);
+        }
+    }
+
+    public void projectileUpdate(double dt, double height) {
+        for (int i = projectiles.size() - 1; i >= 0; i--) {
+            Projectile projectile = projectiles.get(i);
+            if (projectile instanceof MagnetProjectile) {
+                GameObjectHandler.preprocessMagnetic(((MagnetProjectile) projectile), ennemis);
+                ((MagnetProjectile) projectile).update(dt, height);
+            } else {
+                projectile.update(dt);
+            }
+        }
+    }
+
+    public void projectileDraw(GraphicsContext context) {
+        for (Projectile projectile : projectiles) {
+            drawObjet(projectile, context, camera);
+        }
+    }
+
+    public void collectionDesDechets() {
+        GameObjectHandler.supprimerEnnemis(ennemis, camera);
+        GameObjectHandler.supprimerProjectiles(projectiles, camera);
+    }
+
+    public void creationDesEnnemis() {
+        GameObjectHandler.ajouterEnnemi(ennemis, camera, nombreNiveau);
+    }
+
+    public void checkFinNiveau() {
+        finNiveau = (joueur.getX() > longueurNiveau);
+    }
+
+    public void checkJoueurMort() {
+        joeurMort = (joueur.isDead());
+    }
+
+    public void creationObjetsDuFond(double height) {
+        GameObjectHandler.creerBackgroundElements(objetsDuFond, height, longueurNiveau);
+    }
+
+    public boolean isFinNiveau() {
+        return finNiveau;
+    }
+
+    public boolean isJoeurMort() {
+        return joeurMort;
+    }
+
+    public int getHealth() {
+        return joueur.getHealth();
+    }
+
+    public void checkCollisions() {
+        GameObjectHandler.genererCollisionsJoueurEnnemi(joueur, ennemis);
+        GameObjectHandler.genererCollisionsProjectileEnnemi(projectiles, ennemis);
+        GameObjectHandler.genererCollisionsJoueurBaril(joueur, baril);
+    }
+
+    public void setProjectileType1() {
+        if (debug) {
+            GameObjectHandler.setProjectile(joueur, BASIC);
+
+        }
+    }
+
+    public void setProjectileType2() {
+        if (debug) {
+            GameObjectHandler.setProjectile(joueur, TRIPLE);
+        }
+
+    }
+
+    public void setProjectileType3() {
+        if (debug) {
+            GameObjectHandler.setProjectile(joueur, MAGNET);
+        }
+
+    }
+
+    public void setVIES_MAXIMUM() {
+        if (debug) {
+            GameObjectHandler.setMaxHealth(joueur, VIES_MAXIMUM);
+        }
     }
 
     public void downPress() {
@@ -89,186 +271,10 @@ public class Level {
     public void spaceRelease() {
         joueur.shootRelease();
     }
-    public void debug(){
+
+    public void debug() {
         MovableObject.debug = !MovableObject.debug;
         debug = MovableObject.debug;
-    }
-
-    public void updateGame(double dt, double width, double height) {
-        displayTime -= dt;
-
-        garbageCollection();
-
-        if (!levelEnd && !levelDead) {
-            levelEndCheck();
-            levelDeadCheck();
-            if (levelDead) {
-                displayTime = 4;
-            }
-            tempsDepuisDernierAjout += dt;
-            if (tempsDepuisDernierAjout > respawnTime) {
-                tempsDepuisDernierAjout = 0;
-                enemyCreation();
-            }
-            joueur.update(dt, width, height, camera);
-            enemyUpdate(dt);
-            baril.update(dt);
-            projectileUpdate(dt, height);
-
-            GameObjectHandler.ajouterProjectiles(joueur,projectiles);
-            GameObjectHandler.bougerCamera(joueur,camera,longueurNiveau);
-            checkCollisions();
-            topBar.setViesRestantes(joueur.getHealth());
-            topBar.setActuel(joueur.getPT());
-
-        }
-        if (levelDead) {
-            if (displayTime < 0) {
-                levelEnd = true;
-            }
-        }
-
-
-    }
-
-    public void drawGame(GraphicsContext context) {
-
-        bgDraw(context,camera);
-
-        drawObject(joueur, context, camera);
-
-        enemyDraw(context, camera);
-
-        drawObject(baril, context, camera);
-
-        projectileDraw(context);
-
-        topBar.draw(context);
-
-        if (debug){
-            context.setFont(Font.font(12));
-            context.fillText("NB Poissons : " + enemies.size(),25, 100 );
-            context.fillText("NB Projectiles : " + projectiles.size(), 25, 120);
-            context.fillText("Position Charlotte : " + ( joueur.getX()/ longueurNiveau * 100 ) + "%", 25, 140);
-        }
-
-        if (levelDead) {
-            if (displayTime > 0) {
-                textFinNiveau.draw(context, Color.RED);
-            }
-        } else {
-            if (displayTime > 0) {
-                textDebutNiveau.draw(context, Color.WHITE);
-            }
-        }
-    }
-
-    public void drawObject(MovableObject go, GraphicsContext context, Camera camera){
-        go.draw(context, camera);
-        go.drawDebug(context, camera);
-    }
-    public void drawObject(GameObject go, GraphicsContext context, Camera camera){
-        go.draw(context, camera);
-    }
-    public void enemyUpdate(double dt) {
-        for (Enemy enemy : enemies) {
-            enemy.update(dt);
-        }
-    }
-
-    public void enemyDraw(GraphicsContext context, Camera camera) {
-        for (Enemy enemy : enemies) {
-            drawObject(enemy,context,camera);
-        }
-    }
-    public void bgDraw(GraphicsContext context, Camera camera) {
-        context.setFill(colorFond);
-        context.fillRect(0, 0, camera.getLargeur(), camera.getHauteur());
-        for (BackgroundElement backgroundElement : objetsDuFond) {
-            drawObject(backgroundElement,context,camera);
-        }
-    }
-
-    public void projectileUpdate(double dt, double height) {
-        for (int i = projectiles.size() - 1; i >= 0; i--) {
-            Projectile projectile = projectiles.get(i);
-            if (projectile instanceof MagnetProjectile) {
-                GameObjectHandler.preprocessMagnetic(((MagnetProjectile) projectile),enemies);
-                ((MagnetProjectile) projectile).update(dt, height);
-            } else {
-                projectile.update(dt);
-            }
-        }
-    }
-
-    public void projectileDraw(GraphicsContext context) {
-        for (Projectile projectile : projectiles) {
-            drawObject(projectile,context,camera);
-        }
-    }
-
-    public void garbageCollection(){
-        GameObjectHandler.supprimerEnnemis(enemies, camera);
-        GameObjectHandler.supprimerProjectiles(projectiles, camera);
-    }
-
-    public void enemyCreation() {
-        GameObjectHandler.ajouterEnnemi(enemies,camera,nombreNiveau);
-    }
-
-    public void levelEndCheck() {
-        levelEnd = (joueur.getX() > longueurNiveau);
-    }
-
-    public void levelDeadCheck() {
-        levelDead = (joueur.isDead());
-    }
-
-    public void backgroundElementsCreation(double height) {
-        GameObjectHandler.creerBackgroundElements(objetsDuFond, height, longueurNiveau);
-    }
-
-    public boolean isLevelEnd() {
-        return levelEnd;
-    }
-
-    public boolean isLevelDead() {
-        return levelDead;
-    }
-
-    public int getHealth(){
-        return joueur.getHealth();
-    }
-    public void checkCollisions(){
-        GameObjectHandler.genererCollisionsJoueurEnnemi(joueur,enemies);
-        GameObjectHandler.genererCollisionsProjectileEnnemi(projectiles,enemies);
-        GameObjectHandler.genererCollisionsJoueurBaril(joueur,baril);
-    }
-
-    public void setProjectileType1() {
-        if (debug){
-            GameObjectHandler.setProjectile(joueur, BASIC);
-
-        }
-    }
-
-    public void setProjectileType2() {
-        if (debug) {
-            GameObjectHandler.setProjectile(joueur, TRIPLE);
-        }
-
-    }
-
-    public void setProjectileType3() {
-        if (debug) {
-            GameObjectHandler.setProjectile(joueur, MAGNET);
-        }
-
-    }
-    public void setMaxHealth() {
-        if (debug) {
-            GameObjectHandler.setMaxHealth(joueur,MAXHEALTH);
-        }
     }
 
 }
