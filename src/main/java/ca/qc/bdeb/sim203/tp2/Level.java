@@ -49,19 +49,25 @@ public class Level {
         respawnTime = 0.75 + 1 / (Math.sqrt(nombreNiveau));
         longueurNiveau = 8 * largeur;
         colorFond = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1);
+
         double placementBaril = ((new Random()).nextDouble(20, 60) / 100) * longueurNiveau;
         baril = new Baril(placementBaril, hauteur / 2, hauteur);
+
         creationDesEnnemis();
         creationObjetsDuFond(hauteur);
+
         textDebutNiveau = new MainText("NIVEAU " + nombreNiveau, largeur, hauteur);
         textFinNiveau = new MainText("FIN DE PARTIE  ", largeur, hauteur);
 
     }
-
+    /**
+     * Met à jourles positions des objets, les collisions et les états du joueur et des ennemis.
+     *
+     */
     public void updateGame(double dt, double largeur, double hauteur) {
         displayTime -= dt;
 
-        collectionDesDechets();
+        garbageCollector();
 
         if (!finNiveau && !joeurMort) {
             checkFinNiveau();
@@ -94,7 +100,9 @@ public class Level {
 
 
     }
-
+    /**
+     * Dessine les éléments du jeu, y compris les objets, les ennemis, et les textes d'information.
+     */
     public void drawGame(GraphicsContext context) {
 
         arrierePlanDraw(context, camera);
@@ -127,14 +135,26 @@ public class Level {
         }
     }
 
+    /**
+     * dessine objet qui bouge
+     * @param go
+     * @param context
+     * @param camera
+     */
     public void drawObjet(MovableObject go, GraphicsContext context, Camera camera) {
         go.draw(context, camera);
         go.drawDebug(context, camera);
     }
-
+    /**
+     * dessine objet qui bouge pas
+     * @param go
+     * @param context
+     * @param camera
+     */
     public void drawObjet(GameObject go, GraphicsContext context, Camera camera) {
         go.draw(context, camera);
     }
+
 
     public void ennemiUpdate(double dt) {
         for (Enemy enemy : ennemis) {
@@ -174,7 +194,7 @@ public class Level {
         }
     }
 
-    public void collectionDesDechets() {
+    public void garbageCollector() {
         GameObjectHandler.supprimerEnnemis(ennemis, camera);
         GameObjectHandler.supprimerProjectiles(projectiles, camera);
     }
