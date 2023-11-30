@@ -115,8 +115,8 @@ public class Level {
             baril.update(dt);
             projectileUpdate(dt, height);
 
-            GameObjectHandler.addProjectiles(joueur,projectiles);
-            GameObjectHandler.moveCamera(joueur,camera, longueurNiveau);
+            GameObjectHandler.ajouterProjectiles(player,projectiles);
+            GameObjectHandler.bougerCamera(player,camera,levelLength);
             checkCollisions();
             topBar.setViesRestantes(joueur.getHealth());
             topBar.setActuel(joueur.getPT());
@@ -208,12 +208,12 @@ public class Level {
     }
 
     public void garbageCollection(){
-        GameObjectHandler.garbageCollectEnemies(enemies, camera);
-        GameObjectHandler.garbageCollectProjectiles(projectiles, camera);
+        GameObjectHandler.supprimerEnnemis(enemies, camera);
+        GameObjectHandler.supprimerProjectiles(projectiles, camera);
     }
 
     public void enemyCreation() {
-        GameObjectHandler.addEnemies(enemies,camera, nombreNiveau);
+        GameObjectHandler.ajouterEnnemi(enemies,camera,levelNumber);
     }
 
     public void levelEndCheck() {
@@ -225,7 +225,7 @@ public class Level {
     }
 
     public void backgroundElementsCreation(double height) {
-        GameObjectHandler.createBackgroundElements(objetsDuFond, height, longueurNiveau);
+        GameObjectHandler.creerBackgroundElements(backgroundElements, height, levelLength);
     }
 
     public boolean isLevelEnd() {
@@ -240,9 +240,9 @@ public class Level {
         return joueur.getHealth();
     }
     public void checkCollisions(){
-        GameObjectHandler.playerEnemy(joueur,enemies);
-        GameObjectHandler.projectileEnemy(projectiles,enemies);
-        GameObjectHandler.playerBaril(joueur,baril);
+        GameObjectHandler.genererCollisionsJoueurEnnemi(player,enemies);
+        GameObjectHandler.genererCollisionsProjectileEnnemi(projectiles,enemies);
+        GameObjectHandler.genererCollisionsJoueurBaril(player,baril);
     }
 
     public void setProjectileType1() {

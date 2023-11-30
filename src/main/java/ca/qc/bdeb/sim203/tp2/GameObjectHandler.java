@@ -8,93 +8,83 @@ public class GameObjectHandler {
 
     private GameObjectHandler() {}
 
-    static void playerEnemy(Player player, ArrayList<Enemy> enemies){
-        boolean hit;
-        for (Enemy enemy : enemies) {
-            hit = checkCollisionWithObject(player,enemy);
-            if ((hit)){
-                player.enemyHit(true);
+    public static void genererCollisionsJoueurEnnemi(Player joueur, ArrayList<Enemy> ennemi){
+        boolean touche;
+        for (Enemy enemie : ennemi) {
+            touche = genererCollisionsObjet(joueur,enemie);
+            if ((touche)){
+                joueur.enemyHit(true);
             }
         }
-        player.enemyHit(false);
+        joueur.enemyHit(false);
     }
-    static void playerBaril(Player player, Baril baril){
+    public static void genererCollisionsJoueurBaril(Player joueur, Baril baril){
         if (!(baril.isOuvert())) {
-            boolean hit = checkCollisionWithObject(player, baril);
-            if ((hit)) {
-                player.setPT(baril.getProjectileDisponible());
+            boolean touche = genererCollisionsObjet(joueur, baril);
+            if ((touche)) {
+                joueur.setPT(baril.getProjectileDisponible());
                 baril.setOuvert(true);
             }
         }
 
     }
 
-    static boolean checkCollisionWithObject(MovableObject moveableObject1, MovableObject moveableObject2) {
+    private static boolean genererCollisionsObjet(MovableObject objet1, MovableObject objet2) {
 
-        return moveableObject1.getX() < moveableObject2.getX() + moveableObject2.getWidth() && moveableObject1.getX() + moveableObject1.getWidth() > moveableObject2.getX() && moveableObject1.getY() < moveableObject2.getY() + moveableObject2.getHauteur() && moveableObject1.getY() + moveableObject1.getHauteur() > moveableObject2.getY();
+        return objet1.getX() < objet2.getX() + objet2.getWidth() && objet1.getX() + objet1.getWidth() > objet2.getX() && objet1.getY() < objet2.getY() + objet2.getHauteur() && objet1.getY() + objet1.getHauteur() > objet2.getY();
     }
-    static void projectileEnemy(ArrayList<Projectile> projectiles, ArrayList<Enemy> enemies) {
+    public static void genererCollisionsProjectileEnnemi(ArrayList<Projectile> projectiles, ArrayList<Enemy> ennemis) {
         for (Projectile projectile : projectiles){
-            for (int i = enemies.size() - 1; i >= 0; i--) {
-                Enemy enemy = enemies.get(i);
-                if (checkCollisionWithObject(projectile,enemy)) {
-                    enemies.remove(i);
+            for (int i = ennemis.size() - 1; i >= 0; i--) {
+                Enemy ennemi = ennemis.get(i);
+                if (genererCollisionsObjet(projectile,ennemi)) {
+                    ennemis.remove(i);
                 }
             }
         }
     }
-    static void addProjectiles(Player player,ArrayList<Projectile> projectiles){
-        projectiles.addAll(player.getProjectileLauncher().getProjectilesDisponibles());
-        player.getProjectileLauncher().getProjectilesDisponibles().clear();
+   public static void ajouterProjectiles(Player joueur, ArrayList<Projectile> projectiles){
+        projectiles.addAll(joueur.getProjectileLauncher().getProjectilesDisponibles());
+        joueur.getProjectileLauncher().getProjectilesDisponibles().clear();
     }
-    static void preprocessMagnetic(MagnetProjectile mP, ArrayList<Enemy> enemies){
-        mP.preprocess(enemies);
-    }
-    static void setProjectile(Player player, ProjectileType projectileType){
-        player.setPT(projectileType);
-    }
-
-    public static void setMaxHealth(Player player, int maxhealth) {
-        player.setHealth(maxhealth);
-    }
-
-    public static void addEnemies(ArrayList<Enemy> enemies, Camera camera,int levelNumber){
+    public static void ajouterEnnemi(ArrayList<Enemy> ennemis, Camera camera, int numeroNiveau){
         Random rand = (new Random());
-        int enemyCount = rand.nextInt(1, 6);
-        ArrayList<Enemy> enemiestoadd = new ArrayList<>();
-        final int RANDOM_ENEMY_HEIGHT_ORIGIN = 50;
-        for (int i = 0; i < enemyCount; i++) {
+        int nombreEnnemis = rand.nextInt(1, 6);
+        ArrayList<Enemy> ennemiAAjouter = new ArrayList<>();
+        final int RANDOM_ENNEMI_TAILLE_ORIGIN = 50;
+        for (int i = 0; i < nombreEnnemis; i++) {
 
-            double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
-            double enemyWidth = enemyHeight / 120 * 104;
-            enemiestoadd.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
-                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), enemyHeight, enemyWidth, levelNumber));
+            double hauteurEnnemi = rand.nextDouble(RANDOM_ENNEMI_TAILLE_ORIGIN, 120);
+            double largeurEnnemi = hauteurEnnemi / 120 * 104;
+            ennemiAAjouter.add(new Enemy(camera.getX() + camera.getLargeur() + 50, rand.nextDouble(
+                    camera.getHauteur() / 5, 4 * camera.getHauteur() / 5), hauteurEnnemi, largeurEnnemi, numeroNiveau));
         }
-        enemies.addAll(enemiestoadd);
+        ennemis.addAll(ennemiAAjouter);
 
     }
-    public static void createBackgroundElements(ArrayList<BackgroundElement> backgroundElements, double height, double levelLength){
+
+    public static void creerBackgroundElements(ArrayList<BackgroundElement> backgroundElements, double hauteur, double tailleNiveau){
         int x = 0;
-        while (x < levelLength * 9 / 8) {
-            backgroundElements.add((new BackgroundElement(x, height)));
+        while (x < tailleNiveau * 9 / 8) {
+            backgroundElements.add((new BackgroundElement(x, hauteur)));
             x += (new Random()).nextInt(50, 100) + 80; // explain pls
         }
     }
-    public static void garbageCollectEnemies(ArrayList<Enemy> enemies, Camera camera){
-        for (int i = enemies.size() - 1; i >= 0; i--) {
-            if (enemies.get(i).getX() + enemies.get(i).getWidth()< camera.getX()){
-                enemies.remove(i);
+    public static void supprimerEnnemis(ArrayList<Enemy> ennemis, Camera camera){
+        for (int i = ennemis.size() - 1; i >= 0; i--) {
+            if (ennemis.get(i).getX() + ennemis.get(i).getWidth()< camera.getX()){
+                ennemis.remove(i);
             }
         }
     }
-    public static void garbageCollectProjectiles(ArrayList<Projectile> projectiles, Camera camera){
+    public static void supprimerProjectiles(ArrayList<Projectile> projectiles, Camera camera){
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             if (projectiles.get(i).getX() > camera.getX() + camera.getLargeur()){
                 projectiles.remove(i);
             }
         }
     }
-    public static void moveCamera(Player player, Camera camera, double levellength){
+    public static void bougerCamera(Player player, Camera camera, double levellength){
         if ((camera.getX() + camera.getLargeur()) < levellength) {
             if (((player.getX() - camera.getX()) >= camera.getLargeur() / 5)) {
                 camera.setX(player.getX()+- camera.getLargeur()/5);
@@ -102,6 +92,16 @@ public class GameObjectHandler {
         }
     }
 
+    public static void preprocessMagnetic(MagnetProjectile mP, ArrayList<Enemy> enemies){
+        mP.preprocess(enemies);
+    }
+    public static void setProjectile(Player joueur, ProjectileType projectileType){
+        joueur.setPT(projectileType);
+    }
+
+    public static void setMaxHealth(Player joueur, int vieMaximum) {
+        joueur.setHealth(vieMaximum);
+    }
 
 
 
