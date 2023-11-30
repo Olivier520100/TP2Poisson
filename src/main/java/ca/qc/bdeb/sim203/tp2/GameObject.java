@@ -33,8 +33,6 @@ public class GameObject {
         this.hauteur = hauteur;
     }
 
-
-
     public GameObject(double x, double y, double width, double hauteur) {
         this.x = x;
         this.y = y;

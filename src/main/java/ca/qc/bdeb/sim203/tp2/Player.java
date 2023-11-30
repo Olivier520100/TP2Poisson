@@ -177,7 +177,6 @@ public class Player extends Actor {
         invisibilityTimer -= dt;
         shootTimer -= dt;
         shoot();
-        moveCamera(camera, dt, levelLength);
     }
     void enemyHit(boolean hitBoolean) {
         if (invisibilityTimer < 0 && hitBoolean == true) {
@@ -209,13 +208,7 @@ public class Player extends Actor {
         }
     }
 
-    void moveCamera(Camera camera, double dt, double levellength) {
-        if ((camera.getX() + camera.getLargeur()) < levellength) {
-            if (((x - camera.getX()) >= camera.getLargeur() / 5)) {
-                camera.setX(camera.getX() + vitesseX * dt);
-            }
-        }
-    }
+
 
     boolean isDead() {
         return (health <= 0);
