@@ -20,7 +20,6 @@ public class Level {
     Camera camera;
     ArrayList<BackgroundElement> backgroundElements = new ArrayList<>();
 
-    private final int RANDOM_ENEMY_HEIGHT_ORIGIN = 50;
 
     double lastSpawn = 0;
     double displayTime = 4;
@@ -197,7 +196,7 @@ public class Level {
 
         for (int i = 0; i < enemyCount; i++) {
 
-            double enemyHeight = rand.nextDouble(RANDOM_ENEMY_HEIGHT_ORIGIN, 120);
+            double enemyHeight = rand.nextDouble(50, 120);
             double enemyWidth = enemyHeight / 120 * 104;
             enemies.add(new Enemy(camera.getX() + camera.getWidth() + 50, rand.nextDouble(
                     camera.getHeight() / 5, 4 * camera.getHeight() / 5), enemyHeight, enemyWidth, levelNumber));
