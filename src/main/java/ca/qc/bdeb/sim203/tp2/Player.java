@@ -140,7 +140,6 @@ public class Player extends Actor {
                     vitesseY = 0;
                 }
             }
-
         }
     }
 
@@ -157,7 +156,6 @@ public class Player extends Actor {
             x = camera.getX();
             vitesseX = 0;
         }
-
     }
 
     void shoot() {
